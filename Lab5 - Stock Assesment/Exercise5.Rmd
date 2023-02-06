@@ -1,0 +1,22 @@
+---
+title: "Exercise5"
+author: "(Your name here)"
+date: "2/17/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(999)
+```
+Yellowfin tuna fishery data from 1957 can be found from the book: *Using R for Modelling and Quantitative Methods in Fisheries* catch, effort, and cpue from 1934-1955
+
+
+1) Use the `Schaefer` and `Fox` models to predict CPUE (incorporate catch)
+
+2) Optimize parameters, plot, and fit all models
+
+```{r}
+schaefdat = read.csv("schaefer.csv")
+param <- c(r=0.1,K=2250000,Binit=2250000)
+```

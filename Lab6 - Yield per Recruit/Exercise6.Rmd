@@ -1,0 +1,27 @@
+---
+title: "Exercise6"
+author: "(Your name here)"
+date: "2/24/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Let's look at Kootenay Lake Bull Trout data from 2013. Mortality, age, and length data was collected (among others) for 20 age groups. 
+Retrieved from [github_ypr](https://poissonconsulting.shinyapps.io/shinyypr/)
+
+Let's assume constant recruitment while considering fishing and natural mortality values. 
+
+
+```{r}
+trout = read.csv('laketrout.csv')
+```
+
+1) Using an initial population size `N0` of 250 individuals, predict future population sizes using VPA. 
+
+2) Calculate population biomass, catch in numbers, yield per recruit (YPR), and biomass per recruitment (BPR)
+
+3) Plot YPR~F and BPR~F
+

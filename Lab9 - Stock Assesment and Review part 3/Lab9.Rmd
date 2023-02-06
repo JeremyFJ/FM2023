@@ -1,0 +1,276 @@
+---
+title: "Pacific Swordfish Assessment"
+author: "(Your name here)"
+date: "3/31/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(999)
+```
+
+# Comprehensive stock assessment of Western Central Pacific Swordfish
+
+1) Calculate CPUE
+2) Total Catch by nation `who is fishing for swordfish the most`?
+3) Identify stocks `are there more than one?`
+4) Surplus Production `estimate biomass based on parameters`
+5) Comparing and predicting CPUE `How can we develop an index of relative abundance?`
+6) Population Growth 
+7) Mapping `To visualize the stocks`
+
+## installing sCPUEdb package
+
+**sCPUEdb** is a package for easily connecting and querying information found in the `pelagic` database, created by the Ferretti lab. The database is hosted by [PostgreSQL](https://www.postgresql.org/).
+
+*Mac*
+Download the `sCPUEdb_1.0.tar.gz` and then open `terminal` from your applications
+-- In the terminal -- 
+Run: `cd ~/Downloads` to navigate to your Downloads folder
+Run: `R CMD INSTALL sCPUEdb_1.0.tar.gz` to install the package
+
+
+*Windows*
+Download the `sCPUEdb_1.0.tar.gz`
+-- In RStudios -- 
+Run: `install.packages("C:/Downloads/sCPUEdb_1.0.tar.gz", repos = NULL, type="source")`
+NOTE: install any dependencies such as `mapdata` and `plyr` 
+Install: Java Development Kit
+
+```{r}
+# These packages are necessary for connecting to a PostgreSQL database
+# Remember to remove or comment these lines out when knitting
+install.packages("RH2")
+install.packages("RPostgreSQL")
+```
+
+```{r}
+library(sCPUEdb)
+con = connectPelagic("fmuser","swordfish") # connect to the pelagic database
+code = "swo" # represents swordfish
+iattc = getIATTCdataCE(con, code = code, index = "n") # Inter-American Tropical Tuna Commission
+wcpfc = getWCPFCdataCE(con, code = code, index = "n") # Western Central Pacific Fisheries Commission
+```
+
+if sCPUEdb cannot be installed, use the `csv` files 
+```{r}
+iattc = read.csv("iattc_swo.csv")
+wcpfc = read.csv("wcpfc_swo.csv")
+```
+
+
+### Creating CPUEs from catch and hook data and cleaning data
+Like last week, we can create catch per unit effort using the `catch` and `hooks` columns in our new dataframes
+
+```{r}
+# calculate CPUE and rescale by a factor of 1000
+iattc$cpue = (iattc$catch / iattc$hooks)*1000
+wcpfc$cpue = (wcpfc$catch / wcpfc$hooks)*1000
+```
+
+## Total Catch 
+
+Now that we have comprehensive CPUEs from two data sources we can do a more-informed stock assessment of swordfish in the Pacific Ocean
+
+Next, let's look at recent catch biomass (annual) by country for IATTC and WCPFC reports. 
+
+```{r}
+library(ggplot2)
+fleet_ag = aggregate(data=iattc, catch~fleet, sum) # aggregate catch by fleet
+top5fleets =  fleet_ag[order(-fleet_ag$catch),] # order fleet by top catches
+iattc_plot = ggplot(iattc[(iattc$year>1990 & 
+                      iattc$fleet==top5fleets$fleet[1:5]),], # top fleets with most catch
+       aes(fill=fleet, y=catch, x=year)) + 
+    geom_bar(position="stack", stat="identity") + ggtitle("IATTC Swordfish")
+
+fleet_ag = aggregate(data=wcpfc, catch~fleet, sum) # aggregate catch by fleet
+top5fleets =  fleet_ag[order(-fleet_ag$catch),] # order fleet by top catches
+wcpfc_plot = ggplot(wcpfc[(wcpfc$year>1990 & 
+                      wcpfc$fleet==top5fleets$fleet[1:5]),], # top fleets with most catch
+       aes(fill=fleet, y=catch, x=year)) + 
+    geom_bar(position="stack", stat="identity") + ggtitle("WCPFC Swordfish")
+
+gridExtra::grid.arrange(iattc_plot, wcpfc_plot) # arrange both plots next to each other
+```
+
+Next, let's combine the dataframes to make modeling easier
+We can do this with `rbind()`
+
+```{r}
+fishcommission = rbind(iattc, wcpfc)
+dim(fishcommission) # returns dimensions of dataframe or matrix/array
+```
+
+### Identify Stocks
+From the 2018 WCPFC assessment, there appears to be 3 defined stocks of Pacific Swordfish, delineated by the equator and the 150W longitude line. But, let's continue looking at the northern and southern stocks we defined last week.
+
+```{r}
+dat_n = fishcommission[fishcommission$lat>0,] # subset master dataframe for ABOVE the equator
+fc_north = aggregate(data=dat_n, catch~year, FUN=mean) # aggregate catch by year
+fc_north$hooks = aggregate(data=dat_n, hooks~year, FUN=mean)$hooks # add aggregated hook data
+fc_north$cpue = fc_north$catch/fc_north$hooks*1000 # and finally calculate average CPUE
+
+dat_s = fishcommission[fishcommission$lat<0,] # subset master dataframe for BELOW the equator
+fc_south = aggregate(data=dat_s, catch~year, FUN=mean)
+fc_south$hooks = aggregate(data=dat_s, hooks~year, FUN=mean)$hooks
+fc_south$cpue = fc_south$catch/fc_south$hooks*1000
+```
+
+### Surplus Production
+
+**Exercise**
+Instead of just assuming a value for `K` and `Binit`, let's use some simple statistical tools to estimate an average. Normally, you would source values for carrying capacity from literature, but here we will use random number generation to create a value from a uniform distribution.
+
+1) use `runif()` to generate 20 random `K` values between 20,000 and 40,000 metric tons
+2) take the mean of these values
+3) Assume initial Biomass must be between 20% and 80% of carrying capacity. 
+4) use `runif()` to generate 100 random `Binit` values 
+5) calculate its mean and standard deviation
+
+```{r}
+
+```
+
+```{r}
+pars = c(r=0.16,K=meanK,Binit=meanBinit) # initial parameters
+pars[[3]]/pars[[2]] # annual depletion based on above parameters, Binit/K
+scheaferM = function(param, dat){
+  B = c()
+  B[1] = param['Binit']
+  C=dat$catch
+  for (i in 1:(nrow(dat)-1)){
+    
+    B[i+1]=B[i] + param['r']*B[i]*(1-B[i]/param['K']) - C[i]
+  }
+  B
+}
+
+biomass_north = scheaferM(param=pars, dat=fc_north) # predict biomass for northern stock
+biomass_south = scheaferM(param=pars, dat=fc_south) # predict biomass for southern stock
+```
+
+```{r, fig.width=2, fig.height=2.5}
+# Plot time series of predicted biomass for both stocks
+# indicate minimum and maximum potential biomass / year
+par(mfrow=c(2,1))
+plot(biomass_north~fc_north$year, type='l', ylab="Biomass (metric tonnes)", 
+     xlab="Year", main="SP of Northern Pacific Swordfish",
+     ylim=(range(biomass_north)))
+abline(v=fc_north$year[which(biomass_north==min(biomass_north))], col='red') # adds a vertical RED line for the year in which MINIMUM biomass was predicted
+abline(v=fc_north$year[which(biomass_north==max(biomass_north))], col='green') # adds a vertical GREEN line for the year in which MAXIMUM biomass was predicted
+
+plot(biomass_south~fc_south$year, type='l', ylab="Biomass (metric tonnes)", 
+     xlab="Year", main="SP of Southern Pacific Swordfish",
+     ylim=(range(biomass_south)))
+abline(v=fc_south$year[which(biomass_south==min(biomass_south))], col='red')
+abline(v=fc_south$year[which(biomass_south==max(biomass_south))], col='green')
+
+```
+
+Our predictions indicate that both stocks are doing very well as of recently.
+
+### CPUE by stock
+
+Let's compare CPUE of the Northern and Southern Pacific 
+
+```{r}
+par(mfrow=c(1,2))
+# Northern Pacific 
+plot(cpue~year, data=fc_north, type='l', xlab='Year', ylab="CPUE", main="Northern Pacific")
+# Southern Pacific
+plot(cpue~year, data=fc_south, type='l', xlab='Year', ylab="CPUE", main="Southern Pacific")
+```
+
+Now, let's calculate an index of relative abundance by using a catchability coefficient
+
+$$
+\text{Index of relative abundance}\\
+I_t = qB_t
+$$
+
+```{r, fig.width=2, fig.height=2}
+library(datalowSA)
+pred_cpue = function(dat, biomass, PArea){ # dat=CPUE dataframe, biomass=SP biomass, PArea = north or south stock
+cpue = dat$cpue
+# estimating q from the data
+qs = cpue/biomass
+q = mean(qs)
+pred.cpue.e = biomass*q 
+plot(cpue~year, data=dat, main=paste(PArea,"Pacific Swordfish CPUE"))
+pred.cpue = simpspm(pars, dat, schaefer = TRUE)
+lines(pred.cpue.e~dat$year, col='red')
+lines(pred.cpue~dat$year, col='black')
+q
+}
+par(mfrow=c(2,1))
+pred_cpue(fc_north, biomass_north, PArea="North")
+pred_cpue(fc_south, biomass_south, PArea="South")
+```
+
+Here, it is interesting that as CPUE decreases for the Northern Pacific, fishing effort increases for the Southern Pacific, perhaps an artifact of overfishing, but our biomass trends do not support this.
+
+```{r}
+# Function for calculating depletion, Surplus Production, and harvest rates based on initial stock parameters
+SPstock = function(dat, param){
+require(datalowSA)
+ans = displayModel(param,dat,schaefer = TRUE, addrmse = TRUE)
+spmphaseplot(ans, fnt=7)
+}
+SPstock(fc_north,param=pars)
+```
+
+The Northern Stock is harvested sustainably according to our predictions.
+
+```{r}
+SPstock(fc_south,param=pars)
+```
+
+Predicted depletion, catch, and SP production indicate that both Pacific Swordfish stocks are being harvested sustainably.
+
+### Population Growth
+
+How could you estimate population size?
+Can you model logistic population growth using material from Lab 4? 
+
+K = 100000
+N0 = 50000
+r = 0.2
+
+```{r}
+
+```
+
+### International Effort
+
+```{r, fig.height=2.5}
+library(ggplot2)
+
+p1 = ggplot(aes(y = cpue, x = fleet), data = iattc) + geom_boxplot() +
+  ylim(0,200) + ggtitle("IATTC") # create boxplot of CPUE by Nation
+p2 = ggplot(aes(y = cpue, x = fleet), data = wcpfc) + geom_boxplot() +
+  ggtitle("WCPFC") # create boxplot of CPUE by Nation
+gridExtra::grid.arrange(p1,p2)
+```
+
+### Can we look at what else was being fished/targetted at the same time
+If your sCPUEdb package is installed, you can grab IATTC and WCPFC data for other fish stocks such as:
+`alb` = albacore
+`bet` = big-eyed tuna
+`skj` = skip-jack tuna
+
+```{r}
+code = "alb" # represents swordfish
+iattc_alb = getIATTCdataCE(con, code = code, index = "n") # Inter-American Tropical Tuna Commission
+wcpfc_alb = getWCPFCdataCE(con, code = code, index = "n") # Western Central Pacific Fisheries Commission
+```
+
+
+### Mapping
+
+Let's try to map CPUE grids of these stocks together.
+
+
+
+
+

@@ -1,0 +1,109 @@
+---
+title: "Exercise1"
+author: "(Your name here)"
+date: "1/27/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## rfishbase
+We will use the trawl data to produce frequencies of `WTCPUE` and compare distributions of species from 1982 and 2018. `WTCPUE` means Weight of Catch Per Unit Effort and is often measured in kilograms per hectare (kg/ha)
+
+Read in both dataframes (1982-1984 & 2017-2018), with names that represent each dataset.  
+  
+```{r}
+#dat82 = read.csv('ebs1982_1984.csv')
+#dat17 = read.csv('ebs2017_2018.csv')
+```
+  
+
+1) Create two dataframes that contain trawl data for exclusively the years 1982 and 2018. Additionally, use the following argument: `SID<40000`. SID is a species identification code - all codes less than 40000 represent fish, rather than invertebrates.
+
+*Note* You will need to subset both dataframes with two conditions (year and SID) 
+
+
+```{r}
+
+```
+  
+2) Use your new dataframes that contain the species names, as well as the `WTCPUE`. We want to see the average WT each species was caught for per unit of fishing effort for that year. *Note* use `aggregate` to group tow reports by species.
+
+You can aggregate the dataframe. 
+
+```{r}
+# dat_wt1 = aggregate(data=dat_new1, WTCPUE~SCIENTIFIC, FUN=mean)
+```
+
+At this step, take a look at your dataframes and see if anything needs to be cleaned.
+`[-c(),]` is useful for removing rows of your choosing
+
+You can also annotate your data with another column specifying the year
+`dat_wt1$year = 1982`
+`dat_wt2$year = 2018`
+
+
+4) Next, order your dataframe's rows by the highest `WTCPUE` average to the lowest. Look up how to use the *base* `order()` function to do this.
+```{r eval=FALSE}
+
+```
+
+
+5) Now, if we look at the top of our dataframes, we notice some numbers are much larger compared to the rest of the dataset. Let's remove these outliers to minimize residual noise.
+
+```{r}
+# par(mfrow=c(1,2))
+boxplot(dat_wt1$WTCPUE,xlab="1982 Fish Dataset", ylab="WTCPUE (kg/ha)")
+boxplot(dat_wt1$WTCPUE)$out
+wt1_outliers = which(boxplot(dat_wt1$WTCPUE)$out %in% dat_wt1$WTCPUE)
+dat_wt1 = dat_wt1[-c(wt1_outliers),]
+# repeat for 2018 dataset
+```
+
+`%in%` is a slightly more advanced operator that checks if values from one vector are present in another
+
+5) Now, we can compare `WTCPUE` frequencies between the two reported years. There could be many ways to visualize this data. Let's first try boxplots.
+
+```{r, fig.height=5, fig.width=5}
+par(mfrow=c(1,2))
+
+dat_wt1 = dat_wt1 # your 1982 dataframe object name goes here
+n = nrow(dat_wt1)
+binwidth= 0.5
+ggplot(dat_wt1, aes(x = WTCPUE, mean = mean(WTCPUE), sd = sd(WTCPUE), binwidth = binwidth, n = n)) +
+  theme_bw() + ylab("Count")+ggtitle('1982 WTCPUE of Bering Sea groundfish')+xlab('WTCPUE (kg/ha)')+
+  theme(plot.title = element_text(hjust = 0.5))+
+  geom_histogram(binwidth = binwidth, 
+                 colour = "white", fill = "cornflowerblue", size = 0.1) +
+  stat_function(fun = function(x) dnorm(x, mean = mean(dat_wt1$WTCPUE), sd = sd(dat_wt1$WTCPUE)) * n * binwidth,
+                color = "darkred", size = 1)+annotate("text",x=0.8,y=15,label=paste("Mean=",signif(mean(dat_wt1$WTCPUE),3),"kg/ha"))
+
+
+dat_wt2 = dat_wt2 # your 2018 dataframe object name goes here
+n = nrow(dat_wt2)
+binwidth= 0.5
+ggplot(dat_wt2, aes(x = WTCPUE, mean = mean(WTCPUE), sd = sd(WTCPUE), binwidth = binwidth, n = n)) +
+  theme_bw() + ylab("Count")+ggtitle('2018 WTCPUE of Bering Sea groundfish')+xlab('WTCPUE (kg/ha)')+
+  theme(plot.title = element_text(hjust = 0.5))+
+  geom_histogram(binwidth = binwidth, 
+                 colour = "white", fill = "cornflowerblue", size = 0.1) +
+  stat_function(fun = function(x) dnorm(x, mean = mean(dat_wt2$WTCPUE), sd = sd(dat_wt2$WTCPUE)) * n * binwidth,
+                color = "darkred", size = 1) + annotate("text",x=0.75,y=18,label=paste("Mean=",signif(mean(dat_wt2$WTCPUE),3),"kg/ha"))
+```
+
+
+If you were a fisheries manager studying temporal trawl catch trends of groundfish in the Eastern Bering Sea Shelf, what would have to say about the difference between 1982 and 2018 reports and how this might influence future management? *Note* What are these histograms actually showing us?
+
+
+
+Can you repeat this process, but instead of `WTCPUE` use `HAUL` data?
+
+
+ 
+
+
+
+
+

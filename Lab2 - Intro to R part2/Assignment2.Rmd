@@ -1,0 +1,116 @@
+---
+title: "Assignment 2"
+author: "(Your name here)"
+date: "1/26/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+getwd()
+set.seed(9999)
+library(tidyverse)
+```
+
+# Assignment 2
+
+[DATA](https://www.fisheries.noaa.gov/alaska/commercial-fishing/alaska-groundfish-bottom-trawl-survey-data)
+
+```{r}
+nbs = read.csv("nbs1982_2019.csv") # Northern Bering Sea survey
+head(nbs)
+```
+
+## Q1
+Plot a histogram of bottom trawling depth and bottom temperature (remember to remove extraneous values)
+
+```{r}
+par(mfrow=c(1,2), bg = "grey54")
+hist(nbs$BOT_DEPTH, xlab="Depth (m)", ylab="Hauls", main="Northern Bering Sea Trawling Survey Bottom Depth (1982-2019)", col="black", border="green", breaks=20, xlim=c(0, 80),
+     ylim=c(0, 5000), cex.main=1.2)
+nbs_rmtmp = nbs[!nbs$BOT_TEMP==-9999,]
+hist(nbs_rmtmp$BOT_TEMP, xlab="Temperature (C)", ylab="Hauls", main="Northern Bering Sea Trawling Survey Bottom Temperature (1982-2019)", col="black", border="green", xlim=c(-5, 20))
+```
+
+## Q2
+Plot the average `WTCPUE` per `HAUL` for all years.
+
+```{r}
+nbs_wtcpue = aggregate(data = nbs, WTCPUE~YEAR, FUN=mean)
+head(nbs_wtcpue)
+
+ggplot() + geom_point(data=nbs_wtcpue, aes(x=YEAR, y=WTCPUE)) + xlab("YEAR") +
+  ylab("Biomass CPUE (tons)") + ggtitle("Northern Bering Sea Trawl Survey average biomass CPUE (1982-2019)") + theme_bw()
+
+
+```
+
+## Q3
+Report the average and total `WTCPUE` for all vertebrates for the years `2000-2019`. *NOTE* vertebrates are identified by `SID<40000`. 
+
+```{r}
+vert_nbs = subset(nbs, SID<40000 & between(YEAR, 2000, 2019))
+length(unique(vert_nbs$COMMON))
+```
+
+## Q4
+Report the H-index and species evenness of all vertebrates
+
+```{r}
+fish_sum = as.data.frame(table(vert_nbs$SCIENTIFIC))
+fish_sum = fish_sum[-c(1),] # From inspecting the new dataframe, the first row is empty and therefore needs to be removed
+head(fish_sum)
+```
+```{r}
+H_i = abdiv::shannon(fish_sum$Freq)
+H_i
+
+#recap
+nbs = read.csv("nbs1982_2019.csv") # Northern Bering Sea survey
+vert_nbs = subset(nbs, SID<40000 & between(YEAR, 2000, 2019))
+fish_sum = as.data.frame(table(vert_nbs$SCIENTIFIC))
+fish_sum = fish_sum[-c(1),] # From inspecting the new dataframe, the first row is empty and therefore needs to be removed
+H_i = abdiv::shannon(fish_sum$Freq)
+H_i
+
+evenness = H_i/log(nrow(fish_sum))
+evenness
+```
+
+## Q5 
+Plot a histogram of species occurrence 
+
+```{r}
+hist(fish_sum$Freq,
+  main = paste0("Species Occurences (n species=",nrow(fish_sum),")"), # Use paste and paste0 to write text and code output together
+  xlab = "Number of occurrences",
+  ylab = "Number of species",
+  col = "bisque"
+)
+```
+
+## Q6
+Compare the Northern and Eastern Trawl surveys (1982-2019) by mapping both WTCPUE records for non-invertebrates. Which survey reports a relatively higher abundance?  
+```{r}
+ebs = read.csv("ebs1982_2019.csv") # Eastern Bering Sea survey
+head(ebs)
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

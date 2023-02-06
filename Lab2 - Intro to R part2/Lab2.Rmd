@@ -1,0 +1,318 @@
+---
+title: "Intro to R - Part 2"
+author: "(Your name here)"
+date: "1/26/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+getwd()
+set.seed(9999)
+library(tidyverse)
+```
+
+## Missing data (NAs)  
+When an element of a dataframe or vector is blank or missing data, R considers that cell as `NA`, or `Not assigned`. The presence of NAs in your data can interrupt some operations, such as calculating sums, products, means, etc. Many functions allow for the argument `na.rm=TRUE` to be included, which allows the function to ignore NAs and complete the operation.
+```{r}
+x <- y <- c(4,7,9,3,4,6,NA,2,6,1,8) # set two objects equal to the same value
+mean(x)
+mean(x, na.rm=TRUE)
+```
+
+We can also clean data by removing NAs entirely
+```{r}
+x <- x[!is.na(x)] # This is indexing the vector x for all values that are NOT NA (because of the "!" condition)
+x
+mean(x)
+```
+
+```{r}
+which(is.na(y)) # returns the rows that support the condition
+which(!is.na(y)) # ! indicates NOT
+```
+
+```{r}
+y = na.omit(y) # remove NA values from vectors
+y
+```
+
+```{r}
+dat = data.frame(temperature = c(3,2,5,2,-1000), depth=c(10,10,10,10,10))
+dat
+```
+
+```{r}
+dat = dat[!dat$temperature==-1000,] # removes all rows where temperature==-1000
+dat
+```
+  
+## Classes of Data
+You can convert values to different data types that suit your needs better
+```{r}
+y <- c("Striped Bass", "Blue Shark", "Atlantic Menhaden")
+y
+class(y)
+```
+Convert this string vector to `factors` or categorical variables with a limited number of values. Use `levels()` to print the values
+```{r}
+y <- as.factor(y)
+y
+class(y)
+# converting     |  # check logical    |
+#----------------------------------------
+# as.numeric     |  # is.numeric       |
+# as.data.frame  |  # is.data.frame    |
+# as.array       |  # is.array         |
+# as.matrix      |  # is.matrix        |
+```
+
+## Writing a Function
+R allows you to write your own functions and save them for later use. This can be very helpful when fitting fisheries models, for example, but we will just go over some basics here. We will write our own function to calculate the mean of an object.
+
+```{r}
+annual.landings.usa = rfisheries::of_landings(country="USA")
+MYmean_function <- function(x=NULL) { 
+  sum <- sum(x)
+  n <- length(x)
+  mean <- sum/n
+  return(mean)
+}
+MYmean_function(annual.landings.usa$catch)
+mean(annual.landings.usa$catch)
+```
+
+## Loops
+Loops can be used to save time during iterative calculations. For example, say we want to find x^2 for every integer from 1 to 10.
+```{r}
+for (i in 1:10) print(i^2)
+```
+
+To use loops across several lines of code, use the brackets `{}`
+```{r}
+for (i in 1:10){
+  print(i^2)
+  print("hello")
+}
+```
+
+Loops can also be easily integrated into written functions.
+```{r}
+Loopfun = function(name){
+  letters = strsplit(name, "")[[1]] # splits the supplied string into single characters
+  for (i in letters) {
+    print(i)
+  }
+}
+Loopfun("Jon Snow")
+```
+
+Compile landings data for the Western Indian Ocean region (WIO)
+```{r}
+wio.countries = data.frame(code = c("KEN", "TZA", "EAZ", "SYC", "ZAF", "MOZ", 
+                                "SOM", "MUS", "MYT", "MDG"),
+                       name = c("Kenya", "Tanzania", "Zanzibar", "Seychelles",
+                                "South Africa",   "Mozambique", "Somalia", 
+                                "Mauritius", "Mayotte", "Madagascar"))
+wio.countries
+```
+
+```{r}
+wio_landings = data.frame(year=NA, catch=NA, country=NA) # set up an empty dataframe
+for (i in 1:nrow(wio.countries)) { # i = every wio country code
+  country_landings = rfisheries::of_landings(country = wio.countries$code[i]) 
+  country_landings$country = wio.countries$name[i]
+  wio_landings = rbind(wio_landings, country_landings) # bind current dataframe with master dataframe
+  print(paste0(wio.countries$name[i], " processed"))
+}
+wio_landings = wio_landings[-c(1),] # remove NA row
+nrow(wio_landings) # count how many rows
+```
+
+```{r}
+ ggplot() +
+  geom_line(data = wio_landings, 
+            aes(x = year, y = catch/1000, col = country)) + # divide catch by 1000 to get tons
+  labs(x = "Year", y = "Catches (tons)") + theme_bw() + ggtitle("Western Indian Ocean commercial fishery landings (1950-2018)") +
+  scale_x_continuous(breaks = seq(1955,2015,20)) # set axis breaks (min, max, by)
+```
+
+# Bering Sea groundfish trawl survey 1982-1984
+[Archive](https://www.fisheries.noaa.gov/alaska/commercial-fishing/alaska-groundfish-bottom-trawl-survey-data)
+First, we'll read in some data. We will use groundfish bottom trawl survey data from the Eastern Bering Sea Shelf for the yeas 1982-1984, provided in the Canvas folder. Download that file and read it into R.
+```{r}
+ebs1982 <- read.csv("ebs1982_1984.csv")
+head(ebs1982)
+```
+
+***
+1. Write a function that removes all NA values from the `ebs` dataframe and summarizes the information, and then equate it to the same dataframe
+***
+```{r}
+remove_na = function(dataframe) {
+  dataframe <- na.omit(dataframe)
+  return(dataframe)
+  }
+remove_na
+```
+
+```{r}
+ebs1982 = remove_na(ebs1982)
+```
+
+## If/Else  
+`ifelse()` can be used to classify data. 
+
+```{r}
+unique(ebs1982$BOT_DEPTH) # depth of bottom trawls in meters
+```
+
+We will use the `ifelse()` function to categorize each observation as shallow (< 100 m) or deep (>= 100m).
+```{r}
+ebs1982$depth_cat <- ifelse(ebs1982$BOT_DEPTH >= 100, "Deep", "Shallow")
+ebs1982$BOT_DEPTH[143:153] # View area of dataframe where depth < 100m
+ebs1982$depth_cat[143:153] # View ifelse results
+```
+
+*NOTE* how to use `?ifelse` ex. `ifelse(condition, TRUE value, FALSE value)` 
+
+***
+1. Create a new column called `temp_cat` and use the `ifelse()` function to assign each observation as relatively "Cold" (<= 1) or "Warm" (>1) based on `BOT_TEMP`
+2. Convert your new column to factors
+***  
+
+```{r}
+ebs1982$temp_cat = ifelse(ebs1982$BOT_TEMP <= 1, "Cold", "Warm")
+```
+  
+## Aggregate  
+Another useful function is the `aggregate()` function. This allows us to group data based on certain functions or conditions. Let's see if mean bottom temperatures are different on the Deep trawls vs the Shallow trawls.
+
+```{r}
+aggregate(data=wio_landings, catch/1000~country, FUN=mean) # aggregate average catch by WIO country
+```
+
+Aggregate average bottom temperature (in Celsius) by depth category ('Deep' or 'Shallow')
+```{r}
+aggregate(data=ebs1982, BOT_TEMP ~ depth_cat, FUN=mean) # calculates the average bottom temperature for 'Deep' and 'Shallow' trawls
+```
+
+Clearly something is off here. 
+```{r}
+summary(ebs1982$BOT_TEMP)
+min(ebs1982$BOT_TEMP)
+```
+
+To make sure `aggregate()` works, we need to remove these incorrect data
+```{r}
+ebs1982_outrm = ebs1982[!ebs1982$BOT_TEMP==-9999,]
+```
+
+```{r}
+aggregate(data=ebs1982_outrm, BOT_TEMP ~ depth_cat, FUN=mean)
+```
+
+Or we can aggregate using other functions, such as `length()`.
+```{r}
+aggregate(data=ebs1982, SCIENTIFIC~YEAR, function(x) length(x))
+```
+This creates a new dataframe which gives us the total number of species caught each year as species richness.
+
+## Species richness and diversity evenness index
+[ref1](https://www.statology.org/shannon-diversity-index/)
+[ref2](https://link.springer.com/content/pdf/10.1007/978-3-319-71404-2.pdf?pdf=button)
+
+Calculate frequency of species occurrence, and richness
+```{r}
+fish_sum = as.data.frame(table(ebs1982$COMMON))
+fish_sum = fish_sum[-c(1),] # From inspecting the new dataframe, the first row is empty and therefore needs to be removed
+head(fish_sum)
+```
+
+```{r}
+hist(fish_sum$Freq,
+  main = paste0("Species Occurences (n species=",nrow(fish_sum),")"), # Use paste and paste0 to write text and code output together
+  xlab = "Number of occurrences",
+  ylab = "Number of species",
+  col = "bisque"
+)
+```
+
+Calculate the diversity evenness using Shannon's index, denoted as `H`
+```{r}
+# install.packages('abdiv')
+abdiv::shannon # display the H-index function
+```
+
+```{r}
+H_i = abdiv::shannon(fish_sum$Freq)
+H_i
+```
+
+This value ranges from 0 to 1 where 1 indicates complete evenness.
+```{r}
+evenness = H_i/log(nrow(fish_sum))
+evenness
+```
+
+## Map CPUE
+```{r}
+ebs_map = aggregate(data=ebs1982, WTCPUE~HAUL, FUN=sum)
+ebs_map$latitude = aggregate(data=ebs1982, LATITUDE~HAUL, FUN=mean)$LATITUDE # I can take the mean here because latitude is the same for each haul number, otherwise you should not take the mean latitude ever
+ebs_map$longitude = aggregate(data=ebs1982, LONGITUDE~HAUL, FUN=mean)$LONGITUDE
+head(ebs_map)
+```
+
+```{r}
+world <- map_data("world")
+worldmap = ggplot() +
+  geom_map(
+    data = world, map = world,
+    aes(long, lat, map_id = region)
+  ) 
+worldmap
+```
+
+```{r}
+worldmap + 
+  # Generate grids (x,y) and fill them with CPUE data (z). The `bins` argument controls       how many grids there are, and the size.
+  stat_summary_2d(data = ebs_map, aes(x = longitude, y = latitude, 
+        z = WTCPUE), alpha = 0.6, bins = 11) +  
+  # Create the legend and grid color scheme
+  scale_fill_gradient(name = "Weight (tons) CPUE", low = "green", high = "red") +
+  # Control where the center of the map is with xlim and ylim
+  xlim(-185, -150) + ylim(50, 70) + xlab("Longitude") + ylab("Latitude") +
+  # Map title
+  ggtitle("Eastern Bering Sea Trawl Survey (1982-1984)") +
+  # Customize map by removing grid lines, adding a border and background color
+  theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+        axis.line = element_line(colour = "black"),
+        panel.background= element_rect(fill = "skyblue2"))
+```
+
+## Useful functions
+
+```{r}
+nrow(ebs1982) # returns the number of rows in a dataframe or matrix
+dim(ebs1982) # returns the dimensions of a dataframe or matrix
+length(y) # returns the number of values in a vector
+unique(ebs1982$YEAR) # returns the unique values of a vector
+head(ebs1982) # returns the top values of an object
+tail(ebs1982) # returns the bottom values of an object
+x
+between(x, 1, 4) # returns logical for dataframe years
+```
+
+```{r}
+boxplot(annual.landings.usa$catch/1000, main="USA landings", ylab="Weight (tons)")
+```
+
+# Assignment 2 
+
+## Next week -- data vis, species-area calculations, mapping, and regression
+
+
+
+

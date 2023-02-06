@@ -1,0 +1,467 @@
+---
+title: "Intro to R part 1"
+author: "Jeremy Jenrette"
+date: "1/19/2023"
+output:
+  word_document: default
+  pdf_document:
+    keep_tex: yes
+    latex_engine: xelatex
+  html_document: default
+graphics: yes
+---
+```{r setup, include=F}
+knitr::opts_chunk$set(echo=TRUE)
+set.seed(9999)
+```
+
+This is a brief intro to R and RStudio. Here are some good resources\newline
+-- VT library: The R Book, Michael J. Crawley, 2007   
+-- [bookdown](https://bookdown.org/josiesmith/labbook/basics-of-r.html#objects) R basics\newline
+  
+Use an .Rmd file within RStudio. This way, you can experiment with code in the "code blocks" provided. When you are done, use the "Knit" option to view the final Word document.
+ 
+## R as a calculator  
+
+```{r}
+1+1
+7*4
+1753/18
+2+5*3
+(2+5)*3
+```
+
+Simple math functions
+```{r}
+log(100)
+sqrt(100)
+```
+
+### Objects  
+You can assign values to objects easily and perform calculations.
+```{r}
+x <- 6
+2*x + 3
+
+y <- 2
+y^2
+```
+
+Create a new object HERE
+```{r}
+object1 <- 5
+```
+
+### Functions
+Functions simplify complex calculations
+```{r}
+object2 = c(5, 10, 15, 20, 25, 30) # 'c()' stands for combine  
+mean(object2)
+sum(object2)
+```
+
+```{r}
+mean(cars$dist)
+sum(cars$dist)
+```
+Note: Sometimes na.rm = TRUE is necessary within the paranetheses to instruct R to ignore missing data.
+```{r}
+mean(cars$dist, na.rm = TRUE)
+```
+
+### Vectors  
+You can create vectors using the combine function `c()`
+A vector is a sequence of data that are of the same type (numbers, characters)
+```{r}
+x <- c(1,2,3,4,5,6,7) # integers or numerals
+x
+class(x)
+y <- c("a", "b", "c", "d") # characters
+y
+class(y)
+```
+
+### Indexing vectors    
+Within a vector, you can extract individual values based on their index, for example:
+```{r results="hold"}
+x[1] # first value
+x[3] # third value
+
+y[2]
+y[4]
+
+```
+  
+To get multiple values, you can either extract a range of values using the colon, or by combining indices with `c()`
+```{r}
+x
+x[2:5] # 2nd, 3rd, 4th, and 5th values
+x[c(2,4,7)] # 2nd, 4th, and 7th values
+```
+Index a value from a vector with an object
+```{r}
+object3 = 3
+x[object3]
+```
+
+### Lists
+A list is defined as a collection of multiple data types.
+```{r}
+listObject <- list("Virginia Tech", 1, F)
+listObject
+```
+  
+```{r}
+str(listObject)
+```
+  
+### Matrix  
+Create a matrix from using `matrix()`
+```{r}
+matrix(1:9, nrow = 4, ncol = 4) # range, number of rows, number of columns
+```
+
+## Basic Statistics
+You can run a wide range of basic statistics in R - here we examine vector x we just created:
+```{r}
+x
+mean(x) # arithmetic mean
+var(x) # variance
+sd(x) #standard deviation
+min(x) # minimum
+max(x) # maximum
+sum(x) # sum of all values
+prod(x) # product of all values
+median(x) # median
+```
+
+## View summary
+```{r}
+summary(x) # summary statistics
+```
+
+```{r}
+summary(cars)
+```
+
+### Operators
+Operators create conditions and are very useful for analyzing data
+```{r eval=FALSE}
+x <- 5
+y <- 10
+x < y # less than
+x <= y # less than or equal to
+x > y # greater than
+x >= y # greater than or equal to
+x == y # is equal to
+x != y #is not equal to
+!x # is not x
+x|y # x OR y
+x&y # x AND y
+isTRUE(x) # test if X is TRUE
+isTRUE(TRUE)
+```
+
+## Data Frames
+
+When multiple columns or vectors of data are combined, this is called a dataframe (think of data in a spreadsheet). Dataframes can be created manually or loaded into R using a spreadsheet in .csv format.
+
+### Writing Dataframes  
+First - We will write a simple dataset with mock catch data for a hypothetical fish species for the years 2010-2014 using `data.frame()`
+
+```{r}
+catch1 <- data.frame("year" = 2010:2014, "catch" = c(5000,5200,7100,4900,5150))
+catch1
+```
+
+### Indexing Dataframes
+Select value from row and column
+```{r}
+catch1[4,1] # row, column
+```
+Select row
+```{r}
+catch1[4,]
+```
+Select column
+```{r}
+newcatch <- catch1[1]
+newcatch
+```
+Use the `$` to select columns as well
+```{r}
+catch1$year # selects all values in the 'year' column 
+catch1$catch # selects all values in the 'catch' column
+```
+
+### Combining and merging dataframes
+Dataframes can be merged using the row bind `rbind()` function. 
+```{r}
+# write another dataframe with same column names
+catch2 <- data.frame("year"=c(2015:2019),  "catch"=c(4100,5700,3850,5500,4900)) # new catch dataframe
+allcatch <- rbind(catch1, catch2) # binds x & y dataframes together
+allcatch
+```
+Add a new column of **hooks deployed** with `cbind()` or `$`
+```{r}
+# these two lines do the same thing
+cbind(allcatch, hooks = c(20000, 25000, 23000, 31000, 19000, 21000, 21000, 30000, 18000, 34000))
+allcatch$hooks = c(20000, 25000, 23000, 31000, 19000, 21000, 21000, 30000, 18000, 34000)
+```
+
+Perform operations on columns
+```{r}
+allcatch$catch_per_hook = allcatch$catch / allcatch$hooks # divide catch by hooks deployed
+allcatch
+```
+
+New data for the same years is presented
+```{r}
+more_catch = data.frame(year=c(2012, 2014), catch=c(4000, 2000))
+more_catch
+```
+Use the `merge()` function to join the two dataframes 
+```{r}
+merged_allcatch = merge(allcatch, more_catch, by="year", all.x=T) # merge more_catch to allcatch by the year column
+# all.x=T means an inner join to the first dataframe specified
+merged_allcatch
+```
+
+### Subsetting Dataframes
+`subset()` works by selecting a specific value or values based on a given condition
+```{r}
+allcatch_sub <- subset(allcatch, year>2016) # select all catch data recorded after 2016
+allcatch_sub
+```
+
+```{r eval=FALSE}
+# Tip: run these functions one at a time instead of the whole chunk at once 
+subset(allcatch, year==2012) # only 2012 data
+subset(allcatch, year!=2012) # select all EXCEPT the year 2012
+subset(allcatch, year>2012 | catch>4000)
+subset(allcatch, year>2012 & catch>4000 & hooks>30000)
+```
+
+## Setting a working directory and reading .csv files 
+
+### Setting a working directory
+
+The working directory is the directory on your computer where R will retrieve and store data as well as save outputs such as plots and spreadsheets.
+
+For this class, you should maintain a consistent file structure such that you can always code in it. 
+
+For example, on your local desktop, you might start a folder called "FisheriesManagement", with subfolders such as "Lab1 - Intro to R part1", "Lab2 - Intro to R part2", "Lab3 - Fisheries Data Visualization" etc., so that you can easily tell R where to save and retrieve files. There are three ways to set your working directory.
+
+```
+    |-- FisheriesManagement/                   <- root directory
+        |-- Lab_1/                  
+            |-- Lab1.Rmd      
+            |-- Lab1.R
+            |-- allcatch.csv
+            |-- lab1_testdata.csv
+        |-- Lab_2/
+``` 
+
+1) In the menu bar, click on "Session" and then select "Set Working Directory" from the drop-down menu. Select "Choose Directory..." and navigate to the desired folder.   
+2) In your pane with the following tabs: Files, Plots, Packages, Help, and Viewer (Default position is bottom right). After selecting "Files", navigate to the desired folder and click "More" (the gear icon) and then "Set as Working Directory".
+3) The command to set your working directory is `setwd()`. Everyone's home directory will not be the same.
+
+I highly recommend to use option 3 because it is faster and does not require clicking. So, create a file structure like the one outlined above.
+
+```{r}
+getwd()
+```
+
+Here is a trick to get the directory of the file you are working on. This should typically go at the top of your Rmarkdown file
+```{r}
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+getwd()
+```
+
+### Reading a .csv file
+Once you have set your working directory, you can read in the data using the `read.csv()` function.
+```{r}
+list.files()
+usa_landings <- read.csv("lab1_testdata.csv")
+```
+
+### Saving dataframes
+We can now save our new master dataframe as a .csv file as well, using the `write.csv()` command. Files will be saved to your working directory.
+
+```{r eval=FALSE}
+write.csv(allcatch, "allcatch.csv", row.names=FALSE) # writes the dataframe that we created earlier
+list.files()
+```
+
+### Exploring the new dataframe 
+This dataset describes the total catch reported to the Food and Agriculture Organization (FAO) by the USA for the years 1950-2018.
+```{r}
+paste("Catch average:",mean(usa_landings$catch))
+paste("Catch standard deviation:",sd(usa_landings$catch))
+summary(usa_landings)
+```
+
+## Scripts
+Scripts allow you to save and modify your code. You can open a script under File - New File - New R Script. 
+
+Type your code directly into the script, and run individual lines of code either by clicking "Run" at the top of the script, or using the shortcut Cmd-Enter (Mac) / Ctrl-Enter (Windows).  
+
+You can annotate your code with information that helps you to understand each line by commenting after the symbol `#` in a code line.
+
+```{r}
+# anything written after '#' will not be run as code
+1+1 # A simple calculation
+```
+
+## Using Packages
+Packages offer different objects, functions, and data
+Get the list of all loaded packages
+```{r}
+search()
+```
+We are going to install `tidyverse`, which is a collection of several frequently used packages including `ggplot`, `dplyr`, and `tidyr`.  
+  
+```{r}
+# install.packages("tidyverse")
+```
+
+```{r}
+# load the package
+library(tidyverse)
+```
+
+With `tidyverse` we can use more functions, such as `left_join()` 
+```{r}
+more_usa_landings = data.frame(year=c(1952, 1956), catch=c(40000, 20000), country="USA")
+merge(usa_landings, more_usa_landings, by="year")
+```
+
+## Plotting in Base R
+
+The Base R packages allow for some basic plotting through the `plot()` function. The default plot type will be a scatter plot. To plot the catches from our `usa_landings` dataframe, we can use the following code:
+
+```{r}
+plot(data=usa_landings, catch~year)
+```
+
+We can also use the `$` operator
+```{r}
+plot(usa_landings$catch~usa_landings$year)
+```
+
+Now, see what else the `plot` function can do with `?plot`
+```{r}
+?plot
+# Select Generic X-Y Plotting and scroll down to see different arguments the function accepts  
+```
+
+This works for all functions. We can see in this case that we can change the plot style; for example, we can create the same plot as a line plot
+```{r}
+plot(catch~year, data=usa_landings, type="l", col='red')
+```
+
+## Plotting in `ggplot`
+
+`ggplot` is a commonly used package for plotting as it is highly customizable. Plots are created by defining `geom` objects, such as points, lines, or polygons. There are numerous ggplot guides available which discuss how different plot components can be customized.
+
+```{r}
+ggplot(usa_landings) + # ggplot loads in the data and uses '+' to add properties
+  geom_line(aes(x=year, y=catch)) + # creates the line plot
+  geom_point(aes(x=year, y=catch), color="red") + # adds red points for each value
+  ylab("Catch (Tons)") + # y axis title
+  xlab("Year") + # x axis title
+  ggtitle("United States Annual Landings") # main plot title
+```
+
+`ggplot` allows you to customize axes, labels, legends, line and shape styles, and most any other aspect of the plot you may want to modify. Look online at the available guides for additional information on plotting in ggplot. 
+
+[bookdown_ggplot](https://bookdown.org/rdpeng/RProgDA/basic-plotting-with-ggplot2.html) 
+
+## Using packages and functions to access data
+```{r}
+# install.packages("rfisheries") 
+# install.packages("FSAdata")
+```
+
+```{r}
+library(rfisheries)
+library(FSAdata)
+```
+
+The `rfisheries` package provides access to the Open Fisheries global fisheries data - including the total annual number of *landings* for each year. The `FSA` package records biological fisheries data from the Global Fisheries Stock Assesment organization. 
+```{r}
+annual.landings = of_landings(species="SKJ") # Global landings of skipkack tuna
+plot(data=annual.landings, catch~year, type='l')
+```
+
+What does the function `of_landings()` do?
+```{r eval=FALSE}
+?of_landings
+```
+
+Plot by country with a country-specific code
+```{r}
+annual.landings.usa = of_landings(country="AUS") # Total landings from Australia
+plot(data=annual.landings.usa, catch~year, type='l')
+```
+
+Use `ggplot` to plot landings of `Red Drum` and annotate the axes and title.
+```{r}
+RDM_landings = of_landings(species="RDM")
+ggplot(RDM_landings) +
+  geom_line(aes(x=year, y=catch), col="red") +
+  ylab("Annual Catch (Tons)")+
+  xlab("Year")+
+  ggtitle("Global Red Drum landings")
+```
+
+We can plot biological data using the `FSA` package
+```{r}
+data(RedDrum) # loads FSA data for Red Drum biological entries
+ggplot(RedDrum) +
+  geom_point(aes(x=age, y=fl), col="red") + # using points instead of a line
+  ylab("Fork length (mm)")+
+  xlab("Age (year)")+
+  ggtitle("Red Drum length at age")
+```
+
+# Assignment instructions
+
+Choose *1 country* and *1 species* from `rfisheries`, and *2 species* from `FSAdata`. Explore the data with statistical functions and summaries, and visualize the data with plots. Keep track of your report with RMarkdown and when you are finished, Knit the file to Word (you can knit to HTML first to see if it compiles without error).
+
+Find all countries from `rfisheries`
+```{r}
+head(of_country_codes()) # `head()` prints the top of the output, and leaves out the rest
+```
+Find all species from `rfisheries` 
+```{r}
+head(of_species_codes())
+```
+Use `of_landings()` with country OR species arguments
+
+Find all species from `FSA`
+[FSAdata](http://derekogle.com/fishR/data/byPackage)
+Load species data with
+```{r}
+# data([insert species name])
+# example
+data(Bonito)
+head(Bonito)
+```
+
+## Assignment 1
+
+```{r}
+# par(mfrow=c(1,2))
+BlackTip = of_landings(species = "CCL")
+Sturgeon = of_landings(species = "STU")
+CCL_STU <- rbind(BlackTip, Sturgeon)
+ggplot(CCL_STU) +
+  geom_line(aes(x=year, y=catch)) +
+  ylab("Annual Catch (Tons)")+
+  xlab("Year")+
+  ggtitle("Global Blacktip shark and Sturgeon landings") + theme_bw()
+summary(BlackTip)
+```
+

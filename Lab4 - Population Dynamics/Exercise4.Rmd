@@ -1,0 +1,35 @@
+---
+title: "Exercise4"
+author: "(Your name here)"
+date: "2/7/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Exercise  
+Now, open a new R script, and using the `bluecatfish.csv` file on Canvas, fit a VBGF model and generate parameter estimates, and plot the data with confidence intervals generated from bootstrapping the data.
+
+If you complete this, install the package `FSAdata`, and try these analyses on additional datasets. `FSAdata` contains length at age data for the following species (if the package is loaded, you can access the data easily, see example).
+```{r eval = FALSE}
+library(FSAdata)
+data <- BlueCatfish
+```
+Other species, identified by named data frame:  
+- Bonito (Australian bonito)  
+- BullTroutRML2 (Bull Trout from Rocky Mountain Lakes)  
+- CreekChub  
+- Cabezon (Oregon)  
+- Croaker2 (Atlantic Croaker)  
+- DarterOnt (Channel Darters)  
+- EuroPerchTH (European Perch)  
+- FWDrumLE1 (Lake Erie Freshwater Drum)  
+- LJCisco (Longjaw Cisco)  
+- RedDrum (Atlantic Red Drum)  
+- RockBassLO1 (Lake Ontario Rock Bass)  
+- SardineChile  
+- SpotVA2  
+- StripedBass2  
+- TroutBR (Brown and Rainbow Trout)  

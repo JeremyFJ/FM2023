@@ -1,0 +1,243 @@
+---
+title: "Lab 5 - Surplus Production Models and Log-likelihood"
+author: "(Your name here)"
+date: "2/17/2022"
+output: html_document
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE)
+
+# set your working directory here
+# setwd("../Lab5")
+set.seed(999)
+```
+
+Before we look at surplus production models, we'll get familiar with distributions, linear regression, and parameter estimation/optimization
+
+
+```{r}
+a = 3 # this is the intercept
+b = 0.5 # this is the slope
+x = runif(20, min = 2, max = 56) # let's generate a set of 20 x values going from 2 to 56
+mu = a+b*x # now we generate a series of response values without error
+err2 = rnorm(20,0,sd = 5) # let's assume the error is normally distributed with mean 0 and sd  = 5
+y = mu+err2 # add error to mean
+```
+
+```{r}
+model1 = lm(y~x) # least squares estimation
+plot(y~x)
+abline(model1)
+```
+
+Let's write a function to return the negative logarithmic distribution of our intercept and slope parameter estimates. We can use `dnorm()` to calculate the distribution around predicted response values
+
+```{r}
+linregfun = function(a, b) {
+	Y.pred = a + b * x
+	-sum(dnorm(y, mean = Y.pred, sd = 5, log = T))
+	}
+```
+
+We can optimize our regression parameters with a `nested for loop` using the function above and a generated list of parameter values
+
+```{r}
+#building a search grid
+alphas = seq(0.1,10,0.1)
+betas = seq(0.1,10,0.1)
+params = matrix(NA,nrow=100,ncol=100,dimnames = list(alphas,betas))
+for (i in 1:length(alphas)){ # for a
+ 	for (j in 1:length(betas)){ # for b
+		params[i,j] = linregfun(a=alphas[i],b = betas[j])
+		}
+	}
+# not very precise because the grid is coarse. 
+which(params==min(params),arr.ind=T)
+```
+
+```{r}
+# the best parameters are 
+rownames(params)[which(params==min(params),arr.ind=T)[1]] #alpha - intercept
+colnames(params)[which(params==min(params),arr.ind=T)[2]] #beta - slope
+```
+
+```{r}
+plot(seq(0.1,10,0.1),params[,"0.5"], type = "l", ylim = c(59,62), 
+     xlim = c(0,6), ylab = "-LogLikelihood", xlab = "Intercept")
+```
+```{r}
+# now let's try with an optimization function
+pars = c(a = 2, b = 0.1, err.sigma = 3)
+linregfun = function(par) {
+	a = par[1]
+	b = par[2]
+	err.sigma = par[3]
+	Y.pred = a + b * x
+	-sum(dnorm(y, mean = Y.pred, sd = err.sigma, log = T))
+	}
+
+
+O1 = optim(par = c(2,0.1,3), fn = linregfun)
+O1$par
+```
+Are these estimates close to the estimates from above?
+
+#------------------------------------------------------------------------------
+
+*Surplus production models* are especially useful when evaluating biomass and exploitation levels of fish stocks that are data-deficient (particularly if age and size is not reported)
+
+The FRDC (Fisheries Research and Development Corporation) reports metrics of various fish stocks around Australia from 1986-2016 and can be accessed with the **datalowSA** package.
+
+```{r}
+# install the remotes package first
+# install.packages('remotes')
+# remotes::install_github("haddonm/datalowSA")
+library(datalowSA)
+```
+
+```{r}
+data(dataspm)
+fish = dataspm$fish
+```
+
+Use the `getlag()` function to look at the correlation between CPUE and catches. Negative correlation is indicative of the CPUE being informative of catch throughout the years where data is being recorded 
+
+```{r}
+getlag(fish, maxlag = 10, plotout = TRUE, indexI = 1) # check lag
+```
+
+Changes in population biomass can tell us the relationship between fishing mortality rates and population growth. Surplus production models (SPMs) are strong baselines for determining exploitation of a fish stock. 
+
+Here, we will assume that the maximum sustainable biomass is equal to the carrying capacity 
+
+$$B_{max} \approx K$$
+\\
+$$
+\text{Schaefer}\\
+B_{t+1} = B_t + rB_t(1-B_t/K)-C_t\\
+\text{Fox}\\
+B_{t+1} = B_t + rB_t(1-logB_t/logK)-Ct
+$$
+
+`Bt` = exploitable population biomass at time (t)
+`r` = intrinsic rate of population increase
+`K` = carrying capacity
+`Ct` = catch at time (t)
+
+Here, we'll define our set of parameters.
+**Try** Model expected biomass (similar to how we modeled exponential growth) using the Schaefer SPM model
+
+```{r}
+pars = c(r=0.2,K=6000,Binit=2800) # initial parameters
+pars[[3]]/pars[[2]] # annual depletion based on above parameters, Binit/K
+
+B = c()
+B[1] = pars["Binit"]
+C = fish$catch
+
+# Use the Schaefer model equation to 
+# predict population biomass (and incorporate catches) 
+# hint: Use a for loop with 30 time steps 
+
+
+```
+
+**Exercise**  **Do this in a separate Rscript first**
+We'll be using this model again. So, in another Rscript, define a function that intakes the above parameters (r, K, Binit). *Incorporate Catch into the equation and function*
+
+This function should use the above model to predict population biomass. Add it here when you are done.
+
+```{r}
+
+```
+
+
+$$
+\text{Index of relative abundance}\\
+I_t = qB_t
+$$
+`q` = catchability coefficient
+
+
+```{r}
+cpue = fish$cpue
+# estimating q from the data
+qs = cpue/B
+q = mean(qs)
+pred.cpue.e = B*q 
+```
+
+**Exercise** 
+Plot `cpue~year` and fit your model with predicted CPUE
+**Note** In addition, you can use the `simpspm()` function to output predicted CPUE based on observed CPUE (does not incorporate catchability coefficient)
+`simpspm(pars, fish, schaefer = TRUE) # Caclulates CPUE based on Schaefer`
+```{r}
+
+```
+
+
+Let's use our parameters to evaluate depletion, catch, surplus production, and predicted CPUE with one function `displayModel` from the `datalowSA` package.
+
+```{r}
+ans = displayModel(pars,fish,schaefer = TRUE, addrmse = TRUE)
+str(ans)
+```
+
+`ExploitB Depletion`: displays the trajectory of the exploitable biomass depletion rate. The red line is the LRP and the green line is the TRP. In Schaefer model results, two options are similar 
+`Catch`: displays the catch series with MSY as red line
+`Scaled CPUE`: displays the model fit to the CPUE data. Red line is the model predictions and the black dots are the CPUE data points
+`Surplus Production - Biomass`: displays surplus production vs. biomass. Vertical red lines represent $B_{lim}$, $B_{targ}$, and $B_{MSY}$ and the horizontal dash line is MSY
+`LN Residuals`: displays the residuals (scaled observe CPUE / scaled predicted CPUE) with a value of RMSE (root mean square error)
+`Surplus Production - Depletion`: displays the surplus production vs. depletion function. The vertical lines represent the LRP (red, limit reference point) and TRP (green, target reference point) and MSY (blue)
+
+
+Now let's plot the harvest rate vs. Biomass 
+
+```{r}
+spmphaseplot(ans, fnt=7)
+```
+This plot identifies the start and end years (green and red dots). It also plots out the catch time-series and harvest rate time-series to aid in interpretation of the phase plot.
+
+
+**Exercise**
+Let's use the loglikelihood function of the lognormal distribution to optimize our model
+ 
+$$
+\hat{\sigma}^2 = \sum_t\frac{(\ln I_t-\ln\hat{I_t})^2}{n}
+$$
+The `negLL()` function calculates the negative log-likelihood using this equation 
+$$
+LL = -\frac{n}{2}(\ln(2\pi)+2\ln(\hat{\sigma})+1)
+$$
+The `optim()` function is a general-purpose parameter optimization function that takes a list of parameters, data, and function as arguments
+```{r}
+out <- optim(par=pars, fn=negLL, callfun=simpspm, 
+                indat=fish)
+out$par
+```
+Let's use our optimized parameters to fit a new model
+
+```{r}
+B = c()
+B[1] = out$par["Binit"]
+C = fish$catch
+
+# Predict biomass with the Schaefer model again, but this time, with your new parameters
+# use a for loop again
+
+
+# predict CPUE
+
+```
+
+Plot your data and compare the models - use a legend
+```{r}
+
+```
+
+
+```{r}
+ans1 = displayModel(out$par,fish,schaefer = TRUE, addrmse = TRUE) 
+spmphaseplot(ans1, fnt=7)
+```

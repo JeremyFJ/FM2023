@@ -1,0 +1,365 @@
+---
+title: "Life History and Population Dynamics -- part 1"
+author: "(Your name here)"
+date: "2/2/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+getwd()
+set.seed(9999)
+require(FSAdata) 
+require(FSA) 
+require(tidyverse)
+require(rfishbase)
+```
+
+# FSA analyses
+Basic linear and non-linear regression analyses for predicting growth patterns.
+[OpenFisheries](https://www.openfisheries.org/)
+[Intro to R](https://derekogle.com/IFAR/)
+
+## Growth History
+### Red Drum
+- Red drum age and length data from the Southern Atlantic Coast (reported by OpenFisheries). `FL = fork length`
+- Popular recreational target fish
+- Lifespan of 40-45 years
+
+```{r}
+colnames(RedDrum)
+data = RedDrum
+glimpse(data)
+dim(data) # prints number of rows, columns
+```
+
+Add x, y, and main title labels with the `labs()` function for both plot and ggplot
+```{r}
+plot = ggplot() + geom_point(data=data, mapping=aes(x=age, y=fl),
+               colour = "black",
+               size = 3,  # point size
+               alpha = 0.6, # point transparency
+               pch=21) +  # point shape
+            labs(x = "Fork Length (cm)",
+                 y = "Age (years)",
+                 title = "Length at Age Relationship")
+plot
+```
+
+Use histograms to visualize distributions.
+```{r}
+RDhist = ggplot(data, aes(fl)) + geom_histogram(binwidth = 20, colour="black", fill="grey") +
+          xlab("Fork Length (mm)") + ylab("Count") + ggtitle("Red Drum Length Distribution")
+RDhist
+```
+
+```{r}
+RDhist2 <- ggplot(data, aes(age)) + geom_histogram(binwidth = 3, colour="black", fill="grey") +
+            xlab("Age (years)") + ylab("Count") + ggtitle("Red Drum Age Distribution")
+RDhist2
+```
+
+Boxplots are also useful to displaying distributions.
+```{r}
+RDbox <- ggplot(data, aes(factor(age), fl)) + geom_boxplot() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  xlab("Age (years)") + ylab("Fork Length (mm)") + ggtitle("Red Drum Growth Distribution")
+RDbox
+```
+
+## Biological Growth Patterns
+### Ruffe
+`glimpse` Ruffe data from Superior Lake catches in 1992. 
+
+The ruffe is native to many lakes in Eurasia, but is an aggressive invasive fish in the Great Lakes. It has a rapid population growth and eats a variety of foods. The ruffe has a lack of natural predators and is a strong competitor for resources.
+```{r}
+ruf = RuffeSLRH92
+colnames(ruf)
+```
+
+We can use the `sapply` function to run a for loop. Here, we will tell the function to check all columns for `NA` values. We'll get rid of empty rows for length and weight.   
+```{r}
+sapply(ruf,function(x) sum(is.na(x))) # ?sapply
+na_rows = which(is.na(ruf$length) | is.na(ruf$weight))
+ruf = ruf[-c(na_rows),]
+```
+
+Plot Length vs Weight relationship of Ruffe with `plot` and `ggplot` and add some labels. 
+```{r}
+ruf_plot = ggplot() + geom_point(data=ruf, mapping=aes(x=length, y=weight)) +
+  labs(x = "Total Length (mm)",
+       y = "Weight (g)",
+       title = "Length and Weight Relationship of Ruffe")
+ruf_plot
+```
+
+We can transform data with the `log()` function to discover patterns in the data. Here, we show the **linear** relationship between Length and Weight. 
+```{r}
+ruf_plot = ggplot() + geom_point(data=ruf, mapping=aes(x=log(length), y=log(weight))) +
+  labs(x = "log Total Length (mm)",
+       y = "log Weight (g)",
+       title = "Length and Weight Relationship of Ruffe")
+ruf_plot
+```
+
+Create a simple linear regression model with `lm()`
+```{r}
+lm1 <- lm(data=ruf, log(weight)~log(length))
+# Basic summary information is extracted by submitting the saved lm() object to summary() as follows
+summary(lm1)
+```
+Fit our line
+```{r}
+ggplot() + geom_point(data=ruf, aes(x=log(length), y=log(weight))) + 
+  geom_line(data=ruf, aes(x=log(length), y=lm1$fitted.values), color="red") + 
+  xlab("log Total Length (mm)") + 
+  ylab("log Weight (g)")
+```
+
+Look at the goodness of fit.
+```{r}
+par(mfrow=c(2,2))
+plot(lm1)
+# Residuals - difference between observed and predicted values
+# QQ plot - comparing two probability distributions 
+# Scale-Location - spread of residuals
+# Leverage - influence of data points on residuals
+```
+
+In **ggplot** we can fit the same regression model with the `geom_smooth()` or `stat_smooth()` functions.
+```{r}
+ggplot(ruf, aes(log(length),log(weight))) +
+  geom_point() +
+geom_smooth(method="lm", formula=y~x, color="red") +
+  xlab("log Total Length (mm)") + 
+  ylab("log Weight (g)") +
+annotate("text", x=3.4, y=3, label= paste("R2 =", round(summary(lm1)$r.squared, 3))) # retrieve R-squared value
+```
+
+## Non-linear relationships
+Visualize `length`, `weight` and `sex`
+```{r}
+ggplot() + 
+  geom_point(data=ruf, aes(x=length, y=weight, color=sex)) + 
+  xlab("Total Length (mm)") + 
+  ylab("Weight (g)") +
+  ggtitle("Length at Weight of Ruffe") + 
+  scale_color_manual(values = c("female" = "maroon", "male" = "skyblue3", "unknown" = "grey55"))
+```
+
+We can also use the shape 
+```{r}
+ggplot() + 
+  geom_point(data=ruf, aes(x=length, y=weight, shape=sex), size=2) + 
+  xlab("Total Length (mm)") + ylab("Weight (g)") +
+  ggtitle("Length at Weight of Ruffe")
+```
+
+We can use stacked barplots to do the same thing.  
+```{r}
+ggplot(ruf, aes(length)) +
+  geom_bar(aes(fill=sex),width=3) + 
+  xlab("Total Length (mm)") + 
+  scale_fill_manual(values = c("female" = "maroon", "male" = "skyblue3", "unknown" = "grey55")) + 
+  ggtitle("Length Distribution of Ruffe")
+```
+
+Now, let's model the `Weight-Length` relationship of ruffe
+$$
+W = aL^b
+$$
+W = weight
+L = length
+a = species: rate of size change
+b = species: growth pattern (usually around 3)
+
+A *linear* equation is in the form `y = mx + b`.
+This is a non-linear equation because `x` in this case `L` is to a power. 
+Use `nls()` to develop a non-linear model. Parameters `a` and `b` are estimated from the given values. Our model will estimate the best parameters by minimizing residuals.
+```{r}
+model_ruf = nls(weight~a*length^b, start=list(a=160,b=3), data=ruf)
+summary(model_ruf)
+coef(model_ruf)
+```
+
+Use `predict()` to calculate the y-value (weight) based on the model we created above
+```{r}
+ggplot(ruf, aes(x=length,y=weight)) +
+  geom_point() +
+  geom_line(data=ruf, aes(x=length,y=predict(model_ruf)), col="red")+
+  labs(x = "Length (mm)",
+       y = "Weight (g)",
+       title = "Weight Length relationship of Lake Superior Ruffe")
+```
+
+We can evaluate our model by plotting the residuals
+```{r}
+plot(model_ruf)
+```
+
+Install `gridExtra` so that we can combine ggplots 
+```{r, eval=F}
+# install.packages('gridExtra')
+```
+
+```{r}
+title="Weight and Length Relationship of Lake Superior Ruffe"
+rufp1 = ggplot(ruf, aes(log(length),log(weight))) +
+  geom_point() +
+geom_line(aes(x=log(length), y=log(predict(model_ruf))), color="red") +
+  labs(x = "log (Length)",
+       y = "log (Width)",
+       title = title)
+
+rufp2 = ggplot(ruf, aes(x=length,y=weight)) +
+  geom_point() +
+  geom_line(aes(x=length,y=predict(model_ruf)),col="red")+
+  labs(x = "Length (mm)",
+       y = "Weight (g)",
+       title = "")
+
+gridExtra::grid.arrange(rufp1, rufp2)
+```
+
+von Bertalanffy growth function (VBGF) in R -- Red Drum
+[resource](https://www.r-bloggers.com/2019/12/von-bertalanffy-growth-plots-i/)
+$$
+L(a) = L_{inf}(1-e^{(-k(a-t_0))})
+$$
+Linf = asymptotic size
+K = growth coefficient
+t0 = theoretical age when size=0
+a = age
+
+```{r}
+vb = vbFuns(param="Typical") # from FSA package
+```
+
+```{r}
+f.starts <- vbStarts(fl~age,data=RedDrum) # vbStarts is an optimization algorithm designed to find the best params
+f.fit <- nls(fl~vb(age,Linf,K,t0),data=RedDrum,start=f.starts)
+coef(f.fit)
+```
+
+```{r}
+ggplot() + 
+  geom_point(data=RedDrum, aes(x=age, y=fl)) + 
+  geom_line(data=RedDrum, aes(x=age, y=predict(f.fit)), color="red") + 
+  xlab("Age (years)") + 
+  ylab("Fork Length (mm)") + 
+  ggtitle("Red Drum Length at Age")
+```
+
+```{r}
+# plot(f.fit)
+plot(f.fit$m$resid() ~ f.fit$m$fitted(), xlab="Fitted values", ylab="Residual values", main="VBGF of North East Atlantic Coast Red Drum")
+abline(h = 0, col="red")
+# plot(nlstools::nlsResiduals(f.fit))
+# Shows autocorrelation, qq plot, and standardized residuals
+```
+
+# Population Dynamics
+
+## Predicting growth rate of a population
+*Parameters that we need*
+- Lifespan
+- Fecundity
+- Age at Maturation
+```{r}
+# ---- Mortality rate ----------------------------
+
+# get mortality from Then.etal.2014
+getMtmax = function(lifespan){		
+		M = 4.899 * lifespan^-0.916
+		M
+}
+
+# get mortality using Dulvy.etal.2004's method
+getMDulvy.etal.2004 = function(lifespan, agemat){
+	w = (lifespan+agemat)/2 # average lifespan
+	M = 1/w
+	M
+}
+
+getRmax= function(method = "Smith.etal.1998", mortality = "Then.etal.2014", fec = NULL, litter = NULL, cycle = NULL, lifespan, agemat){
+
+  # Calculate natural mortality rate
+	if (mortality== "Dulvy.etal.2004") M = getMDulvy.etal.2004(lifespan = lifespan, agemat = agemat)
+	if (mortality== "Then.etal.2014") M = getMtmax(lifespan = lifespan)
+	if (is.numeric(mortality)) M = mortality
+
+	if(method=="Smith.etal.1998"){
+		tmax = lifespan
+		tmat = agemat
+		if (is.null(fec)) fec = litter/2/cycle else fec = fec
+		Z<-1.5*M
+	
+		#this is equation 7 in the manuscript
+		l_alpha<-(1-exp(-(Z)))/((fec)*(1-exp(-(Z*(tmax-tmat+1)))))
+
+		#this is equation 6 in the manuscript
+		eq6 <- function(reb) 1-exp(-(M+reb))-l_alpha*(fec)*1.25*exp(-reb*tmat)*(1-exp(-(M+reb)*(tmax-tmat+1)))
+		r_Z<-uniroot(eq6, c(0,5), tol=1e-8)
+		return(r_Z$root*2)
+	} 
+	
+}
+```
+
+Look at Spiny Dogfish in the Northwest Atlantic.
+```{r}
+spinyLife = popgrowth(species_list = c("Squalus acanthias"))
+```
+
+```{r}
+spinyLife = subset(popgrowth(species_list = c("Squalus acanthias")), Locality=="Northwestern Atlantic")
+spinyFec = fecundity(species_list = c("Squalus acanthias"))[1,]
+spinyMat = subset(maturity(species_list = c("Squalus acanthias")), Locality=="Northwest Atlantic")
+```
+
+Calculate growth rate for Northwest Atlantic spiny dogfish stock
+```{r}
+lifespan = mean(spinyLife$tmax, na.rm=T)
+fecundity = (spinyFec$FecundityMin+spinyFec$FecundityMax) / 2 # mean of minimum and maximum fecundity
+agemat = (spinyMat$AgeMatMin + spinyMat$AgeMatMin2) / 2 # mean of two records for minimum age at maturity
+rmax = getRmax(method = "Smith.etal.1998", mortality = "Then.etal.2014", fec = fecundity, lifespan = lifespan, agemat = agemat)
+paste0("Intrinsic Growth Rate = ", round(rmax, 3))
+```
+
+## Exponential Population Growth
+$$
+N_t = N_0(e^{(b-d)t})
+$$
+```{r examplebox2.1}
+b = c(0.9,0.1,0.1) # birth rates
+d = c(0.04,0.1,0.125) # death rates
+N0 = c(500,500,500) # starting population number
+Time = seq(0,20,0.5) # time steps
+Nt = matrix(NA, nrow = length(Time), ncol = 3)
+for (i in 1:3){
+  Nt[,i] = N0[i]*exp((b[i]-d[i])*Time)
+}
+plot(Nt[,1]~Time, type = "l", ylim = range(Nt))
+lines(Nt[,2]~Time, col = "red")
+lines(Nt[,3]~Time, col = "blue")
+```
+
+## Logistic Population Growth
+$$
+N_{t+1} = N_t + rN_t(1-N_t/K) - C_t 
+$$
+
+```{r}
+r = 0.5 # intrinsic growth rate
+K = 1000 # carrying capacity
+N0 = 50 # starting population number
+Time = seq(0,25,1) # time
+Nt = c()
+Nt[1] = N0
+Ct = 10 # catch or harvest
+for (i in 1:25){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
+}
+plot(Nt~Time, type = "l", ylim = range(Nt))
+```
