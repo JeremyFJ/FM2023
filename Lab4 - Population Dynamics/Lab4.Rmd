@@ -1,12 +1,16 @@
 ---
-title: "Population dynamics and Von Bertalanffy indiviudal growth"
+title: "Population dynamics and Surplus Production"
 author: "(Your name here)"
-date: "2/10/22"
+date: "2/9/23"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+getwd()
+set.seed(9999)
 ```
 
 You will need the following packages installed and loaded. 
@@ -15,19 +19,22 @@ library(nlstools)
 library(tidyverse)
 library(magrittr)
 library(FSA)
+library(rfishbase)
 ```  
-Leave that data aside for now, first we will look at population growth models. Recall the equation for exponential growth?
 
-### Exponential Growth model
+# Population Dynamics
 
+## Exponential Growth model
 $$
 N_t = N_0e^{(b-d)t}
 $$
-where $N_t$ = population size at time (t), $N_0$ = initial population size, $b$ = birth rate, $d$ = death rate, $t$ = time  
+`Nt` = population size at time
+`N0` beginning population size
+`b` = birth rate
+`d` = death rate
+`t` = time
 
-Let's model exponential growth of a hypothetical population using different birth and death rates.
-
-
+Exponential growth of a hypothetical population using different birth and death rates.
 ```{r examplebox2.1}
 b = c(0.2,0.2,0.2) # birth rates
 d = c(0.04,0.1,0.2) # death rates
@@ -39,10 +46,6 @@ for (i in 1:3){
   Nt[,i] = N0[i]*exp((b[i]-d[i])*Time)
 }
 
-plot(Nt[,1]~Time, type = "l", ylim = range(Nt))
-lines(Nt[,2]~Time, col = "red")
-lines(Nt[,3]~Time, col = "green")
-
 Nt_dat = data.frame(Nt)
 colnames(Nt_dat) = c('T1', 'T2', 'T3')
 ggplot() + geom_line(aes(x=Time, y=Nt_dat$T1)) +
@@ -51,188 +54,170 @@ ggplot() + geom_line(aes(x=Time, y=Nt_dat$T1)) +
   labs(x="Time", y="Population size (Nt)")
 ```
 
-**Questions**  
-1) Change the values for b and d and run the models again. *Think about:* How does this change the plot? Why? 
-2) Plot the linear function of this model
-
-```{r}
-
-```
-
-
-### Logistic Population Growth
+## Logistic Population Growth
 
 
 $$
 N_{t+1} = N_t + rN_t(1-N_t/K) - C_t 
 $$
-$r$ = rate of increase, $K$ = carrying capacity, $C_t$ = harvest rate  
-
+`Nt+1` = population size at timestep t+1
+`Nt` = population size at time
+`r` = rate of increase
+`K` = carrying capacity
+`C_t` = harvest rate  
 
 ```{r}
+colors = c("0"="grey76", "10"="grey60", "20"="black")
 r = 0.5
 K = 1000
 N0 = 50
 Time = seq(0,25,1)
 Nt = c()
 Nt[1] = N0
+#-----------------------
+# Catch = 0
+#-----------------------
+for (i in 1:25){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K)
+}
+Nt0 = Nt
 Ct = 10
+#-----------------------
+# Catch = 10
+#-----------------------
 for (i in 1:25){
   Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
 }
-par(mfrow  = c(1,2))
-
-plot(Nt~Time, type = "l", ylim = range(Nt))
-
+Nt1 = Nt
 Ct = 20
+#-----------------------
+# Catch = 20
+#-----------------------
 for (i in 1:25){
   Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
 }
-plot(Nt~Time, type = "l", ylim = range(Nt))
+Nt2 = Nt
 
+ggplot() + 
+  geom_line(aes(x=Time, y=Nt0, color="0"), size=1.5) +
+  geom_line(aes(x=Time, y=Nt1, color="10"), size=1.5) +
+  geom_line(aes(x=Time, y=Nt2, color="20"), size=1.5) + 
+  labs(x="Time", 
+       y="Population size",
+       color="Catch") +
+    scale_color_manual(values = colors)
 ```
   
-**Questions**  
-Manipulate the parameters k, r, and N0; how does this affect the models?
-
-```{r}
-
-```
-
-
-**EXERCISE**  
-In a new R script, write and plot an exponential growth model for a stock with initial population biomass of 1500 (hundreds of tons), an annual death rate of 0.07, and an annual harvest (catch) of 100 (hundreds of tons). Compare the effects of differential birth rates b=0.15, b=0.2, and b=0.25 on the population trajectory. Project the population growth over 30 years.  
-  
-### Von Bertalanffy Individual Growth
-
-
-First, we will load some data in the .Dat format - you need to change the line below to direct R to the file location on your machine. Then, we will remove all negatives or missing values for length
-```{r}
-dat <- read.table("codAL.dat",head=TRUE)
-index1<-which(dat$length>0)
-dat <-dat[index1,]
-```
-
-$$
-L_t = L_{\infty}(1-e^{-K(t-t_0)})
-$$
-
-#### Parameter starting values  
-The Von Bertalanffy growth equation includes the parameters Linf, K, and t0. We will define estimates of these parameters to be used in a function.  As a general rule for marine fish, estimates of K=0.3 and t0=0 are a good starting point, and we can supply the maximum length in our dataset as an estimate of mean maximum length.
-
-```{r}
-parameters <- list(Linf=max(dat$length), K=0.3, t0=0)
-```
-#### Writing a function  
-Next, we will write a function for the Von Bertalanffy growth equation.
-```{r}
-VBgrowth <- function(age, Linf, K, t0) Linf*(1-exp(-K*(age-t0)))
-```
-
-
-**Question** With our function, how can we estimate length at age 3?
-
-```{r}
-
-```
-The package `FSA` contains a function vbFuns() which we can use to slightly modify our growth function - this allows us to supply all of the parameters as one argument.
-```{r}
-VBgrowth=vbFuns()
-VBgrowth(3, Linf=max(dat$length), K=0.3, t0=0)
-VBgrowth(3, Linf=c(max(dat$length), 0.3, 0))
-```
-Both of the above code lines produce the same result, but in the second, the three parameters are provided in one argument.  
-  
-#### Parameter estimates  
-To generate estimates of our parameters, we will fit the model using the non-linear least squares method. We need to supply our function, our dataset, and our starting estimates for parameter values (which we defined above in the list `parameters`.)
-```{r}
-VBfit <- nls(length~VBgrowth(age, Linf, K, t0), data=dat,start=parameters)
-```
-To extract our parameter estimates from the list `VBfit`, we will use the `coef()` function; similarly, to get confidence intervals for each, we can use the `confint()` function.
-```{r}
-coef(VBfit)
-confint(VBfit)
-```
-
-#### Bootstrapping  
-We now have estimates based on our data, but to make our estimates more robust, we can use a technique called bootstrapping. Bootstrapping is a technique whereby the data is sampled with replacements repeatedly, and parameters are estimated from each bootstrap sample. For non-linear models (such as VBGF), we can use the function `nlsBoot()` from the package `nlstools`.
-```{r}
-bootFit <- nlsBoot(VBfit)
-head(bootFit$coefboot)
-```
-We can also estimate confidence intervals from our bootstrap samples and plot them.
-```{r}
-confint(bootFit,plot=TRUE)
-```
-
-#### Predictions  
-We can now use our updated parameter estimates to make predictions for length-at-age.
-```{r}
-predicts = data.frame(age=c(1:25)) #ages for predictions
-predicts$length=predict(VBfit,predicts) #generate predicted length at age
-```
-The above predictions are based on our initial (non-bootstrapped) parameter estimates. We can also generate predictions based on the bootstrap samples (note that the `vbFuns()` function we used earlier assigns "t" as the variable for age). We will use the bootstrap data to project mean length at age 5, using the `apply()` function. `apply()` allows us to apply functions to vectors or lists; here we use the argument `MARGIN=1` to apply the function across rows, rather than columns, because each row contains a set of parameter estimates. We then use the `quantile()` function to generate a 95% confidence interval.
-```{r}
-predicts.age5 = apply(bootFit$coefboot, MARGIN=1, FUN=VBgrowth, t=5)
-quantile(predicts.age5, c(0.025,0.975))
-```
-
-#### Plotting  
-Let's plot our data.
-```{r}
-x = seq(0,25,length.out=500) #ages for predictions
-predLength = VBgrowth(x,Linf=coef(VBfit)) #predicted length at age
-xlmts = range(c(x,dat$age)) #Because we are plotting outside of our age data
-ylmts = range(c(predLength,dat$length)) 
-plot(length~age, data=dat, xlab="Age", ylab="Total length (cm)",
-     xlim=xlmts, ylim=ylmts,pch=19,col=rgb(0,0,0,1/3))
-lines(predLength~x,lwd=2)
-
-
-dat2=data.frame(x=x, length=predLength)
-ggplot() + geom_point(data=dat,aes(x=age, y=length))+
-  geom_line(data=dat2, aes(x=x, y=predLength))+
-  labs(x='Age', y='Total length (cm)')
-```
-  
-Now we can add some confidence intervals - first we need to define the dimensions.
-```{r}
-LCI = UCI = numeric(length(x))
-```
-Now we are going to use a `for` loop to predict confidence intervals, again using the `apply()` function.
-```{r}
-for (i in 1:length(x)) {
-  tmp = apply(bootFit$coefboot,MARGIN = 1,FUN=VBgrowth, t=x[i])
-  LCI[i] = quantile(tmp,0.025)
-  UCI[i] = quantile(tmp,0.975)
+Now we look at intrinsic growth rates > 1 which should lead to unstable and oscillatory population dynamics. 
+```{r fig2.6}
+r = 0.25
+K = 1000
+N0 = 1
+Time = seq(0,100,1)
+Nt = c()
+Nt[1] = N0
+Ct = 0
+for (i in 1:100){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
 }
+par(mfrow  = c(2,2))
+plot(Nt~Time, type = "l", ylim = range(Nt), main="r=0.25")
+r = 1.85
+for (i in 1:100){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
+}
+plot(Nt~Time, type = "l", ylim = range(Nt), main="r=1.85")
+r = 2.5
+for (i in 1:100){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
+}
+plot(Nt~Time, type = "l", ylim = range(Nt), main="r=2.5")
+r = 3
+for (i in 1:100){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
+}
+plot(Nt~Time, type = "l", ylim = range(Nt), main="r=3")
 ```
-We'll now update our y-axis limits to include the range of the confidence intervals, and then plot again.
-```{r}
-ylmts <- range(c(predLength,LCI,UCI,dat$length))
-plot(length~age, data=dat, xlab="Age", ylab="Total length (cm)",
-     xlim=xlmts, ylim=ylmts,pch=19,col=rgb(0,0,0,1/3))
-lines(predLength~x,lwd=2)
-lines(UCI~x,lwd=2,lty=2, col="red")
-lines(LCI~x,lwd=2,lty=2, col="red")
 
-ggplot() + geom_point(data=dat,aes(x=age, y=length))+
-  geom_line(data=dat2, aes(x=x, y=predLength))+
-  labs(x='Age', y='Total length (cm)')+
-  geom_line(aes(x,UCI), col='red', lty=2)+
-  geom_line(aes(x,LCI), col='red', lty=2)
+## Surplus Production
+
+Now let's plot the phase diagram of the discrete logistic population growth.
+```{r phaseDiag}
+r = 0.5
+K = 1000
+N0 = 50
+Time = seq(0,100,1)
+Nt = c()
+Nt[1] = N0
+for (i in 1:100){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K)
+}
+plot(Nt[1:99],Nt[2:100], type = "l")
+lines(Nt,Nt, lty = 2)
+```
+The difference in population abundance between the strait dotted line and the curved line is the surplus production, which theoretically should be maximum at `k/2`. 
+
+Let's see that in terms of yield.
+```{r MSY}
+par(mfrow=c(1,2))
+plot(1:50, Nt[1:50], type = "l") 
+Y = Nt[2:50] - Nt[1:49]
+plot(Y~Nt[1:49],type = "l")
 ```
 
-#### Check model fit  
-We will check our model fit using the `residPlot()` function.
+$$
+B_{max} \approx K
+$$
+\\
+$$
+\text{Schaefer}\\
+B_{t+1} = B_t + rB_t(1-B_t/K)-C_t\\
+\text{Fox}\\
+B_{t+1} = B_t + rB_t(1-logB_t/logK)-Ct
+$$
+
+`Bt` = exploitable population biomass at time (t)
+`r` = intrinsic rate of population increase
+`K` = carrying capacity
+`Ct` = catch at time (t)
+
 ```{r}
-residPlot(VBfit)
+# install.packages('remotes')
+# remotes::install_github("haddonm/datalowSA")
+library(datalowSA)
+data(dataspm)
+fish = dataspm$fish
 ```
-  
-#### Log-Transform  
-As you can see, as age increases, the variability of length increases (multiplicative error). If we take the natural log of each side, then we can transform the equation, fit it again using least-squares, and check the new fit.
+
 ```{r}
-dat %<>% mutate(log_length=log(length))
-VBLogFit = nls(log_length~log(VBgrowth(age,Linf,K,t0)),data=dat,start=parameters)
-residPlot(VBLogFit)
+pars = c(r=0.2,K=6000,Binit=2800) # initial parameters
+depletion = pars[[3]]/pars[[2]] # annual depletion based on above parameters, Binit/K
+
+B = c()
+B[1] = pars["Binit"]
+C = fish$catch
+time = seq(1,30,1)
+
+for (i in time) {
+  B[i+1] = B[i] + pars["r"]*B[i]*(1-B[i]/pars["K"]) - C[i]
+}
+
+ggplot() + 
+  geom_line(aes(x=time, y=B[1:30])) + 
+  xlab("Time") + 
+  ylab("Population Biomass") +
+  ggtitle("Schaefer Surplus Production") +
+  theme(panel.grid = element_line(colour="black", size=0.08),
+        panel.border = element_rect(fill=NA))
 ```
+
+## VPA 
+
+
+
+
+
+
+
+
+
