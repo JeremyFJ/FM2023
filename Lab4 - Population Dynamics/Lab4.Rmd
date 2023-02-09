@@ -204,15 +204,6 @@ rmax = getRmax(method = "Smith.etal.1998", mortality = "Then.etal.2014", fec = f
 paste0("Intrinsic Growth Rate = ", round(rmax, 3))
 ```
 
-## Length frequency distributions
-
-Growth increment data for Red Lakes Walleye (Sander vitreus) 
-```{r}
-data = WalleyeRL
-hist(~tl,data=bg11,breaks=seq(20,270,10),
-xlab="Total Length (mm)")
-```
-
 ## Calculating CPUEs
 Catch and effort of swordfish by longline in the Indian Ocean and the Western Central Pacific 
 ```{r}
@@ -289,5 +280,20 @@ south = ggplot() +
 
 gridExtra::grid.arrange(north, south)
 ```
+
+
+```{r}
+world <- map_data("world")
+ggplot() + 
+  geom_tile(data=wcpfc, aes(x=lon, y=lat, fill=cpue)) +
+  geom_map(
+    data = world, map = world,
+    aes(long, lat, map_id = region)) +
+  scale_fill_gradientn(colours=topo.colors(3), 
+                       breaks=c(0, 1, 2, 3), 
+                       limits=c(0,3))
+
+```
+
 
 
