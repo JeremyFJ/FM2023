@@ -1,4 +1,4 @@
-colnames(new_df)
+
 setwd("~/VTech/Teaching/FM/2022/W9-FisheriesManagement")
 
 swo = read.csv('WCPFC_L_PUBLIC_BY_FLAG_MON.CSV')
