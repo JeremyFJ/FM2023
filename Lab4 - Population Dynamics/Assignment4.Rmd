@@ -1,0 +1,76 @@
+---
+title: "Assignment 4"
+author: "(Your name here)"
+date: "2/9/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+getwd()
+set.seed(9999)
+require(tidyverse)
+require(rfishbase)
+```
+
+1) Growth Modeling
+- plot an exponential growth model for a stock with `initial population size of 1500`, an `annual death rate of 0.07`, and an `annual harvest (catch) of 100` individuals. Compare the effects of different `birth rates b=0.15, b=0.2, and b=0.25` on the population trajectory. Project the population growth over `30 years`.  
+
+```{r}
+
+```
+
+2) Calculate the maximum growth rate of `North Sea Haddock` (`Melanogrammus aeglefinus`) using the functions below. 
+*Parameters that we need*
+- Lifespan
+- Fecundity
+- Age at Maturation
+```{r}
+# ---- Mortality rate ----------------------------
+
+# get mortality from Then.etal.2014
+getMtmax = function(lifespan){		
+		M = 4.899 * lifespan^-0.916
+		M
+}
+
+# get mortality using Dulvy.etal.2004's method
+getMDulvy.etal.2004 = function(lifespan, agemat){
+	w = (lifespan+agemat)/2 # average lifespan
+	M = 1/w
+	M
+}
+
+getRmax= function(method = "Smith.etal.1998", mortality = "Then.etal.2014", fec = NULL, litter = NULL, cycle = NULL, lifespan, agemat){
+
+  # Calculate natural mortality rate
+	if (mortality== "Dulvy.etal.2004") M = getMDulvy.etal.2004(lifespan = lifespan, agemat = agemat)
+	if (mortality== "Then.etal.2014") M = getMtmax(lifespan = lifespan)
+	if (is.numeric(mortality)) M = mortality
+
+	if(method=="Smith.etal.1998"){
+		tmax = lifespan
+		tmat = agemat
+		if (is.null(fec)) fec = litter/2/cycle else fec = fec
+		Z<-1.5*M
+	
+		#this is equation 7 in the manuscript
+		l_alpha<-(1-exp(-(Z)))/((fec)*(1-exp(-(Z*(tmax-tmat+1)))))
+
+		#this is equation 6 in the manuscript
+		eq6 <- function(reb) 1-exp(-(M+reb))-l_alpha*(fec)*1.25*exp(-reb*tmat)*(1-exp(-(M+reb)*(tmax-tmat+1)))
+		r_Z<-uniroot(eq6, c(0,5), tol=1e-8)
+		return(r_Z$root*2)
+	} 
+	
+}
+```
+
+```{r}
+
+```
+
+3)
+

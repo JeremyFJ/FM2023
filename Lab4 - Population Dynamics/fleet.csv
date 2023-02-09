@@ -1,0 +1,807 @@
+fleetid,fleetcode,fleetname,flagid,flagcode,flagname,statuscode
+001DZ00,DZA,Algerie,1,DZA,Algerie,CP
+001JP00,DZA-JPN,Algerie(Japan),1,DZA,Algerie,CP
+001TR00,DZA-TUR,Algerie(Turkey),1,DZA,Algerie,CP
+002AR00,ARG,Argentina,2,ARG,Argentina,NCO
+003BB00,BRA-BRB,Brasil (Barbados),3,BRA,Brasil,CP
+003BO00,BRA-BOL,Brasil (Bolivia),3,BRA,Brasil,CP
+003BO01,BRA-BOL-NATAL,Brasil (Bolivia - Natal),3,BRA,Brasil,CP
+003BR00,BRA,Brasil,3,BRA,Brasil,CP
+003BR01,BRA-BRA-RECIFE,Brazil (based in Recife),3,BRA,Brasil,CP
+003BR02,BRA-BRA-ITAJAI,Brasil (based in Itajai),3,BRA,Brasil,CP
+003BR03,BRA-BRA-CABDELO,Brasil (based in Cabedelo),3,BRA,Brasil,CP
+003BR04,BRA-BRA-NATAL,Brasil (based in Natal),3,BRA,Brasil,CP
+003BR05,BRA-BRA-RGRANDE,Brasil (based in Rio Grande),3,BRA,Brasil,CP
+003BR06,BRA-BRA-SANTOS,Brasil (based in Santos),3,BRA,Brasil,CP
+003BR08,BRA-BRA-RJANERO,Brasil (based in R. Janeiro),3,BRA,Brasil,CP
+003BR09,BRA-BRA-BELEM,Brazil (based in Belem),3,BRA,Brasil,CP
+003BR10,BRA-BRA-ITAIPAVA,Brazil (based in Itaipava),3,BRA,Brasil,CP
+003BR11,BRA-BRA-VITORIA,Brazil (based in Vitoria),3,BRA,Brasil,CP
+003BR12,BRA-BRA-FNORONHA,Brazil (based in Fernando de Noronha),3,BRA,Brasil,CP
+003BR13,BRA-BRA-SPAULO,Brazil (based in Sao Paulo),3,BRA,Brasil,CP
+003BR14,BRA-BRA-FORTALEZA,Brazil (based in Fortaleza),3,BRA,Brasil,CP
+003BR15,BRA-BRA-ALCOBACA,Brazil (based in AlcobaCa),3,BRA,Brasil,CP
+003BR16,BRA-BRA-ANCHIETA,Brazil (based in Anchieta),3,BRA,Brasil,CP
+003BR17,BRA-BRA-ADOSREIS,Brazil (based in Angra Dos Reis),3,BRA,Brasil,CP
+003BR18,BRA-BRA-GUARAPARI,Brazil (based in Guarapari),3,BRA,Brasil,CP
+003BR19,BRA-BRA-NAVEGANTES,Brazil (based in Navegantes),3,BRA,Brasil,CP
+003BR20,BRA-BRA-PIUMA,Brazil (based in Piuma),3,BRA,Brasil,CP
+003BR21,BRA-BRA-PIVUS,Brazil (based in Pivus),3,BRA,Brasil,CP
+003BR22,BRA-BRA-SCRUZ,Brazil (based in Santa Cruz),3,BRA,Brasil,CP
+003BR23,BRA-BRA-PBELO,Brazil (based in Porto Belo),3,BRA,Brasil,CP
+003BR24,BRA-BRA-CFRIO,Brazil (based in Cabo Frio),3,BRA,Brasil,CP
+003BZ00,BRA-BLZ,Brasil (Belize),3,BRA,Brasil,CP
+003CA00,BRA-CAN,Brasil (Canada),3,BRA,Brasil,CP
+003CA01,BRA-CAN-NATAL,Brasil (Canada - Natal),3,BRA,Brasil,CP
+003EC00,BRA-ECU-NATAL,Brasil (Ecuador - Natal),3,BRA,Brasil,CP
+003ES00,BRA-ESP,Brasil (Espana),3,BRA,Brasil,CP
+003ES01,BRA-ESP-CABDELO,Brasil (Espana - Cabedelo),3,BRA,Brasil,CP
+003ES02,BRA-ESP-NATAL,Brasil (Espana - NATAL),3,BRA,Brasil,CP
+003ES03,BRA-ESP-SANTOS,Brazil (Espana - Santos),3,BRA,Brasil,CP
+003GB01,BRA-GBR-NATAL,Brazil (United Kingdom - Natal),3,BRA,Brasil,CP
+003GB02,BRA-GBR-CABDELO,Brazil (United Kingdom - Cabedelo),3,BRA,Brasil,CP
+003GQ00,BRA-GNQ,Brasil (Eq. Guinea),3,BRA,Brasil,CP
+003GY00,BRA-GUY,Brasil (Guyan),3,BRA,Brasil,CP
+003GY01,BRA-GUY-NATAL,Brasil (Guyan - Natal),3,BRA,Brasil,CP
+003HN00,BRA-HND,Brasil (Honduras),3,BRA,Brasil,CP
+003HN02,BRA-HND-CABDELO,Brasil (Honduras - Cabedelo),3,BRA,Brasil,CP
+003HN03,BRA-HND-NATAL,Brasil (Honduras - Natal),3,BRA,Brasil,CP
+003HN04,BRA-HND-SANTOS,Brasil (Honduras - Santos),3,BRA,Brasil,CP
+003HN05,BRA-HND-ITAJAI,Brazil (Honduras - Itajai),3,BRA,Brasil,CP
+003HN06,BRA-HND-RGRANDE,Brazil (Honduras - Rio Grande),3,BRA,Brasil,CP
+003IS00,BRA-ISL,Brasil (Iceland),3,BRA,Brasil,CP
+003IS01,BRA-ISL-NATAL,Brasil (Iceland - Natal),3,BRA,Brasil,CP
+003JP00,BRA-JPN,Brasil (Japan),3,BRA,Brasil,CP
+003KN00,BRA-KNA-NATAL,Brazil (S. Kitts & Nevis - Natal),3,BRA,Brasil,CP
+003KN01,BRA-KNA-CABDELO,Brazil (S. Kitts & Nevis - Cabedelo),3,BRA,Brasil,CP
+003KN02,BRA-KNA-RECIFE,Brazil (S. Kitts & Nevis - Recife),3,BRA,Brasil,CP
+003KR00,BRA-KOR,Brasil (Korea),3,BRA,Brasil,CP
+003KY00,BRA-CYM,Brasil (Cayman Islands),3,BRA,Brasil,CP
+003MA01,BRA-MAR-NATAL,Brazil (Maroc - Natal),3,BRA,Brasil,CP
+003MA02,BRA-MAR-RECIFE,Brazil (Maroc - Recife),3,BRA,Brasil,CP
+003PA00,BRA-PAN,Brasil (Panama),3,BRA,Brasil,CP
+003PA02,BRA-PAN-CABDELO,Brasil (Panama - Cabedelo),3,BRA,Brasil,CP
+003PA03,BRA-PAN-NATAL,Brasil (Panama - Natal),3,BRA,Brasil,CP
+003PA04,BRA-PAN-RECIFE,Brazil (Panama - Recife),3,BRA,Brasil,CP
+003PT00,BRA-PRT,Brasil (Portugal),3,BRA,Brasil,CP
+003PT01,BRA-PRT-CABDELO,Brasil (Portugal-Cabedelo),3,BRA,Brasil,CP
+003PT02,BRA-PRT-NATAL,Brazil (Portugal-Natal),3,BRA,Brasil,CP
+003TW00,BRA-TAI,Brasil (Taipei),3,BRA,Brasil,CP
+003US00,BRA-USA,Brasil (USA),3,BRA,Brasil,CP
+003US01,BRA-USA-NATAL,Brasil (USA - Natal),3,BRA,Brasil,CP
+003UY00,BRA-URY,Brasil (Uruguay),3,BRA,Brasil,CP
+003UY01,BRA-URY-ITAJAI,Brasil (Uruguay - Itajai),3,BRA,Brasil,CP
+003UY02,BRA-URY-CABDELO,Brasil (Uruguay - Cabedelo),3,BRA,Brasil,CP
+003UY03,BRA-URY-NATAL,Brazil (Uruguay - Natal),3,BRA,Brasil,CP
+003VC00,BRA-VCT,Brasil (St. Vincent),3,BRA,Brasil,CP
+003VC03,BRA-VCT-NATAL,Brazil (St. Vincent Natal),3,BRA,Brasil,CP
+003VU00,BRA-VUT,Brasil (Vanuatu),3,BRA,Brasil,CP
+003VU02,BRA-VUT-NATAL,Brazil (Vanuatu Natal),3,BRA,Brasil,CP
+004CA00,CAN,Canada,4,CAN,Canada,CP
+004JP00,CAN-JPN,Canada (Japan),4,CAN,Canada,CP
+005TW00,TAI,Chinese Taipei,5,TAI,Chinese Taipei,NCC
+005TW01,TAI.Re-Registration,Chinese Taipei-Re-Registration,5,TAI,Chinese Taipei,NCC
+006CU00,CUB,Cuba,6,CUB,Cuba,NCO
+007DK00,EU.DNK,EU.Denmark,7,EU.DNK,EU.Denmark,CP
+008FR00,EU.FRA,EU.France,8,EU.FRA,EU.France,CP
+067BJ00,BEN,Benin,67,BEN,Benin,NCO
+008FR01,EU.FRA-FR,EU.France (Mainland),8,EU.FRA,EU.France,CP
+008FR02,EU.FRA-FR-GP,EU.France (based in Guadaloupe),8,EU.FRA,EU.France,CP
+008FR03,EU.FRA-FR-MQ,EU.France (based in Martinique),8,EU.FRA,EU.France,CP
+008FR04,EU.FRA-FR-ETRO,EU.France (East Tropical fleet),8,EU.FRA,EU.France,CP
+008FR05,EU.FRA-MED,EU.France (Medi),8,EU.FRA,EU.France,CP
+009DE00,EU.DEU,EU.Germany,9,EU.DEU,EU.Germany,CP
+009DE99,EU.RFA,EU.Germany Fed. Rep.,9,EU.DEU,EU.Germany,CP
+010GR00,EU.GRC,EU.Greece,10,EU.GRC,EU.Greece,CP
+011IT00,EU.ITA,EU.Italy,11,EU.ITA,EU.Italy,CP
+011IT01,EU.ITA-IT-TY.LI,EU.Italy (Tyrreniam + Ligurian seas),11,EU.ITA,EU.Italy,CP
+011IT02,EU.ITA-IT-SIC.ST,EU.Italy (Strait of Sicily),11,EU.ITA,EU.Italy,CP
+011IT10,EU.ITA-IT-ADRIAT,EU.Italy (Adriatic sea),11,EU.ITA,EU.Italy,CP
+011IT11,EU.ITA-IT-ADRI.C,EU.Italy (Central Adriatic sea),11,EU.ITA,EU.Italy,CP
+011IT12,EU.ITA-IT-ADRI.S,EU.Italy (South Adriatic sea),11,EU.ITA,EU.Italy,CP
+011IT20,EU.ITA-IT-IONIAN,EU.Italy (Ionian sea),11,EU.ITA,EU.Italy,CP
+011IT21,EU.ITA-IT-IONI.N,EU.Italy (North Ionian sea),11,EU.ITA,EU.Italy,CP
+011IT22,EU.ITA-IT-IONI.S,EU.Italy (South Ionian sea),11,EU.ITA,EU.Italy,CP
+011IT30,EU.ITA-IT-LIGURY,EU.Italy (Ligurian sea),11,EU.ITA,EU.Italy,CP
+011IT40,EU.ITA-IT-SARDHA,EU.Italy (Sardenha),11,EU.ITA,EU.Italy,CP
+011IT50,EU.ITA-IT-TYRREN,EU.Italy (Tyrrenean sea),11,EU.ITA,EU.Italy,CP
+011IT51,EU.ITA-IT-TYRR.N,EU.Italy (North Tyrrenean sea),11,EU.ITA,EU.Italy,CP
+011IT52,EU.ITA-IT-TYRR.S,EU.Italy (South Tyrrenean sea),11,EU.ITA,EU.Italy,CP
+011IT53,EU.ITA-IT-TYRR.C,EU.Italy (Central Tyrrenean sea),11,EU.ITA,EU.Italy,CP
+012JP00,JPN,Japan,12,JPN,Japan,CP
+013KR00,KOR,Korea Rep.,13,KOR,Korea Rep.,CP
+013MT00,KOR-MLT,"Korea, Malta",13,KOR,Korea Rep.,CP
+014LY00,LBY,Libya,14,LBY,Libya,CP
+015MT00,EU.MLT,EU.Malta,15,EU.MLT,EU.Malta,CP
+016MA00,MAR,Maroc,16,MAR,Maroc,CP
+017NO00,NOR,Norway,17,NOR,Norway,CP
+018PL00,EU.POL,EU.Poland,18,EU.POL,EU.Poland,CP
+019JP00,EU.PRT-JAPAN,EU.Portugal (Japan),19,EU.PRT,EU.Portugal,CP
+019PT00,EU.PRT,EU.Portugal,19,EU.PRT,EU.Portugal,CP
+019PT01,EU.PRT-PT-MAINLND,EU.Portugal (Mainland),19,EU.PRT,EU.Portugal,CP
+019PT02,EU.PRT-PT-AZORES,EU.Portugal (Azores),19,EU.PRT,EU.Portugal,CP
+019PT03,EU.PRT-PT-MADEIRA,EU.Portugal (Madeira),19,EU.PRT,EU.Portugal,CP
+020ES00,ZAF-ESP,South Africa (Spain),20,ZAF,South Africa,CP
+020ID00,ZAF-IDN,South Africa (Indonesia),20,ZAF,South Africa,CP
+020IS00,ZAF-ISL,South Africa (Iceland),20,ZAF,South Africa,CP
+020JP00,ZAF-JPN,South Africa (Japan),20,ZAF,South Africa,CP
+020KR00,ZAF-KOR,South Africa (Korea),20,ZAF,South Africa,CP
+020NA00,ZAF-NAM,South Africa (Namibia),20,ZAF,South Africa,CP
+020PA00,ZAF-PAN,South Africa (Panama),20,ZAF,South Africa,CP
+020PH00,ZAF-PHL,South Africa (Philipinnes),20,ZAF,South Africa,CP
+020SC00,ZAF-SYC,South Africa (Seychelles),20,ZAF,South Africa,CP
+020VC00,ZAF-VCT,South Africa (St. Vincent),20,ZAF,South Africa,CP
+020ZA00,ZAF,South Africa,20,ZAF,South Africa,CP
+021ES00,EU.ESP,EU.Espana,21,EU.ESP,EU.Espana,CP
+021ES01,EU.ESP-ES-CANARY,EU.Espana (Canary Isl.),21,EU.ESP,EU.Espana,CP
+021ES02,EU.ESP-ES-CANT_BFT,EU.Espana (Cantabrian sea) Target BFT,21,EU.ESP,EU.Espana,CP
+021ES03,EU.ESP-ES-SWO,EU.Espana Target SWO,21,EU.ESP,EU.Espana,CP
+021ES04,EU.ESP-ES-MEDI_SWO,EU.Espana (Mediterranean) target SWO,21,EU.ESP,EU.Espana,CP
+021ES05,EU.ESP-ES-CANT_ALB,EU.Espana (Cantabrian sea) target ALB,21,EU.ESP,EU.Espana,CP
+021ES06,EU.ESP-ES-ETRO,EU.Espana (East tropical fishery),21,EU.ESP,EU.Espana,CP
+021ES07,EU.ESP-ES-MEDI_PS,EU.Espana (Mediterranean) PS,21,EU.ESP,EU.Espana,CP
+021ES08,EU.ESP-ES-MEDI_SPOR,EU.Espana (Mediterranean) SPORT,21,EU.ESP,EU.Espana,CP
+021ES09,EU.ESP-CANT_CDZ_ALB,EU.Espana (Cantabric V. in G. Cadiz) Target ALB,21,EU.ESP,EU.Espana,CP
+021ES10,EU.ESP-CANT_AZS_ALB,EU.Espana (Cantabric V. in Azores) Target ALB,21,EU.ESP,EU.Espana,CP
+021ES11,EU.ESP-CANARY_ALB,EU.Espana (Canary Isl.) Target ALB,21,EU.ESP,EU.Espana,CP
+022SE00,EU.SWE,EU.Sweden,22,EU.SWE,EU.Sweden,CP
+023FR00,TUN-FRA,Tunisie (France),23,TUN,Tunisie,CP
+023LY00,TUN-LBY,Tunisie (Libya),23,TUN,Tunisie,CP
+023TN00,TUN,Tunisie,23,TUN,Tunisie,CP
+023TN01,TUN-TUN-MONAST,Tunisie (Monastir based),23,TUN,Tunisie,CP
+023TN02,TUN-TUN-SFAX,Tunisie (Sfax based),23,TUN,Tunisie,CP
+023TN03,TUN-TUN-KELIBIA,Tunisie (Kelibia based),23,TUN,Tunisie,CP
+023TN04,TUN-TUN-SOUSSE,Tunisie (Sousse based),23,TUN,Tunisie,CP
+023TN05,TUN-TUN-MAHDIA,Tunisie (Mahdia based),23,TUN,Tunisie,CP
+023TN06,TUN-TUN-GABES,Tunisie (Gabes based),23,TUN,Tunisie,CP
+024TR00,TUR,Turkey,24,TUR,Turkey,CP
+025US00,USA,U.S.A.,25,USA,U.S.A.,CP
+025US01,USA-Com,USA (commercial),25,USA,U.S.A.,CP
+025US02,USA-Rec,USA (recreational),25,USA,U.S.A.,CP
+026YU00,YUG,Yugoslavia Fed.,26,YUG,Yugoslavia Fed.,NCO
+027GH00,GHA,Ghana,27,GHA,Ghana,CP
+027GH01,GHA.BASED,Ghana (Ghanian based),27,GHA,Ghana,CP
+027GH02,GHA.LOCMARK,Ghana (Ghanian local market),27,GHA,Ghana,CP
+028PA00,PAN,Panama,28,PAN,Panama,CP
+028PA01,PAN-PAN-TTO,Panama (Trinidad&Tobago),28,PAN,Panama,CP
+028PA02,PAN-PAN-ETRO,Panama (ETRO fleet),28,PAN,Panama,CP
+028PA03,PAN-PAN-GHA,Panama(Ghana),28,PAN,Panama,CP
+028PA04,PAN-PAN-SEN,Panama(Senegal),28,PAN,Panama,CP
+028PA05,PAN-PAN-SUR,Panama(Suriname),28,PAN,Panama,CP
+028PA06,PAN-PAN-CIV,Panama(C.Ivorie),28,PAN,Panama,CP
+029VE00,VEN,Venezuela,29,VEN,Venezuela,CP
+029VE01,VEN-FOR.FLTS,Venezuela (foreign based),29,VEN,Venezuela,CP
+029VE02,VEN.ARTISANAL,Venezuela (Artisanal fleet),29,VEN,Venezuela,CP
+029VE03,VEN.INDUSTRIAL,Venezuela (Industrial fleet),29,VEN,Venezuela,CP
+030GD00,GRD,Grenada,30,GRD,Grenada,NCO
+031MX00,MEX,Mexico,31,MEX,Mexico,CP
+034AO00,AGO,Angola,34,AGO,Angola,CP
+035RU00,USR,U.S.S.R.,35,USR,U.S.S.R.,CP
+037DO00,DOM,Dominican Republic,37,DOM,Dominican Republic,NCO
+038IL00,ISR,Israel,38,ISR,Israel,NCO
+039LB00,LBN,Lebanon,39,LBN,Lebanon,NCO
+040SL00,SLE,Sierra Leone,40,SLE,Sierra Leone,CP
+041TT00,TTO,Trinidad and Tobago,41,TTO,Trinidad and Tobago,CP
+041TT01,TTO-TTO-TRINID,Trinidad,41,TTO,Trinidad and Tobago,CP
+041TT02,TTO-TTO-TOBAG,Tobago,41,TTO,Trinidad and Tobago,CP
+042UY00,URY,Uruguay,42,URY,Uruguay,CP
+043VI00,VIR,US Virgin Islands,43,VIR,US Virgin Islands,NCO
+047BG00,EU.BGR,EU.Bulgaria,47,EU.BGR,EU.Bulgaria,CP
+048CY00,EU.CYP,EU.Cyprus,48,EU.CYP,EU.Cyprus,CP
+049DE00,DDR,Germany Democratic Rep.,49,DDR,Germany Democratic Rep.,NCO
+050CI00,CIV,Cote D'Ivoire,50,CIV,Cote D'Ivoire,CP
+050CI01,CIV-ABIDJAN,Cote D'Ivoire (based in Abidjan),50,CIV,Cote D'Ivoire,CP
+050CI02,CIV-S.PEDRO,Cote D'Ivoire (based in S. Pedro),50,CIV,Cote D'Ivoire,CP
+050CI03,CIV-CIV-KOREA,Cote D'Ivoire (Korea),50,CIV,Cote D'Ivoire,CP
+051LR00,LBR,Liberia,51,LBR,Liberia,NCO
+052RO00,ROU,Rumania,52,ROU,Rumania,NCO
+053SN00,SEN,Senegal,53,SEN,Senegal,CP
+053SN01,SEN-SEN-DAKAR,Senegal (based in Dakar),53,SEN,Senegal,CP
+053SN02,SEN-SEN-Art,Senegal (artisanal),53,SEN,Senegal,CP
+058PR00,PRI,Puerto Rico,58,PRI,Puerto Rico,NCO
+060EG00,EGY,Egypt,60,EGY,Egypt,CP
+061SH00,UK.SHN,Sta. Helena,61,UK.SHN,UK.Sta Helena,CP
+062CO00,COL,Colombia,62,COL,Colombia,NCC
+063BB00,BRB,Barbados,63,BRB,Barbados,CP
+064SY00,SYR,Syrian Arab Republic,64,SYR,Syria Rep.,CP
+065CV00,CPV,Cape Verde,65,CPV,Cape Verde,CP
+065CV01,CPV-Ind,Cape Verde (Industrial),65,CPV,Cape Verde,CP
+065CV02,CPV-Art,Cape Verde (Artisanal),65,CPV,Cape Verde,CP
+065CV99,CPV-ETRO,Cape Verde (ETRO),65,CPV,Cape Verde,CP
+066IE00,EU.IRL,EU.Ireland,66,EU.IRL,EU.Ireland,CP
+067BJ00,BEN,Benin,67,BEN,Benin,NCO
+068GA00,GAB,Gabon,68,GAB,Gabon,CP
+069CG00,COG,Congo,69,COG,Congo,NCO
+070NL00,EU.NLD,EU.Netherlands,70,EU.NLD,EU.Netherlands,CP
+071HN00,HND,Honduras,71,HND,Honduras,CP
+072TG00,TGO,Togo,72,TGO,Togo,NCO
+074KY00,CYM,Cayman Islands,74,CYM,Cayman Islands,NCO
+076CW00,CUW,CuraCao,76,CUW,CuraCao,NCC
+076CW01,CUW-CW-ETRO,CuraCao (ETRO fleet),76,CUW,CuraCao,NCC
+077LC00,LCA,Sta. Lucia,77,LCA,Sta. Lucia,NCO
+079ST00,STP,S. Tome e Principe,79,STP,S. Tome e Principe,CP
+081GQ00,GNQ,Guinea Ecuatorial,81,GNQ,Guinea Ecuatorial,CP
+081GQ01,GNQ.ARTESANAL,Guinea Ecuatorial (Artisanal fleet),81,GNQ,Guinea Ecuatorial,CP
+227SI00,EU.SVN,EU.Slovenia,227,EU.SVN,EU.Slovenia,CP
+081GQ02,GNQ.INDUSTRIAL,Guinea Ecuatorial (Industrial fleet),81,GNQ,Guinea Ecuatorial,CP
+082MR00,MRT,Mauritania,82,MRT,Mauritania,CP
+083BM00,UK.BMU,UK.Bermuda,83,UK.BMU,UK.Bermuda,CP
+084CM00,CMR,Cameroon,84,CMR,Cameroon,NCO
+088NG00,NGA,Nigeria,88,NGA,Nigeria,CP
+090AW00,ABW,Aruba,90,ABW,Aruba,NCO
+094GW00,GNB,Guinea Bissau,94,GNB,Guinea Bissau,NCO
+101HR00,HRV,Croatia,101,HRV,Croatia,CP
+101HR01,HRV-ADR,Croatia (Adriatic),101,HRV,Croatia,CP
+104RU00,RUS,Russian Federation,104,RUS,Russian Federation,CP
+104RU01,RUS-RU-MURMANSK,Russian Federation (Murmansk),104,RUS,Russian Federation,CP
+104RU02,RUS-RU-KALININGRAD,Russian Federation (Kaliningrad),104,RUS,Russian Federation,CP
+105GN00,GIN,Guinee Conakry,105,GIN,Guinee Conakry,CP
+110UA00,UKR,Ukraine,110,UKR,Ukraine,NCO
+111TT00,VCT-TTO,S. Vincent (Trinidad and Tobago),111,VCT,St. Vincent and Grenadines,CP
+111VC00,VCT,S. Vincent and Grenadines,111,VCT,St. Vincent and Grenadines,CP
+111VC01,VCT-FOR.FLTS,S. Vincent (foreign based),111,VCT,St. Vincent and Grenadines,CP
+112GB00,EU.UK,EU.United Kingdom,112,EU.UK,EU.United Kingdom,CP
+113NA00,NAM,Namibia,113,NAM,Namibia,CP
+114AG00,ATG,Antigua and Barbuda,114,ATG,Antigua and Barbuda,NCO
+115JM00,JAM,Jamaica,115,JAM,Jamaica,NCO
+116DM00,DMA,Dominica,116,DMA,Dominica,NCO
+118CN00,CHN,China P.R.,118,CHN,China P.R.,CP
+119GY00,GUY,Guyana,119,GUY,Guyana,NCC
+134BZ00,BLZ,Belize,134,BLZ,Belize,CP
+134BZ99,BLZ-ETRO,Belize (ETRO),134,BLZ,Belize,CP
+134CI00,BLZ-CIV,Belize(C.Ivoire),134,BLZ,Belize,CP
+134ES00,BLZ-ESP,Belize(Espana),134,BLZ,Belize,CP
+134GH00,BLZ-GHA,Belize(Ghana),134,BLZ,Belize,CP
+134TT00,BLZ-TTO,Belize(Trinidad&Tobago),134,BLZ,Belize,CP
+134UR00,BLZ-URY,Belize(Uruguay),134,BLZ,Belize,CP
+134ZA00,BLZ-ZAF,Belize(S.Africa),134,BLZ,Belize,CP
+142CR00,CRI,Costa Rica,142,CRI,Costa Rica,NCO
+143EE00,EU.EST,EU.Estonia,143,EU.EST,EU.Estonia,CP
+143EE01,EU.EST.EE.Vigo,EU.Estonia (based in Vigo),143,EU.EST,EU.Estonia,CP
+144GE00,GEO,Georgia,144,GEO,Georgia,NCO
+145LV00,EU.LVA,EU.Latvia,145,EU.LVA,EU.Latvia,CP
+146LT00,EU.LTU,EU.Lithuania,146,EU.LTU,EU.Lithuania,CP
+147GM00,GMB,Gambia,147,GMB,Gambia,NCO
+148AL00,ALB,Albania,148,ALB,Albania,CP
+152CS00,SCG,Serbia & Montenegro,152,SCG,Serbia & Montenegro,NCO
+156IS00,ISL,Iceland,156,ISL,Iceland,CP
+157BY00,BLR,Belarus,157,BLR,Belarus,NCO
+164FO00,FRO,Faroe Islands,164,FRO,Faroe Islands,NCO
+165PH00,PHL,Philippines,165,PHL,Philippines,CP
+165PH01,PHL-PHL-MANILA,Philippines (based in Manila),165,PHL,Philippines,CP
+166KH00,KHM,Cambodia,166,KHM,Cambodia,NCO
+167FK00,FLK,Falklands,167,FLK,Falklands,NCO
+172CA00,FR.SPM-CAN,FR-Saint Pierre et Miquelon(Canada),172,FR.SPM,FR.St Pierre et Miquelon,CP
+172PM00,FR.SPM,FR-Saint Pierre et Miquelon,172,FR.SPM,FR.St Pierre et Miquelon,CP
+178PS00,PSE,"Palestinian Territory, Occupied",178,PSE,Palestina,NCO
+178PS01,PSE-PSE-GAZA.ST,Palestenean (Gaza strip based),178,PSE,Palestina,NCO
+179SC00,SYC,Seychelles,179,SYC,Seychelles,NCO
+185KN00,KNA,St. Kitts and Nevis,185,KNA,Saint Kitts and Nevis,NCO
+185KN01,KNA-KNA-ST.KITTS,St. Kitts and Nevis (St. Kitts based),185,KNA,Saint Kitts and Nevis,NCO
+185KN02,KNA-KNA-NEVIS,St. Kitts and Nevis (Nevis based),185,KNA,Saint Kitts and Nevis,NCO
+191MU00,MUS,Mauritius,191,MUS,Mauritius,NCO
+192IN00,IND,India,192,IND,India,NCO
+193VU00,VUT,Vanuatu,193,VUT,Vanuatu,CP
+194IR00,IRN,"Iran, Islamic Republic of",194,IRN,Iran Islamic Rep.,NCO
+195MY00,MYS,Malaysia,195,MYS,Malaysia,NCO
+196GT00,GTM,Guatemala,196,GTM,Guatemala,CP
+196GT01,GTM.ETRO,Guatemala (ETRO fleet),196,GTM,Guatemala,CP
+197SV00,SLV,El Salvador,197,SLV,El Salvador,NCO
+198AI00,AIA,Anguilla,198,AIA,Anguilla,NCO
+199TC00,UK.TCA,Turks and Caicos Islands,199,UK.TCA,UK.Turks and Caicos,CP
+199TC01,UK.TCA-USA,Turks and Caikos (USA),199,UK.TCA,UK.Turks and Caicos,CP
+199TC02,UK.TCA-CYM,Turks and Caikos (Cayman Isl.),199,UK.TCA,UK.Turks and Caicos,CP
+199TC03,UK.TCA-VGB,Turks and Caicos (British Virgin Isl.),199,UK.TCA,UK.Turks and Caicos,CP
+200BE00,EU.BEL,EU.Belgium,200,EU.BEL,EU.Belgium,CP
+201VG00,UK.VGB,UK.British Virgin Islands,201,UK.VGB,UK.British Virgin Islands,CP
+202TH00,THA,Thailand,202,THA,Thailand,NCO
+203CL00,CHL,Chile,203,CHL,Chile,NCO
+204NI00,NI.NIC,Nicaragua,204,NIC,Nicaragua,CP
+205BS00,BS.BHS,Bahamas,205,BHS,Bahamas,NCO
+206SR00,SR.SUR,Suriname,206,SUR,Suriname,NCO
+207EC00,ECU,Ecuador,207,ECU,Ecuador,NCO
+208AU00,AUS,Australia,208,AUS,Australia,NCO
+209FJ00,FJI,Fiji Islands,209,FJI,Fiji Islands,NCO
+210GU00,GUM,Guam,210,GUM,Guam,NCO
+211ID00,IDN,Indonesia,211,IDN,Indonesia,NCO
+212KI00,KIR,Kiribati,212,KIR,Kiribati,NCO
+213MV00,MDV,Maldives,213,MDV,Maldives,NCO
+214PG00,PNG,Papua New Guinea,214,PNG,Papua New Guinea,NCO
+215LK00,LKA,Sri Lanka,215,LKA,Sri Lanka,NCO
+216VN00,VNM,Viet Nam,216,VNM,Viet Nam,NCO
+217SG00,SGP,Singapore,217,SGP,Singapore,NCO
+218OM00,OMN,Oman,218,OMN,Oman,NCO
+219NZ00,NZL,New Zealand,219,NZL,New Zealand,NCO
+220FM00,FSM,Micronesia,220,FSM,Micronesia,NCO
+221CK00,COK,Cook Islands,221,COK,Cook Islands,NCO
+222BO00,BOL,Bolivia,222,BOL,Bolivia,NCO
+223PW00,PLW,Palau,223,PLW,Palau,NCO
+224TO00,TON,Tonga,224,TON,Tonga,NCO
+225KE00,KEN,Kenya,225,KEN,Kenya,NCO
+226PF00,PYF,Polynesie FranCaise,226,PYF,Polynesie FranCaise,NCO
+228PE00,PER,Peru,228,PER,Peru,NCO
+229CH00,CHE,Switzerland,229,CHE,Switzerland,NCO
+230TZ00,TZA,Tanzania,230,TZA,Tanzania,NCO
+231AE00,ARE,United Arab Emirates,231,ARE,United Arab Emirates,NCO
+232PE00,PER,Peru,232,PER,Peru,NCO
+233HT00,HTI,Haiti,233,HTI,Haiti,NCO
+234MG00,MDG,Madagascar,234,MDG,Madagascar,NCO
+235MZ00,MOZ,Mozambique,235,MOZ,Mozambique,NCO
+236TZ00,TZA,Tanzania,236,TZA,Tanzania,NCO
+237EH00,ESH,Western Sahara,237,ESH,Western Sahara,NCO
+238SB00,SLB,Solomon Islands,238,SLB,Solomon Islands,NCO
+239MH00,MHL,Marshall Islands,239,MHL,Marshall Islands,NCO
+501--00,NEI.001,NEI (ETRO),501,NEI.001,NEI (ETRO),NCO
+501AN00,NEI.001-ANT,NEI (ETRO-ANT),501,NEI.001,NEI (ETRO),NCO
+501BZ00,NEI.001-BLZ,NEI (ETRO-BLZ),501,NEI.001,NEI (ETRO),NCO
+501CV00,NEI.001-CPV,NEI (ETRO-CPV),501,NEI.001,NEI (ETRO),NCO
+501GH00,NEI.001-GHA,NEI (ETRO-GHA),501,NEI.001,NEI (ETRO),NCO
+501GN00,NEI.001-GIN,NEI (ETRO-GIN),501,NEI.001,NEI (ETRO),NCO
+501GT00,NEI.001-GTM,NEI (ETRO-GTM),501,NEI.001,NEI (ETRO),NCO
+501IT00,NEI.001-ITA,NEI (ETRO-ITA),501,NEI.001,NEI (ETRO),NCO
+501LR00,NEI.001-LBR,NEI (ETRO-LBR),501,NEI.001,NEI (ETRO),NCO
+501MA00,NEI.001-MAR,NEI (ETRO-MAR),501,NEI.001,NEI (ETRO),NCO
+501MT00,NEI.001-MLT,NEI (ETRO-MLT),501,NEI.001,NEI (ETRO),NCO
+501MU00,NEI.001-MUS,NEI (ETRO-MUS),501,NEI.001,NEI (ETRO),NCO
+501MY00,NEI.001-MYS,NEI (ETRO-MYS),501,NEI.001,NEI (ETRO),NCO
+501NO00,NEI.001-NOR,NEI (ETRO-NOR),501,NEI.001,NEI (ETRO),NCO
+501PA00,NEI.001-PAN,NEI (ETRO-PAN),501,NEI.001,NEI (ETRO),NCO
+501SC00,NEI.001-SYC,NEI (ETRO-SYC),501,NEI.001,NEI (ETRO),NCO
+501SN00,NEI.001-SEN,NEI (ETRO-SEN),501,NEI.001,NEI (ETRO),NCO
+501SV00,NEI.001-SLV,NEI (ETRO-SLV),501,NEI.001,NEI (ETRO),NCO
+501VC00,NEI.001-VCT,NEI (ETRO-VCT),501,NEI.001,NEI (ETRO),NCO
+501VE00,NEI.001-VEN,NEI (ETRO-VEN),501,NEI.001,NEI (ETRO),NCO
+501VU00,NEI.001-VUT,NEI (ETRO-VUT),501,NEI.001,NEI (ETRO),NCO
+502--00,NEI.002,NEI (Mediterranean Unclassified),502,NEI.002,NEI (MED),NCO
+503--00,NEI.COMB,NEI (Combined fleets BFT),503,NEI.COMB,NEI (combined),NCO
+504--00,NEI.UK.OT,NEI (UK-O. Territories unclassified),504,NEI.UK.OT,NEI (UK.OT),NCO
+510DK00,NEI.007,NEI (Denmark),500,NEI.FLAGS,NEI (Flag related),NCO
+511FR00,NEI.008,NEI (France),500,NEI.FLAGS,NEI (Flag related),NCO
+512GR00,NEI.010,NEI (Greece),500,NEI.FLAGS,NEI (Flag related),NCO
+513IT00,NEI.011,NEI (Italy),500,NEI.FLAGS,NEI (Flag related),NCO
+514MA00,NEI.016,NEI (Norway),500,NEI.FLAGS,NEI (Flag related),NCO
+515PT00,NEI.019,NEI (Portugal),500,NEI.FLAGS,NEI (Flag related),NCO
+516ES00,NEI.021,NEI (Espana),500,NEI.FLAGS,NEI (Flag related),NCO
+517PA00,NEI.028,NEI (Panama),500,NEI.FLAGS,NEI (Flag related),NCO
+518MX00,NEI.031,NEI (Mexico),500,NEI.FLAGS,NEI (Flag related),NCO
+519SL00,NEI.040,NEI (Sierra Leone),500,NEI.FLAGS,NEI (Flag related),NCO
+520UY00,NEI.042,NEI (Uruguay),500,NEI.FLAGS,NEI (Flag related),NCO
+521IE00,NEI.066,NEI (Ireland),500,NEI.FLAGS,NEI (Flag related),NCO
+522HN00,NEI.071,NEI (Honduras),500,NEI.FLAGS,NEI (Flag related),NCO
+523ST00,NEI.079,NEI (S. Tome e Principe),500,NEI.FLAGS,NEI (Flag related),NCO
+524GQ00,NEI.081,NEI (Eq. Guinea),500,NEI.FLAGS,NEI (Flag related),NCO
+525GW00,NEI.094,NEI (Guine Bissau),500,NEI.FLAGS,NEI (Flag related),NCO
+526RU00,NEI.104,NEI (Russian Fed.),500,NEI.FLAGS,NEI (Flag related),NCO
+527GN00,NEI.105,NEI (G. Conakry),500,NEI.FLAGS,NEI (Flag related),NCO
+528VC00,NEI.111,NEI (St. Vincent),500,NEI.FLAGS,NEI (Flag related),NCO
+529GB00,NEI.112,NEI (EC.GBR),500,NEI.FLAGS,NEI (Flag related),NCO
+530CN00,NEI.118,NEI (China),500,NEI.FLAGS,NEI (Flag related),NCO
+531BZ00,NEI.134,NEI (Belize),500,NEI.FLAGS,NEI (Flag related),NCO
+532GE00,NEI.144,NEI (Georgia),500,NEI.FLAGS,NEI (Flag related),NCO
+533GM00,NEI.147,NEI (Gambia),500,NEI.FLAGS,NEI (Flag related),NCO
+534BY00,NEI.157,NEI (Belarus),500,NEI.FLAGS,NEI (Flag related),NCO
+535KH00,NEI.166,NEI (Cambodia),500,NEI.FLAGS,NEI (Flag related),NCO
+536PM00,NEI.172,"NEI (France, S. Pierre Miquellon)",500,NEI.FLAGS,NEI (Flag related),NCO
+700EC00,EU,EU (unspecified),700,EU,EU (unspecified),CP
+800--00,MIX.FIS,France + C. Ivoire + Senegal,800,MIX.FIS,Mixed flags (FIS),NCO
+801--00,MIX.KR+PA,Korea + Panama,801,MIX.KR+PA,Mixed flags (KR+PA),NCO
+802--00,MIX.FR+ES,EU.France+Espana,802,MIX.FR+ES,Mixed flags (FR+ES),NCO
+803--00,MIX.EC-ETRO,MIX (ESP+FRA+NEI),803,MIX.EU-ETRO,Mixed flags (EU tropical),NCO
+900JP00,JPN.REF,Japan (Reference data),900,JPN.ref,Japan,NCO
+910CA00,JPN.OB.CAN,Japan (observed by Canada),910,JPN.obs,Japan (foreign obs.),NCO
+910DZ00,JPN.OB.DZA,Japan (observed by Algeria),910,JPN.obs,Japan (foreign obs.),NCO
+910SH00,JPN.OB.SHN,Japan (observed by Sta. Helena),910,JPN.obs,Japan (foreign obs.),NCO
+910US00,JPN.OB.USA,Japan (observed by USA),910,JPN.obs,Japan (foreign obs.),NCO
+911SH00,TAI.OB.SHN,Chinese Taipei (observed by Sta. Helena),911,TAI.Obs,Chinese Taipei (foreign obs.),NCO
+912SH00,HND.OB.SHN,Honduras (observed by Sta. Helena),912,HND.Obs,Honduras (foreign obs.),NCO
+913SH00,PAN.OB.SHN,Panama (observed by Sta. Helena),913,PAN.Obs,Panama (foreign obs.),NCO
+914SH00,SGP.OB.SHN,Singapore (Observed by Sta. Helena),914,SGP.Obs,Singapore (foreign obs.),NCO
+915SH00,BLZ.OB.SHN,Belize (Observed by Sta. Helena),915,BLZ.Obs,Belize (foreign obs.),NCO
+916SH00,SYC.OB.SHN,Seychelles (Observed by Sta. Helena),916,SYC.Obs,Seychelles (foreign obs.),NCO
+920--00,GHA.ICCAT,Ghana (ICCAT program),920,GHA.ICCAT,Ghana (ICCAT program),NCO
+921--00,JPN.ICCAT,Japan (ICCAT program),921,JPN.ICCAT,Japan (ICCAT program),NCO
+922--00,CUB.ICCAT,Cuba (ICCAT program),922,CUB.ICCAT,Cuba (ICCAT program),NCO
+923--00,CHN.ICCAT,China (ICCAT program),923,CHN.ICCAT,China (ICCAT program),NCO
+999--99,UNCL.FLEETS,OTHERS (Unclassified fleets),999,UNCL,Unclassified flag,NCO
+001DZ00,DZA,Algerie,1,DZA,Algerie,CP
+001JP00,DZA-JPN,Algerie(Japan),1,DZA,Algerie,CP
+001TR00,DZA-TUR,Algerie(Turkey),1,DZA,Algerie,CP
+002AR00,ARG,Argentina,2,ARG,Argentina,NCO
+003BB00,BRA-BRB,Brasil (Barbados),3,BRA,Brasil,CP
+003BO00,BRA-BOL,Brasil (Bolivia),3,BRA,Brasil,CP
+003BO01,BRA-BOL-NATAL,Brasil (Bolivia - Natal),3,BRA,Brasil,CP
+003BR00,BRA,Brasil,3,BRA,Brasil,CP
+003BR01,BRA-BRA-RECIFE,Brazil (based in Recife),3,BRA,Brasil,CP
+003BR02,BRA-BRA-ITAJAI,Brasil (based in Itajai),3,BRA,Brasil,CP
+003BR03,BRA-BRA-CABDELO,Brasil (based in Cabedelo),3,BRA,Brasil,CP
+003BR04,BRA-BRA-NATAL,Brasil (based in Natal),3,BRA,Brasil,CP
+003BR05,BRA-BRA-RGRANDE,Brasil (based in Rio Grande),3,BRA,Brasil,CP
+003BR06,BRA-BRA-SANTOS,Brasil (based in Santos),3,BRA,Brasil,CP
+003BR08,BRA-BRA-RJANERO,Brasil (based in R. Janeiro),3,BRA,Brasil,CP
+003BR09,BRA-BRA-BELEM,Brazil (based in Belem),3,BRA,Brasil,CP
+003BR10,BRA-BRA-ITAIPAVA,Brazil (based in Itaipava),3,BRA,Brasil,CP
+003BR11,BRA-BRA-VITORIA,Brazil (based in Vitoria),3,BRA,Brasil,CP
+003BR12,BRA-BRA-FNORONHA,Brazil (based in Fernando de Noronha),3,BRA,Brasil,CP
+003BR13,BRA-BRA-SPAULO,Brazil (based in Sao Paulo),3,BRA,Brasil,CP
+003BR14,BRA-BRA-FORTALEZA,Brazil (based in Fortaleza),3,BRA,Brasil,CP
+003BR15,BRA-BRA-ALCOBACA,Brazil (based in AlcobaCa),3,BRA,Brasil,CP
+003BR16,BRA-BRA-ANCHIETA,Brazil (based in Anchieta),3,BRA,Brasil,CP
+003BR17,BRA-BRA-ADOSREIS,Brazil (based in Angra Dos Reis),3,BRA,Brasil,CP
+003BR18,BRA-BRA-GUARAPARI,Brazil (based in Guarapari),3,BRA,Brasil,CP
+003BR19,BRA-BRA-NAVEGANTES,Brazil (based in Navegantes),3,BRA,Brasil,CP
+003BR20,BRA-BRA-PIUMA,Brazil (based in Piuma),3,BRA,Brasil,CP
+003BR21,BRA-BRA-PIVUS,Brazil (based in Pivus),3,BRA,Brasil,CP
+003BR22,BRA-BRA-SCRUZ,Brazil (based in Santa Cruz),3,BRA,Brasil,CP
+003BR23,BRA-BRA-PBELO,Brazil (based in Porto Belo),3,BRA,Brasil,CP
+003BR24,BRA-BRA-CFRIO,Brazil (based in Cabo Frio),3,BRA,Brasil,CP
+003BZ00,BRA-BLZ,Brasil (Belize),3,BRA,Brasil,CP
+003CA00,BRA-CAN,Brasil (Canada),3,BRA,Brasil,CP
+003CA01,BRA-CAN-NATAL,Brasil (Canada - Natal),3,BRA,Brasil,CP
+068GA00,GAB,Gabon,68,GAB,Gabon,CP
+003EC00,BRA-ECU-NATAL,Brasil (Ecuador - Natal),3,BRA,Brasil,CP
+003ES00,BRA-ESP,Brasil (Espana),3,BRA,Brasil,CP
+003ES01,BRA-ESP-CABDELO,Brasil (Espana - Cabedelo),3,BRA,Brasil,CP
+003ES02,BRA-ESP-NATAL,Brasil (Espana - NATAL),3,BRA,Brasil,CP
+003ES03,BRA-ESP-SANTOS,Brazil (Espana - Santos),3,BRA,Brasil,CP
+003GB01,BRA-GBR-NATAL,Brazil (United Kingdom - Natal),3,BRA,Brasil,CP
+003GB02,BRA-GBR-CABDELO,Brazil (United Kingdom - Cabedelo),3,BRA,Brasil,CP
+003GQ00,BRA-GNQ,Brasil (Eq. Guinea),3,BRA,Brasil,CP
+003GY00,BRA-GUY,Brasil (Guyan),3,BRA,Brasil,CP
+003GY01,BRA-GUY-NATAL,Brasil (Guyan - Natal),3,BRA,Brasil,CP
+003HN00,BRA-HND,Brasil (Honduras),3,BRA,Brasil,CP
+003HN02,BRA-HND-CABDELO,Brasil (Honduras - Cabedelo),3,BRA,Brasil,CP
+003HN03,BRA-HND-NATAL,Brasil (Honduras - Natal),3,BRA,Brasil,CP
+003HN04,BRA-HND-SANTOS,Brasil (Honduras - Santos),3,BRA,Brasil,CP
+003HN05,BRA-HND-ITAJAI,Brazil (Honduras - Itajai),3,BRA,Brasil,CP
+003HN06,BRA-HND-RGRANDE,Brazil (Honduras - Rio Grande),3,BRA,Brasil,CP
+003IS00,BRA-ISL,Brasil (Iceland),3,BRA,Brasil,CP
+003IS01,BRA-ISL-NATAL,Brasil (Iceland - Natal),3,BRA,Brasil,CP
+003JP00,BRA-JPN,Brasil (Japan),3,BRA,Brasil,CP
+003KN00,BRA-KNA-NATAL,Brazil (S. Kitts & Nevis - Natal),3,BRA,Brasil,CP
+003KN01,BRA-KNA-CABDELO,Brazil (S. Kitts & Nevis - Cabedelo),3,BRA,Brasil,CP
+003KN02,BRA-KNA-RECIFE,Brazil (S. Kitts & Nevis - Recife),3,BRA,Brasil,CP
+003KR00,BRA-KOR,Brasil (Korea),3,BRA,Brasil,CP
+003KY00,BRA-CYM,Brasil (Cayman Islands),3,BRA,Brasil,CP
+003MA01,BRA-MAR-NATAL,Brazil (Maroc - Natal),3,BRA,Brasil,CP
+003MA02,BRA-MAR-RECIFE,Brazil (Maroc - Recife),3,BRA,Brasil,CP
+003PA00,BRA-PAN,Brasil (Panama),3,BRA,Brasil,CP
+003PA02,BRA-PAN-CABDELO,Brasil (Panama - Cabedelo),3,BRA,Brasil,CP
+003PA03,BRA-PAN-NATAL,Brasil (Panama - Natal),3,BRA,Brasil,CP
+003PA04,BRA-PAN-RECIFE,Brazil (Panama - Recife),3,BRA,Brasil,CP
+003PT00,BRA-PRT,Brasil (Portugal),3,BRA,Brasil,CP
+003PT01,BRA-PRT-CABDELO,Brasil (Portugal-Cabedelo),3,BRA,Brasil,CP
+003PT02,BRA-PRT-NATAL,Brazil (Portugal-Natal),3,BRA,Brasil,CP
+003TW00,BRA-TAI,Brasil (Taipei),3,BRA,Brasil,CP
+003US00,BRA-USA,Brasil (USA),3,BRA,Brasil,CP
+003US01,BRA-USA-NATAL,Brasil (USA - Natal),3,BRA,Brasil,CP
+003UY00,BRA-URY,Brasil (Uruguay),3,BRA,Brasil,CP
+003UY01,BRA-URY-ITAJAI,Brasil (Uruguay - Itajai),3,BRA,Brasil,CP
+003UY02,BRA-URY-CABDELO,Brasil (Uruguay - Cabedelo),3,BRA,Brasil,CP
+003UY03,BRA-URY-NATAL,Brazil (Uruguay - Natal),3,BRA,Brasil,CP
+003VC00,BRA-VCT,Brasil (St. Vincent),3,BRA,Brasil,CP
+003VC03,BRA-VCT-NATAL,Brazil (St. Vincent Natal),3,BRA,Brasil,CP
+003VU00,BRA-VUT,Brasil (Vanuatu),3,BRA,Brasil,CP
+003VU02,BRA-VUT-NATAL,Brazil (Vanuatu Natal),3,BRA,Brasil,CP
+004CA00,CAN,Canada,4,CAN,Canada,CP
+004JP00,CAN-JPN,Canada (Japan),4,CAN,Canada,CP
+005TW00,TAI,Chinese Taipei,5,TAI,Chinese Taipei,NCC
+005TW01,TAI.Re-Registration,Chinese Taipei-Re-Registration,5,TAI,Chinese Taipei,NCC
+006CU00,CUB,Cuba,6,CUB,Cuba,NCO
+007DK00,EU.DNK,EU.Denmark,7,EU.DNK,EU.Denmark,CP
+008FR00,EU.FRA,EU.France,8,EU.FRA,EU.France,CP
+008FR01,EU.FRA-FR,EU.France (Mainland),8,EU.FRA,EU.France,CP
+008FR02,EU.FRA-FR-GP,EU.France (based in Guadaloupe),8,EU.FRA,EU.France,CP
+008FR03,EU.FRA-FR-MQ,EU.France (based in Martinique),8,EU.FRA,EU.France,CP
+008FR04,EU.FRA-FR-ETRO,EU.France (East Tropical fleet),8,EU.FRA,EU.France,CP
+008FR05,EU.FRA-MED,EU.France (Medi),8,EU.FRA,EU.France,CP
+009DE00,EU.DEU,EU.Germany,9,EU.DEU,EU.Germany,CP
+009DE99,EU.RFA,EU.Germany Fed. Rep.,9,EU.DEU,EU.Germany,CP
+010GR00,EU.GRC,EU.Greece,10,EU.GRC,EU.Greece,CP
+011IT00,EU.ITA,EU.Italy,11,EU.ITA,EU.Italy,CP
+011IT01,EU.ITA-IT-TY.LI,EU.Italy (Tyrreniam + Ligurian seas),11,EU.ITA,EU.Italy,CP
+011IT02,EU.ITA-IT-SIC.ST,EU.Italy (Strait of Sicily),11,EU.ITA,EU.Italy,CP
+011IT10,EU.ITA-IT-ADRIAT,EU.Italy (Adriatic sea),11,EU.ITA,EU.Italy,CP
+011IT11,EU.ITA-IT-ADRI.C,EU.Italy (Central Adriatic sea),11,EU.ITA,EU.Italy,CP
+011IT12,EU.ITA-IT-ADRI.S,EU.Italy (South Adriatic sea),11,EU.ITA,EU.Italy,CP
+011IT20,EU.ITA-IT-IONIAN,EU.Italy (Ionian sea),11,EU.ITA,EU.Italy,CP
+011IT21,EU.ITA-IT-IONI.N,EU.Italy (North Ionian sea),11,EU.ITA,EU.Italy,CP
+011IT22,EU.ITA-IT-IONI.S,EU.Italy (South Ionian sea),11,EU.ITA,EU.Italy,CP
+011IT30,EU.ITA-IT-LIGURY,EU.Italy (Ligurian sea),11,EU.ITA,EU.Italy,CP
+011IT40,EU.ITA-IT-SARDHA,EU.Italy (Sardenha),11,EU.ITA,EU.Italy,CP
+011IT50,EU.ITA-IT-TYRREN,EU.Italy (Tyrrenean sea),11,EU.ITA,EU.Italy,CP
+011IT51,EU.ITA-IT-TYRR.N,EU.Italy (North Tyrrenean sea),11,EU.ITA,EU.Italy,CP
+011IT52,EU.ITA-IT-TYRR.S,EU.Italy (South Tyrrenean sea),11,EU.ITA,EU.Italy,CP
+011IT53,EU.ITA-IT-TYRR.C,EU.Italy (Central Tyrrenean sea),11,EU.ITA,EU.Italy,CP
+012JP00,JPN,Japan,12,JPN,Japan,CP
+013KR00,KOR,Korea Rep.,13,KOR,Korea Rep.,CP
+013MT00,KOR-MLT,"Korea, Malta",13,KOR,Korea Rep.,CP
+014LY00,LBY,Libya,14,LBY,Libya,CP
+015MT00,EU.MLT,EU.Malta,15,EU.MLT,EU.Malta,CP
+016MA00,MAR,Maroc,16,MAR,Maroc,CP
+017NO00,NOR,Norway,17,NOR,Norway,CP
+018PL00,EU.POL,EU.Poland,18,EU.POL,EU.Poland,CP
+019JP00,EU.PRT-JAPAN,EU.Portugal (Japan),19,EU.PRT,EU.Portugal,CP
+019PT00,EU.PRT,EU.Portugal,19,EU.PRT,EU.Portugal,CP
+019PT01,EU.PRT-PT-MAINLND,EU.Portugal (Mainland),19,EU.PRT,EU.Portugal,CP
+066IE00,EU.IRL,EU.Ireland,66,EU.IRL,EU.Ireland,CP
+019PT02,EU.PRT-PT-AZORES,EU.Portugal (Azores),19,EU.PRT,EU.Portugal,CP
+019PT03,EU.PRT-PT-MADEIRA,EU.Portugal (Madeira),19,EU.PRT,EU.Portugal,CP
+020ES00,ZAF-ESP,South Africa (Spain),20,ZAF,South Africa,CP
+020ID00,ZAF-IDN,South Africa (Indonesia),20,ZAF,South Africa,CP
+020IS00,ZAF-ISL,South Africa (Iceland),20,ZAF,South Africa,CP
+020JP00,ZAF-JPN,South Africa (Japan),20,ZAF,South Africa,CP
+020KR00,ZAF-KOR,South Africa (Korea),20,ZAF,South Africa,CP
+020NA00,ZAF-NAM,South Africa (Namibia),20,ZAF,South Africa,CP
+020PA00,ZAF-PAN,South Africa (Panama),20,ZAF,South Africa,CP
+020PH00,ZAF-PHL,South Africa (Philipinnes),20,ZAF,South Africa,CP
+020SC00,ZAF-SYC,South Africa (Seychelles),20,ZAF,South Africa,CP
+020VC00,ZAF-VCT,South Africa (St. Vincent),20,ZAF,South Africa,CP
+020ZA00,ZAF,South Africa,20,ZAF,South Africa,CP
+021ES00,EU.ESP,EU.Espana,21,EU.ESP,EU.Espana,CP
+021ES01,EU.ESP-ES-CANARY,EU.Espana (Canary Isl.),21,EU.ESP,EU.Espana,CP
+021ES02,EU.ESP-ES-CANT_BFT,EU.Espana (Cantabrian sea) Target BFT,21,EU.ESP,EU.Espana,CP
+021ES03,EU.ESP-ES-SWO,EU.Espana Target SWO,21,EU.ESP,EU.Espana,CP
+021ES04,EU.ESP-ES-MEDI_SWO,EU.Espana (Mediterranean) target SWO,21,EU.ESP,EU.Espana,CP
+021ES05,EU.ESP-ES-CANT_ALB,EU.Espana (Cantabrian sea) target ALB,21,EU.ESP,EU.Espana,CP
+021ES06,EU.ESP-ES-ETRO,EU.Espana (East tropical fishery),21,EU.ESP,EU.Espana,CP
+021ES07,EU.ESP-ES-MEDI_PS,EU.Espana (Mediterranean) PS,21,EU.ESP,EU.Espana,CP
+021ES08,EU.ESP-ES-MEDI_SPOR,EU.Espana (Mediterranean) SPORT,21,EU.ESP,EU.Espana,CP
+021ES09,EU.ESP-CANT_CDZ_ALB,EU.Espana (Cantabric V. in G. Cadiz) Target ALB,21,EU.ESP,EU.Espana,CP
+021ES10,EU.ESP-CANT_AZS_ALB,EU.Espana (Cantabric V. in Azores) Target ALB,21,EU.ESP,EU.Espana,CP
+021ES11,EU.ESP-CANARY_ALB,EU.Espana (Canary Isl.) Target ALB,21,EU.ESP,EU.Espana,CP
+022SE00,EU.SWE,EU.Sweden,22,EU.SWE,EU.Sweden,CP
+023FR00,TUN-FRA,Tunisie (France),23,TUN,Tunisie,CP
+023LY00,TUN-LBY,Tunisie (Libya),23,TUN,Tunisie,CP
+023TN00,TUN,Tunisie,23,TUN,Tunisie,CP
+023TN01,TUN-TUN-MONAST,Tunisie (Monastir based),23,TUN,Tunisie,CP
+023TN02,TUN-TUN-SFAX,Tunisie (Sfax based),23,TUN,Tunisie,CP
+023TN03,TUN-TUN-KELIBIA,Tunisie (Kelibia based),23,TUN,Tunisie,CP
+023TN04,TUN-TUN-SOUSSE,Tunisie (Sousse based),23,TUN,Tunisie,CP
+023TN05,TUN-TUN-MAHDIA,Tunisie (Mahdia based),23,TUN,Tunisie,CP
+023TN06,TUN-TUN-GABES,Tunisie (Gabes based),23,TUN,Tunisie,CP
+024TR00,TUR,Turkey,24,TUR,Turkey,CP
+025US00,USA,U.S.A.,25,USA,U.S.A.,CP
+025US01,USA-Com,USA (commercial),25,USA,U.S.A.,CP
+025US02,USA-Rec,USA (recreational),25,USA,U.S.A.,CP
+026YU00,YUG,Yugoslavia Fed.,26,YUG,Yugoslavia Fed.,NCO
+027GH00,GHA,Ghana,27,GHA,Ghana,CP
+027GH01,GHA.BASED,Ghana (Ghanian based),27,GHA,Ghana,CP
+027GH02,GHA.LOCMARK,Ghana (Ghanian local market),27,GHA,Ghana,CP
+028PA00,PAN,Panama,28,PAN,Panama,CP
+028PA01,PAN-PAN-TTO,Panama (Trinidad&Tobago),28,PAN,Panama,CP
+028PA02,PAN-PAN-ETRO,Panama (ETRO fleet),28,PAN,Panama,CP
+028PA03,PAN-PAN-GHA,Panama(Ghana),28,PAN,Panama,CP
+028PA04,PAN-PAN-SEN,Panama(Senegal),28,PAN,Panama,CP
+028PA05,PAN-PAN-SUR,Panama(Suriname),28,PAN,Panama,CP
+028PA06,PAN-PAN-CIV,Panama(C.Ivorie),28,PAN,Panama,CP
+029VE00,VEN,Venezuela,29,VEN,Venezuela,CP
+029VE01,VEN-FOR.FLTS,Venezuela (foreign based),29,VEN,Venezuela,CP
+029VE02,VEN.ARTISANAL,Venezuela (Artisanal fleet),29,VEN,Venezuela,CP
+029VE03,VEN.INDUSTRIAL,Venezuela (Industrial fleet),29,VEN,Venezuela,CP
+030GD00,GRD,Grenada,30,GRD,Grenada,NCO
+031MX00,MEX,Mexico,31,MEX,Mexico,CP
+034AO00,AGO,Angola,34,AGO,Angola,CP
+035RU00,USR,U.S.S.R.,35,USR,U.S.S.R.,CP
+037DO00,DOM,Dominican Republic,37,DOM,Dominican Republic,NCO
+038IL00,ISR,Israel,38,ISR,Israel,NCO
+039LB00,LBN,Lebanon,39,LBN,Lebanon,NCO
+040SL00,SLE,Sierra Leone,40,SLE,Sierra Leone,CP
+041TT00,TTO,Trinidad and Tobago,41,TTO,Trinidad and Tobago,CP
+041TT01,TTO-TTO-TRINID,Trinidad,41,TTO,Trinidad and Tobago,CP
+041TT02,TTO-TTO-TOBAG,Tobago,41,TTO,Trinidad and Tobago,CP
+042UY00,URY,Uruguay,42,URY,Uruguay,CP
+043VI00,VIR,US Virgin Islands,43,VIR,US Virgin Islands,NCO
+047BG00,EU.BGR,EU.Bulgaria,47,EU.BGR,EU.Bulgaria,CP
+048CY00,EU.CYP,EU.Cyprus,48,EU.CYP,EU.Cyprus,CP
+049DE00,DDR,Germany Democratic Rep.,49,DDR,Germany Democratic Rep.,NCO
+050CI00,CIV,Cote D'Ivoire,50,CIV,Cote D'Ivoire,CP
+050CI01,CIV-ABIDJAN,Cote D'Ivoire (based in Abidjan),50,CIV,Cote D'Ivoire,CP
+050CI02,CIV-S.PEDRO,Cote D'Ivoire (based in S. Pedro),50,CIV,Cote D'Ivoire,CP
+050CI03,CIV-CIV-KOREA,Cote D'Ivoire (Korea),50,CIV,Cote D'Ivoire,CP
+051LR00,LBR,Liberia,51,LBR,Liberia,NCO
+052RO00,ROU,Rumania,52,ROU,Rumania,NCO
+053SN00,SEN,Senegal,53,SEN,Senegal,CP
+053SN01,SEN-SEN-DAKAR,Senegal (based in Dakar),53,SEN,Senegal,CP
+053SN02,SEN-SEN-Art,Senegal (artisanal),53,SEN,Senegal,CP
+058PR00,PRI,Puerto Rico,58,PRI,Puerto Rico,NCO
+060EG00,EGY,Egypt,60,EGY,Egypt,CP
+061SH00,UK.SHN,Sta. Helena,61,UK.SHN,UK.Sta Helena,CP
+062CO00,COL,Colombia,62,COL,Colombia,NCC
+063BB00,BRB,Barbados,63,BRB,Barbados,CP
+064SY00,SYR,Syrian Arab Republic,64,SYR,Syria Rep.,CP
+065CV00,CPV,Cape Verde,65,CPV,Cape Verde,CP
+065CV01,CPV-Ind,Cape Verde (Industrial),65,CPV,Cape Verde,CP
+065CV02,CPV-Art,Cape Verde (Artisanal),65,CPV,Cape Verde,CP
+065CV99,CPV-ETRO,Cape Verde (ETRO),65,CPV,Cape Verde,CP
+069CG00,COG,Congo,69,COG,Congo,NCO
+070NL00,EU.NLD,EU.Netherlands,70,EU.NLD,EU.Netherlands,CP
+071HN00,HND,Honduras,71,HND,Honduras,CP
+072TG00,TGO,Togo,72,TGO,Togo,NCO
+074KY00,CYM,Cayman Islands,74,CYM,Cayman Islands,NCO
+076CW00,CUW,CuraCao,76,CUW,CuraCao,NCC
+076CW01,CUW-CW-ETRO,CuraCao (ETRO fleet),76,CUW,CuraCao,NCC
+077LC00,LCA,Sta. Lucia,77,LCA,Sta. Lucia,NCO
+079ST00,STP,S. Tome e Principe,79,STP,S. Tome e Principe,CP
+081GQ00,GNQ,Guinea Ecuatorial,81,GNQ,Guinea Ecuatorial,CP
+081GQ01,GNQ.ARTESANAL,Guinea Ecuatorial (Artisanal fleet),81,GNQ,Guinea Ecuatorial,CP
+227SI00,EU.SVN,EU.Slovenia,227,EU.SVN,EU.Slovenia,CP
+081GQ02,GNQ.INDUSTRIAL,Guinea Ecuatorial (Industrial fleet),81,GNQ,Guinea Ecuatorial,CP
+082MR00,MRT,Mauritania,82,MRT,Mauritania,CP
+083BM00,UK.BMU,UK.Bermuda,83,UK.BMU,UK.Bermuda,CP
+084CM00,CMR,Cameroon,84,CMR,Cameroon,NCO
+088NG00,NGA,Nigeria,88,NGA,Nigeria,CP
+090AW00,ABW,Aruba,90,ABW,Aruba,NCO
+094GW00,GNB,Guinea Bissau,94,GNB,Guinea Bissau,NCO
+101HR00,HRV,Croatia,101,HRV,Croatia,CP
+101HR01,HRV-ADR,Croatia (Adriatic),101,HRV,Croatia,CP
+104RU00,RUS,Russian Federation,104,RUS,Russian Federation,CP
+104RU01,RUS-RU-MURMANSK,Russian Federation (Murmansk),104,RUS,Russian Federation,CP
+104RU02,RUS-RU-KALININGRAD,Russian Federation (Kaliningrad),104,RUS,Russian Federation,CP
+105GN00,GIN,Guinee Conakry,105,GIN,Guinee Conakry,CP
+110UA00,UKR,Ukraine,110,UKR,Ukraine,NCO
+111TT00,VCT-TTO,S. Vincent (Trinidad and Tobago),111,VCT,St. Vincent and Grenadines,CP
+111VC00,VCT,S. Vincent and Grenadines,111,VCT,St. Vincent and Grenadines,CP
+111VC01,VCT-FOR.FLTS,S. Vincent (foreign based),111,VCT,St. Vincent and Grenadines,CP
+112GB00,EU.UK,EU.United Kingdom,112,EU.UK,EU.United Kingdom,CP
+113NA00,NAM,Namibia,113,NAM,Namibia,CP
+114AG00,ATG,Antigua and Barbuda,114,ATG,Antigua and Barbuda,NCO
+115JM00,JAM,Jamaica,115,JAM,Jamaica,NCO
+116DM00,DMA,Dominica,116,DMA,Dominica,NCO
+118CN00,CHN,China P.R.,118,CHN,China P.R.,CP
+119GY00,GUY,Guyana,119,GUY,Guyana,NCC
+134BZ00,BLZ,Belize,134,BLZ,Belize,CP
+134BZ99,BLZ-ETRO,Belize (ETRO),134,BLZ,Belize,CP
+134CI00,BLZ-CIV,Belize(C.Ivoire),134,BLZ,Belize,CP
+134ES00,BLZ-ESP,Belize(Espana),134,BLZ,Belize,CP
+134GH00,BLZ-GHA,Belize(Ghana),134,BLZ,Belize,CP
+134TT00,BLZ-TTO,Belize(Trinidad&Tobago),134,BLZ,Belize,CP
+134UR00,BLZ-URY,Belize(Uruguay),134,BLZ,Belize,CP
+134ZA00,BLZ-ZAF,Belize(S.Africa),134,BLZ,Belize,CP
+142CR00,CRI,Costa Rica,142,CRI,Costa Rica,NCO
+143EE00,EU.EST,EU.Estonia,143,EU.EST,EU.Estonia,CP
+143EE01,EU.EST.EE.Vigo,EU.Estonia (based in Vigo),143,EU.EST,EU.Estonia,CP
+144GE00,GEO,Georgia,144,GEO,Georgia,NCO
+145LV00,EU.LVA,EU.Latvia,145,EU.LVA,EU.Latvia,CP
+146LT00,EU.LTU,EU.Lithuania,146,EU.LTU,EU.Lithuania,CP
+147GM00,GMB,Gambia,147,GMB,Gambia,NCO
+148AL00,ALB,Albania,148,ALB,Albania,CP
+152CS00,SCG,Serbia & Montenegro,152,SCG,Serbia & Montenegro,NCO
+156IS00,ISL,Iceland,156,ISL,Iceland,CP
+157BY00,BLR,Belarus,157,BLR,Belarus,NCO
+164FO00,FRO,Faroe Islands,164,FRO,Faroe Islands,NCO
+165PH00,PHL,Philippines,165,PHL,Philippines,CP
+165PH01,PHL-PHL-MANILA,Philippines (based in Manila),165,PHL,Philippines,CP
+166KH00,KHM,Cambodia,166,KHM,Cambodia,NCO
+167FK00,FLK,Falklands,167,FLK,Falklands,NCO
+172CA00,FR.SPM-CAN,FR-Saint Pierre et Miquelon(Canada),172,FR.SPM,FR.St Pierre et Miquelon,CP
+172PM00,FR.SPM,FR-Saint Pierre et Miquelon,172,FR.SPM,FR.St Pierre et Miquelon,CP
+178PS00,PSE,"Palestinian Territory, Occupied",178,PSE,Palestina,NCO
+178PS01,PSE-PSE-GAZA.ST,Palestenean (Gaza strip based),178,PSE,Palestina,NCO
+179SC00,SYC,Seychelles,179,SYC,Seychelles,NCO
+185KN00,KNA,St. Kitts and Nevis,185,KNA,Saint Kitts and Nevis,NCO
+185KN01,KNA-KNA-ST.KITTS,St. Kitts and Nevis (St. Kitts based),185,KNA,Saint Kitts and Nevis,NCO
+185KN02,KNA-KNA-NEVIS,St. Kitts and Nevis (Nevis based),185,KNA,Saint Kitts and Nevis,NCO
+191MU00,MUS,Mauritius,191,MUS,Mauritius,NCO
+192IN00,IND,India,192,IND,India,NCO
+193VU00,VUT,Vanuatu,193,VUT,Vanuatu,CP
+194IR00,IRN,"Iran, Islamic Republic of",194,IRN,Iran Islamic Rep.,NCO
+195MY00,MYS,Malaysia,195,MYS,Malaysia,NCO
+196GT00,GTM,Guatemala,196,GTM,Guatemala,CP
+196GT01,GTM.ETRO,Guatemala (ETRO fleet),196,GTM,Guatemala,CP
+197SV00,SLV,El Salvador,197,SLV,El Salvador,NCO
+198AI00,AIA,Anguilla,198,AIA,Anguilla,NCO
+199TC00,UK.TCA,Turks and Caicos Islands,199,UK.TCA,UK.Turks and Caicos,CP
+199TC01,UK.TCA-USA,Turks and Caikos (USA),199,UK.TCA,UK.Turks and Caicos,CP
+199TC02,UK.TCA-CYM,Turks and Caikos (Cayman Isl.),199,UK.TCA,UK.Turks and Caicos,CP
+199TC03,UK.TCA-VGB,Turks and Caicos (British Virgin Isl.),199,UK.TCA,UK.Turks and Caicos,CP
+200BE00,EU.BEL,EU.Belgium,200,EU.BEL,EU.Belgium,CP
+201VG00,UK.VGB,UK.British Virgin Islands,201,UK.VGB,UK.British Virgin Islands,CP
+202TH00,THA,Thailand,202,THA,Thailand,NCO
+203CL00,CHL,Chile,203,CHL,Chile,NCO
+204NI00,NI.NIC,Nicaragua,204,NIC,Nicaragua,CP
+205BS00,BS.BHS,Bahamas,205,BHS,Bahamas,NCO
+206SR00,SR.SUR,Suriname,206,SUR,Suriname,NCO
+207EC00,ECU,Ecuador,207,ECU,Ecuador,NCO
+208AU00,AUS,Australia,208,AUS,Australia,NCO
+209FJ00,FJI,Fiji Islands,209,FJI,Fiji Islands,NCO
+210GU00,GUM,Guam,210,GUM,Guam,NCO
+211ID00,IDN,Indonesia,211,IDN,Indonesia,NCO
+212KI00,KIR,Kiribati,212,KIR,Kiribati,NCO
+213MV00,MDV,Maldives,213,MDV,Maldives,NCO
+214PG00,PNG,Papua New Guinea,214,PNG,Papua New Guinea,NCO
+215LK00,LKA,Sri Lanka,215,LKA,Sri Lanka,NCO
+216VN00,VNM,Viet Nam,216,VNM,Viet Nam,NCO
+217SG00,SGP,Singapore,217,SGP,Singapore,NCO
+218OM00,OMN,Oman,218,OMN,Oman,NCO
+219NZ00,NZL,New Zealand,219,NZL,New Zealand,NCO
+220FM00,FSM,Micronesia,220,FSM,Micronesia,NCO
+221CK00,COK,Cook Islands,221,COK,Cook Islands,NCO
+222BO00,BOL,Bolivia,222,BOL,Bolivia,NCO
+223PW00,PLW,Palau,223,PLW,Palau,NCO
+224TO00,TON,Tonga,224,TON,Tonga,NCO
+225KE00,KEN,Kenya,225,KEN,Kenya,NCO
+226PF00,PYF,Polynesie FranCaise,226,PYF,Polynesie FranCaise,NCO
+228PE00,PER,Peru,228,PER,Peru,NCO
+229CH00,CHE,Switzerland,229,CHE,Switzerland,NCO
+230TZ00,TZA,Tanzania,230,TZA,Tanzania,NCO
+231AE00,ARE,United Arab Emirates,231,ARE,United Arab Emirates,NCO
+232PE00,PER,Peru,232,PER,Peru,NCO
+233HT00,HTI,Haiti,233,HTI,Haiti,NCO
+234MG00,MDG,Madagascar,234,MDG,Madagascar,NCO
+235MZ00,MOZ,Mozambique,235,MOZ,Mozambique,NCO
+236TZ00,TZA,Tanzania,236,TZA,Tanzania,NCO
+237EH00,ESH,Western Sahara,237,ESH,Western Sahara,NCO
+238SB00,SLB,Solomon Islands,238,SLB,Solomon Islands,NCO
+239MH00,MHL,Marshall Islands,239,MHL,Marshall Islands,NCO
+501--00,NEI.001,NEI (ETRO),501,NEI.001,NEI (ETRO),NCO
+501AN00,NEI.001-ANT,NEI (ETRO-ANT),501,NEI.001,NEI (ETRO),NCO
+501BZ00,NEI.001-BLZ,NEI (ETRO-BLZ),501,NEI.001,NEI (ETRO),NCO
+501CV00,NEI.001-CPV,NEI (ETRO-CPV),501,NEI.001,NEI (ETRO),NCO
+501GH00,NEI.001-GHA,NEI (ETRO-GHA),501,NEI.001,NEI (ETRO),NCO
+501GN00,NEI.001-GIN,NEI (ETRO-GIN),501,NEI.001,NEI (ETRO),NCO
+501GT00,NEI.001-GTM,NEI (ETRO-GTM),501,NEI.001,NEI (ETRO),NCO
+501IT00,NEI.001-ITA,NEI (ETRO-ITA),501,NEI.001,NEI (ETRO),NCO
+501LR00,NEI.001-LBR,NEI (ETRO-LBR),501,NEI.001,NEI (ETRO),NCO
+501MA00,NEI.001-MAR,NEI (ETRO-MAR),501,NEI.001,NEI (ETRO),NCO
+501MT00,NEI.001-MLT,NEI (ETRO-MLT),501,NEI.001,NEI (ETRO),NCO
+501MU00,NEI.001-MUS,NEI (ETRO-MUS),501,NEI.001,NEI (ETRO),NCO
+501MY00,NEI.001-MYS,NEI (ETRO-MYS),501,NEI.001,NEI (ETRO),NCO
+501NO00,NEI.001-NOR,NEI (ETRO-NOR),501,NEI.001,NEI (ETRO),NCO
+501PA00,NEI.001-PAN,NEI (ETRO-PAN),501,NEI.001,NEI (ETRO),NCO
+501SC00,NEI.001-SYC,NEI (ETRO-SYC),501,NEI.001,NEI (ETRO),NCO
+501SN00,NEI.001-SEN,NEI (ETRO-SEN),501,NEI.001,NEI (ETRO),NCO
+501SV00,NEI.001-SLV,NEI (ETRO-SLV),501,NEI.001,NEI (ETRO),NCO
+501VC00,NEI.001-VCT,NEI (ETRO-VCT),501,NEI.001,NEI (ETRO),NCO
+501VE00,NEI.001-VEN,NEI (ETRO-VEN),501,NEI.001,NEI (ETRO),NCO
+501VU00,NEI.001-VUT,NEI (ETRO-VUT),501,NEI.001,NEI (ETRO),NCO
+502--00,NEI.002,NEI (Mediterranean Unclassified),502,NEI.002,NEI (MED),NCO
+503--00,NEI.COMB,NEI (Combined fleets BFT),503,NEI.COMB,NEI (combined),NCO
+504--00,NEI.UK.OT,NEI (UK-O. Territories unclassified),504,NEI.UK.OT,NEI (UK.OT),NCO
+510DK00,NEI.007,NEI (Denmark),500,NEI.FLAGS,NEI (Flag related),NCO
+511FR00,NEI.008,NEI (France),500,NEI.FLAGS,NEI (Flag related),NCO
+512GR00,NEI.010,NEI (Greece),500,NEI.FLAGS,NEI (Flag related),NCO
+513IT00,NEI.011,NEI (Italy),500,NEI.FLAGS,NEI (Flag related),NCO
+514MA00,NEI.016,NEI (Norway),500,NEI.FLAGS,NEI (Flag related),NCO
+515PT00,NEI.019,NEI (Portugal),500,NEI.FLAGS,NEI (Flag related),NCO
+516ES00,NEI.021,NEI (Espana),500,NEI.FLAGS,NEI (Flag related),NCO
+517PA00,NEI.028,NEI (Panama),500,NEI.FLAGS,NEI (Flag related),NCO
+518MX00,NEI.031,NEI (Mexico),500,NEI.FLAGS,NEI (Flag related),NCO
+519SL00,NEI.040,NEI (Sierra Leone),500,NEI.FLAGS,NEI (Flag related),NCO
+520UY00,NEI.042,NEI (Uruguay),500,NEI.FLAGS,NEI (Flag related),NCO
+521IE00,NEI.066,NEI (Ireland),500,NEI.FLAGS,NEI (Flag related),NCO
+522HN00,NEI.071,NEI (Honduras),500,NEI.FLAGS,NEI (Flag related),NCO
+523ST00,NEI.079,NEI (S. Tome e Principe),500,NEI.FLAGS,NEI (Flag related),NCO
+524GQ00,NEI.081,NEI (Eq. Guinea),500,NEI.FLAGS,NEI (Flag related),NCO
+525GW00,NEI.094,NEI (Guine Bissau),500,NEI.FLAGS,NEI (Flag related),NCO
+526RU00,NEI.104,NEI (Russian Fed.),500,NEI.FLAGS,NEI (Flag related),NCO
+527GN00,NEI.105,NEI (G. Conakry),500,NEI.FLAGS,NEI (Flag related),NCO
+528VC00,NEI.111,NEI (St. Vincent),500,NEI.FLAGS,NEI (Flag related),NCO
+529GB00,NEI.112,NEI (EC.GBR),500,NEI.FLAGS,NEI (Flag related),NCO
+530CN00,NEI.118,NEI (China),500,NEI.FLAGS,NEI (Flag related),NCO
+531BZ00,NEI.134,NEI (Belize),500,NEI.FLAGS,NEI (Flag related),NCO
+532GE00,NEI.144,NEI (Georgia),500,NEI.FLAGS,NEI (Flag related),NCO
+533GM00,NEI.147,NEI (Gambia),500,NEI.FLAGS,NEI (Flag related),NCO
+534BY00,NEI.157,NEI (Belarus),500,NEI.FLAGS,NEI (Flag related),NCO
+535KH00,NEI.166,NEI (Cambodia),500,NEI.FLAGS,NEI (Flag related),NCO
+536PM00,NEI.172,"NEI (France, S. Pierre Miquellon)",500,NEI.FLAGS,NEI (Flag related),NCO
+700EC00,EU,EU (unspecified),700,EU,EU (unspecified),CP
+800--00,MIX.FIS,France + C. Ivoire + Senegal,800,MIX.FIS,Mixed flags (FIS),NCO
+801--00,MIX.KR+PA,Korea + Panama,801,MIX.KR+PA,Mixed flags (KR+PA),NCO
+802--00,MIX.FR+ES,EU.France+Espana,802,MIX.FR+ES,Mixed flags (FR+ES),NCO
+803--00,MIX.EC-ETRO,MIX (ESP+FRA+NEI),803,MIX.EU-ETRO,Mixed flags (EU tropical),NCO
+900JP00,JPN.REF,Japan (Reference data),900,JPN.ref,Japan,NCO
+910CA00,JPN.OB.CAN,Japan (observed by Canada),910,JPN.obs,Japan (foreign obs.),NCO
+910DZ00,JPN.OB.DZA,Japan (observed by Algeria),910,JPN.obs,Japan (foreign obs.),NCO
+910SH00,JPN.OB.SHN,Japan (observed by Sta. Helena),910,JPN.obs,Japan (foreign obs.),NCO
+910US00,JPN.OB.USA,Japan (observed by USA),910,JPN.obs,Japan (foreign obs.),NCO
+911SH00,TAI.OB.SHN,Chinese Taipei (observed by Sta. Helena),911,TAI.Obs,Chinese Taipei (foreign obs.),NCO
+912SH00,HND.OB.SHN,Honduras (observed by Sta. Helena),912,HND.Obs,Honduras (foreign obs.),NCO
+913SH00,PAN.OB.SHN,Panama (observed by Sta. Helena),913,PAN.Obs,Panama (foreign obs.),NCO
+914SH00,SGP.OB.SHN,Singapore (Observed by Sta. Helena),914,SGP.Obs,Singapore (foreign obs.),NCO
+915SH00,BLZ.OB.SHN,Belize (Observed by Sta. Helena),915,BLZ.Obs,Belize (foreign obs.),NCO
+916SH00,SYC.OB.SHN,Seychelles (Observed by Sta. Helena),916,SYC.Obs,Seychelles (foreign obs.),NCO
+920--00,GHA.ICCAT,Ghana (ICCAT program),920,GHA.ICCAT,Ghana (ICCAT program),NCO
+921--00,JPN.ICCAT,Japan (ICCAT program),921,JPN.ICCAT,Japan (ICCAT program),NCO
+922--00,CUB.ICCAT,Cuba (ICCAT program),922,CUB.ICCAT,Cuba (ICCAT program),NCO
+923--00,CHN.ICCAT,China (ICCAT program),923,CHN.ICCAT,China (ICCAT program),NCO
+999--99,UNCL.FLEETS,OTHERS (Unclassified fleets),999,UNCL,Unclassified flag,NCO
