@@ -63,14 +63,14 @@ lati = as.numeric(dimnames(datGrid)[[2]])
 
 long = long+180
 
-pdf(paste("cpuePlot.pdf",sep=""))
+#pdf(paste("cpuePlot.pdf",sep=""))
 fields::image.plot(long,lati,datGrid, las = 1, ylab = "latitude", xlab = "longitude", main = paste(species," predicted log(CPUE)", sep = ""))
 maps::map("world2", xlim = xlim+180, ylim = ylim, fill = T, add = T) # this works
-dev.off()
+#dev.off()
 
 ### get data with the sCPUEdb
 
-iattc = getIATTCdataCE(con, code = code, index = "n")
+#iattc = getIATTCdataCE(con, code = code, index = "n")
 
 
 
