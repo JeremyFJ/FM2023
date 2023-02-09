@@ -239,28 +239,22 @@ gridExtra::grid.arrange(p1,p2)
 ```{r}
 # IATTC
 fleet_ia = aggregate(data=iattc, catch~fleet, sum) # aggregate catch by fleet
-top5fleets =  fleet_ia[order(-fleet_ia$catch),] # order fleet by top catches
-top5_iattc <- subset(iattc, year >= 1990)
-top5_iattc <- subset(top5_iattc, fleet=="CHN" | 
-                       fleet == "ESP" | 
-                       fleet == "JPN" | 
-                       fleet == "KOR" | 
-                       fleet == "TWN")
-iattc_plot = ggplot(top5_iattc, aes(fill=fleet, y=catch*0.001, x=year)) + # top fleets with most catch
+top5fleets_ia <-  fleet_ia[order(-fleet_ia$catch),] # order fleet by top catches
+top5fleets_ia <- top5fleets_ia[c(1:5),] #isolate top 5
+top5_iattc <- subset(iattc, year >= 1990) %>% #only consider 1990 forward
+  filter(fleet %in% top5fleets_ia$fleet) # top fleets with most catch
+iattc_plot = ggplot(top5_iattc, aes(fill=fleet, y=catch*0.001, x=year)) + 
   geom_bar(position="stack", stat='identity') + ggtitle("IATTC Swordfish") + 
   ylab("Catch (t)")
 
 # WCPFC
-fleet_wp = aggregate(data=wcpfc, catch~fleet, sum) # aggregate catch by fleet
-top5fleets =  fleet_wp[order(-fleet_wp$catch),] # order fleet by top catches
-top5_wcpfc <- subset(wcpfc, year >= 1990)
-top5_wcpfc <- subset(top5_wcpfc, fleet=="JP" | 
-                       fleet == "TW" | 
-                       fleet == "CN" | 
-                       fleet == "KR" | 
-                       fleet == "AU")
+fleet_wc = aggregate(data=wcpfc, catch~fleet, sum) # aggregate catch by fleet
+top5fleets_wc =  fleet_wc[order(-fleet_wc$catch),] # order fleet by top catches
+top5fleets_wc <- top5fleets_wc[c(1:5),] #isolate top 5
+top5_wcpfc <- subset(wcpfc, year >= 1990) %>% #only consider 1990 forward
+  filter(fleet %in% top5fleets_wc$fleet) # top fleets with most catch
 wcpfc_plot = ggplot(top5_wcpfc, aes(fill=fleet, y=catch*0.001, x=year)) + # top fleets with most catch
-  geom_bar(position="stack", stat='identity') + ggtitle("WCPFC Swordfish") + 
+    geom_bar(position="stack", stat="identity") + ggtitle("WCPFC Swordfish") +
   ylab("Catch (t)")
 
 ```
