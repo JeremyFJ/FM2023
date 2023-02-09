@@ -1,33 +1,40 @@
 ---
-title: "Population dynamics and Von Bertalanffy indiviudal growth"
+title: "Population dynamics, Length frequencies, and CPUEs"
 author: "(Your name here)"
-date: "2/10/22"
+date: "2/9/23"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+getwd()
+set.seed(9999)
 ```
 
 You will need the following packages installed and loaded. 
 ```{r message=FALSE}
-library(nlstools)
 library(tidyverse)
 library(magrittr)
 library(FSA)
+library(FSAdata)
+library(rfishbase)
 ```  
-Leave that data aside for now, first we will look at population growth models. Recall the equation for exponential growth?
 
-### Exponential Growth model
+# Population Dynamics
 
+## Exponential Growth model
 $$
 N_t = N_0e^{(b-d)t}
 $$
-where $N_t$ = population size at time (t), $N_0$ = initial population size, $b$ = birth rate, $d$ = death rate, $t$ = time  
+`Nt` = population size at time
+`N0` beginning population size
+`b` = birth rate
+`d` = death rate
+`t` = time
 
-Let's model exponential growth of a hypothetical population using different birth and death rates.
-
-
+Exponential growth of a hypothetical population using different birth and death rates.
 ```{r examplebox2.1}
 b = c(0.2,0.2,0.2) # birth rates
 d = c(0.04,0.1,0.2) # death rates
@@ -39,10 +46,6 @@ for (i in 1:3){
   Nt[,i] = N0[i]*exp((b[i]-d[i])*Time)
 }
 
-plot(Nt[,1]~Time, type = "l", ylim = range(Nt))
-lines(Nt[,2]~Time, col = "red")
-lines(Nt[,3]~Time, col = "green")
-
 Nt_dat = data.frame(Nt)
 colnames(Nt_dat) = c('T1', 'T2', 'T3')
 ggplot() + geom_line(aes(x=Time, y=Nt_dat$T1)) +
@@ -51,188 +54,256 @@ ggplot() + geom_line(aes(x=Time, y=Nt_dat$T1)) +
   labs(x="Time", y="Population size (Nt)")
 ```
 
-**Questions**  
-1) Change the values for b and d and run the models again. *Think about:* How does this change the plot? Why? 
-2) Plot the linear function of this model
-
-```{r}
-
-```
-
-
-### Logistic Population Growth
-
+## Logistic Population Growth
 
 $$
 N_{t+1} = N_t + rN_t(1-N_t/K) - C_t 
 $$
-$r$ = rate of increase, $K$ = carrying capacity, $C_t$ = harvest rate  
-
+`Nt+1` = population size at timestep t+1
+`Nt` = population size at time
+`r` = rate of increase
+`K` = carrying capacity
+`C_t` = harvest rate  
 
 ```{r}
+colors = c("0"="grey76", "10"="grey60", "20"="black")
 r = 0.5
 K = 1000
 N0 = 50
 Time = seq(0,25,1)
 Nt = c()
 Nt[1] = N0
+#-----------------------
+# Catch = 0
+#-----------------------
+for (i in 1:25){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K)
+}
+Nt0 = Nt
 Ct = 10
+#-----------------------
+# Catch = 10
+#-----------------------
 for (i in 1:25){
   Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
 }
-par(mfrow  = c(1,2))
-
-plot(Nt~Time, type = "l", ylim = range(Nt))
-
+Nt1 = Nt
 Ct = 20
+#-----------------------
+# Catch = 20
+#-----------------------
 for (i in 1:25){
   Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
 }
-plot(Nt~Time, type = "l", ylim = range(Nt))
+Nt2 = Nt
 
+ggplot() + 
+  geom_line(aes(x=Time, y=Nt0, color="0"), size=1.5) +
+  geom_line(aes(x=Time, y=Nt1, color="10"), size=1.5) +
+  geom_line(aes(x=Time, y=Nt2, color="20"), size=1.5) + 
+  labs(x="Time", 
+       y="Population size",
+       color="Catch") +
+    scale_color_manual(values = colors)
 ```
   
-**Questions**  
-Manipulate the parameters k, r, and N0; how does this affect the models?
-
-```{r}
-
+Now we look at intrinsic growth rates > 1 which should lead to unstable and oscillatory population dynamics. 
+```{r fig2.6}
+r = 0.25
+K = 1000
+N0 = 1
+Time = seq(0,100,1)
+Nt = c()
+Nt[1] = N0
+Ct = 0
+for (i in 1:100){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
+}
+par(mfrow  = c(2,2))
+plot(Nt~Time, type = "l", ylim = range(Nt), main="r=0.25")
+r = 1.85
+for (i in 1:100){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
+}
+plot(Nt~Time, type = "l", ylim = range(Nt), main="r=1.85")
+r = 2.5
+for (i in 1:100){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
+}
+plot(Nt~Time, type = "l", ylim = range(Nt), main="r=2.5")
+r = 3
+for (i in 1:100){
+  Nt[i+1] = Nt[i] + r*Nt[i]*(1-Nt[i]/K) - Ct
+}
+plot(Nt~Time, type = "l", ylim = range(Nt), main="r=3")
 ```
 
-
-**EXERCISE**  
-In a new R script, write and plot an exponential growth model for a stock with initial population biomass of 1500 (hundreds of tons), an annual death rate of 0.07, and an annual harvest (catch) of 100 (hundreds of tons). Compare the effects of differential birth rates b=0.15, b=0.2, and b=0.25 on the population trajectory. Project the population growth over 30 years.  
-  
-### Von Bertalanffy Individual Growth
-
-
-First, we will load some data in the .Dat format - you need to change the line below to direct R to the file location on your machine. Then, we will remove all negatives or missing values for length
+### Predicting growth rate of a population
+*Parameters that we need*
+- Lifespan
+- Fecundity
+- Age at Maturation
 ```{r}
-dat <- read.table("codAL.dat",head=TRUE)
-index1<-which(dat$length>0)
-dat <-dat[index1,]
-```
+# ---- Mortality rate ----------------------------
 
-$$
-L_t = L_{\infty}(1-e^{-K(t-t_0)})
-$$
+# get mortality from Then.etal.2014
+getMtmax = function(lifespan){		
+		M = 4.899 * lifespan^-0.916
+		M
+}
 
-#### Parameter starting values  
-The Von Bertalanffy growth equation includes the parameters Linf, K, and t0. We will define estimates of these parameters to be used in a function.  As a general rule for marine fish, estimates of K=0.3 and t0=0 are a good starting point, and we can supply the maximum length in our dataset as an estimate of mean maximum length.
+# get mortality using Dulvy.etal.2004's method
+getMDulvy.etal.2004 = function(lifespan, agemat){
+	w = (lifespan+agemat)/2 # average lifespan
+	M = 1/w
+	M
+}
 
-```{r}
-parameters <- list(Linf=max(dat$length), K=0.3, t0=0)
-```
-#### Writing a function  
-Next, we will write a function for the Von Bertalanffy growth equation.
-```{r}
-VBgrowth <- function(age, Linf, K, t0) Linf*(1-exp(-K*(age-t0)))
-```
+getRmax= function(method = "Smith.etal.1998", mortality = "Then.etal.2014", fec = NULL, litter = NULL, cycle = NULL, lifespan, agemat){
 
+  # Calculate natural mortality rate
+	if (mortality== "Dulvy.etal.2004") M = getMDulvy.etal.2004(lifespan = lifespan, agemat = agemat)
+	if (mortality== "Then.etal.2014") M = getMtmax(lifespan = lifespan)
+	if (is.numeric(mortality)) M = mortality
 
-**Question** With our function, how can we estimate length at age 3?
+	if(method=="Smith.etal.1998"){
+		tmax = lifespan
+		tmat = agemat
+		if (is.null(fec)) fec = litter/2/cycle else fec = fec
+		Z<-1.5*M
+	
+		#this is equation 7 in the manuscript
+		l_alpha<-(1-exp(-(Z)))/((fec)*(1-exp(-(Z*(tmax-tmat+1)))))
 
-```{r}
-
-```
-The package `FSA` contains a function vbFuns() which we can use to slightly modify our growth function - this allows us to supply all of the parameters as one argument.
-```{r}
-VBgrowth=vbFuns()
-VBgrowth(3, Linf=max(dat$length), K=0.3, t0=0)
-VBgrowth(3, Linf=c(max(dat$length), 0.3, 0))
-```
-Both of the above code lines produce the same result, but in the second, the three parameters are provided in one argument.  
-  
-#### Parameter estimates  
-To generate estimates of our parameters, we will fit the model using the non-linear least squares method. We need to supply our function, our dataset, and our starting estimates for parameter values (which we defined above in the list `parameters`.)
-```{r}
-VBfit <- nls(length~VBgrowth(age, Linf, K, t0), data=dat,start=parameters)
-```
-To extract our parameter estimates from the list `VBfit`, we will use the `coef()` function; similarly, to get confidence intervals for each, we can use the `confint()` function.
-```{r}
-coef(VBfit)
-confint(VBfit)
-```
-
-#### Bootstrapping  
-We now have estimates based on our data, but to make our estimates more robust, we can use a technique called bootstrapping. Bootstrapping is a technique whereby the data is sampled with replacements repeatedly, and parameters are estimated from each bootstrap sample. For non-linear models (such as VBGF), we can use the function `nlsBoot()` from the package `nlstools`.
-```{r}
-bootFit <- nlsBoot(VBfit)
-head(bootFit$coefboot)
-```
-We can also estimate confidence intervals from our bootstrap samples and plot them.
-```{r}
-confint(bootFit,plot=TRUE)
-```
-
-#### Predictions  
-We can now use our updated parameter estimates to make predictions for length-at-age.
-```{r}
-predicts = data.frame(age=c(1:25)) #ages for predictions
-predicts$length=predict(VBfit,predicts) #generate predicted length at age
-```
-The above predictions are based on our initial (non-bootstrapped) parameter estimates. We can also generate predictions based on the bootstrap samples (note that the `vbFuns()` function we used earlier assigns "t" as the variable for age). We will use the bootstrap data to project mean length at age 5, using the `apply()` function. `apply()` allows us to apply functions to vectors or lists; here we use the argument `MARGIN=1` to apply the function across rows, rather than columns, because each row contains a set of parameter estimates. We then use the `quantile()` function to generate a 95% confidence interval.
-```{r}
-predicts.age5 = apply(bootFit$coefboot, MARGIN=1, FUN=VBgrowth, t=5)
-quantile(predicts.age5, c(0.025,0.975))
-```
-
-#### Plotting  
-Let's plot our data.
-```{r}
-x = seq(0,25,length.out=500) #ages for predictions
-predLength = VBgrowth(x,Linf=coef(VBfit)) #predicted length at age
-xlmts = range(c(x,dat$age)) #Because we are plotting outside of our age data
-ylmts = range(c(predLength,dat$length)) 
-plot(length~age, data=dat, xlab="Age", ylab="Total length (cm)",
-     xlim=xlmts, ylim=ylmts,pch=19,col=rgb(0,0,0,1/3))
-lines(predLength~x,lwd=2)
-
-
-dat2=data.frame(x=x, length=predLength)
-ggplot() + geom_point(data=dat,aes(x=age, y=length))+
-  geom_line(data=dat2, aes(x=x, y=predLength))+
-  labs(x='Age', y='Total length (cm)')
-```
-  
-Now we can add some confidence intervals - first we need to define the dimensions.
-```{r}
-LCI = UCI = numeric(length(x))
-```
-Now we are going to use a `for` loop to predict confidence intervals, again using the `apply()` function.
-```{r}
-for (i in 1:length(x)) {
-  tmp = apply(bootFit$coefboot,MARGIN = 1,FUN=VBgrowth, t=x[i])
-  LCI[i] = quantile(tmp,0.025)
-  UCI[i] = quantile(tmp,0.975)
+		#this is equation 6 in the manuscript
+		eq6 <- function(reb) 1-exp(-(M+reb))-l_alpha*(fec)*1.25*exp(-reb*tmat)*(1-exp(-(M+reb)*(tmax-tmat+1)))
+		r_Z<-uniroot(eq6, c(0,5), tol=1e-8)
+		return(r_Z$root*2)
+	} 
+	
 }
 ```
-We'll now update our y-axis limits to include the range of the confidence intervals, and then plot again.
-```{r}
-ylmts <- range(c(predLength,LCI,UCI,dat$length))
-plot(length~age, data=dat, xlab="Age", ylab="Total length (cm)",
-     xlim=xlmts, ylim=ylmts,pch=19,col=rgb(0,0,0,1/3))
-lines(predLength~x,lwd=2)
-lines(UCI~x,lwd=2,lty=2, col="red")
-lines(LCI~x,lwd=2,lty=2, col="red")
 
-ggplot() + geom_point(data=dat,aes(x=age, y=length))+
-  geom_line(data=dat2, aes(x=x, y=predLength))+
-  labs(x='Age', y='Total length (cm)')+
-  geom_line(aes(x,UCI), col='red', lty=2)+
-  geom_line(aes(x,LCI), col='red', lty=2)
+Look at Spiny Dogfish in the Northwest Atlantic.
+```{r}
+spinyLife = popgrowth(species_list = c("Squalus acanthias"))
 ```
 
-#### Check model fit  
-We will check our model fit using the `residPlot()` function.
 ```{r}
-residPlot(VBfit)
+spinyLife = subset(popgrowth(species_list = c("Squalus acanthias")), Locality=="Northwestern Atlantic")
+spinyFec = fecundity(species_list = c("Squalus acanthias"))[1,]
+spinyMat = subset(maturity(species_list = c("Squalus acanthias")), Locality=="Northwest Atlantic")
 ```
-  
-#### Log-Transform  
-As you can see, as age increases, the variability of length increases (multiplicative error). If we take the natural log of each side, then we can transform the equation, fit it again using least-squares, and check the new fit.
+
+Calculate growth rate for Northwest Atlantic spiny dogfish stock
 ```{r}
-dat %<>% mutate(log_length=log(length))
-VBLogFit = nls(log_length~log(VBgrowth(age,Linf,K,t0)),data=dat,start=parameters)
-residPlot(VBLogFit)
+lifespan = mean(spinyLife$tmax, na.rm=T)
+fecundity = (spinyFec$FecundityMin+spinyFec$FecundityMax) / 2 # mean of minimum and maximum fecundity
+agemat = (spinyMat$AgeMatMin + spinyMat$AgeMatMin2) / 2 # mean of two records for minimum age at maturity
+rmax = getRmax(method = "Smith.etal.1998", mortality = "Then.etal.2014", fec = fecundity, lifespan = lifespan, agemat = agemat)
+paste0("Intrinsic Growth Rate = ", round(rmax, 3))
 ```
+
+## Calculating CPUEs
+Catch and effort of swordfish by longline in the Pacific Ocean by the Inter-American Tropical Tuna Commission and the Western Pacific Fisheries Commission. These are RFMOs or Regional Fisheries Management Organization. 
+```{r}
+iattc = read.csv("iattc_swo.csv") # IATTC catch and effort for swordfish
+wcpfc = read.csv("wcpfc_swo.csv") # WCPFC catch and effort for swordfish
+```
+
+### Creating CPUEs from catch and hook data 
+Create catch per unit effort using the `catch` and `hooks` columns 
+
+```{r}
+# calculate CPUE and rescale by a factor of 1000
+iattc$cpue = (iattc$catch / iattc$hooks)*1000
+wcpfc$cpue = (wcpfc$catch / wcpfc$hooks)*1000
+```
+
+## Total Catch by Nation
+
+Now that we have comprehensive CPUEs from two data sources we can do a more-informed stock assessment of swordfish in the Pacific Ocean
+
+Next, let's look at recent catch biomass by country for IATTC and WCPFC reports. 
+```{r}
+p1 = ggplot(aes(y = log(cpue), x = fleet), data = iattc) + 
+  geom_boxplot() +
+  ggtitle("IATTC")
+p2 = ggplot(aes(y = log(cpue), x = fleet), data = wcpfc) + 
+  geom_boxplot() +
+  ggtitle("WCPFC") 
+
+gridExtra::grid.arrange(p1,p2)
+```
+
+```{r}
+# IATTC
+fleet_ia = aggregate(data=iattc, catch~fleet, sum) # aggregate catch by fleet
+top5fleets =  fleet_ia[order(-fleet_ia$catch),] # order fleet by top catches
+iattc_plot = ggplot(iattc[(iattc$year>1990 & iattc$fleet==top5fleets$fleet[1:5]),], aes(fill=fleet, y=catch*0.001, x=year)) + # top fleets with most catch
+    geom_bar(position="stack", stat="identity") + ggtitle("IATTC Swordfish") + 
+  ylab("Catch (t)")
+
+# WCPFC
+fleet_wc = aggregate(data=wcpfc, catch~fleet, sum) # aggregate catch by fleet
+top5fleets =  fleet_wc[order(-fleet_wc$catch),] # order fleet by top catches
+wcpfc_plot = ggplot(wcpfc[(wcpfc$year>1990 & wcpfc$fleet==top5fleets$fleet[1:5]),], aes(fill=fleet, y=catch*0.001, x=year)) + # top fleets with most catch
+    geom_bar(position="stack", stat="identity") + ggtitle("WCPFC Swordfish") +
+  ylab("Catch (t)")
+```
+
+```{r}
+gridExtra::grid.arrange(iattc_plot, wcpfc_plot) # arrange both plots next to each other
+```
+
+### Identify Stocks
+From the 2018 WCPFC assessment, there appears to be 3 defined stocks of Pacific Swordfish, delineated by the equator and the 150W longitude line. 
+
+Look at the `North` and `South` swordfish stocks in the Western Pacific
+```{r}
+dat_n = wcpfc[wcpfc$lat>0,] # subset master dataframe for ABOVE the equator
+fc_north = aggregate(data=dat_n, catch~year, FUN=mean) # aggregate catch by year
+fc_north$hooks = aggregate(data=dat_n, hooks~year, FUN=mean)$hooks # add aggregated hook data
+fc_north$cpue = fc_north$catch/fc_north$hooks*1000 # and finally calculate average CPUE
+
+dat_s = wcpfc[wcpfc$lat<0,] # subset master dataframe for BELOW the equator
+fc_south = aggregate(data=dat_s, catch~year, FUN=mean)
+fc_south$hooks = aggregate(data=dat_s, hooks~year, FUN=mean)$hooks
+fc_south$cpue = fc_south$catch/fc_south$hooks*1000
+```
+
+
+```{r}
+north = ggplot() + 
+  geom_line(data=fc_north, aes(x=year, y=cpue)) +
+  ylab("CPUE (kg/hook)") +
+  ggtitle("Northwest Pacific Swordfish") +
+  theme(panel.grid = element_line(colour = "black",size = 0.05),
+        panel.border = element_rect(fill = NA))
+
+south = ggplot() + 
+  geom_line(data=fc_south, aes(x=year, y=cpue)) +
+  ylab("CPUE (kg/hook)") +
+  ggtitle("Southwest Pacific Swordfish") +
+  theme(panel.grid = element_line(colour = "black",size = 0.05),
+        panel.border = element_rect(fill = NA))
+
+gridExtra::grid.arrange(north, south)
+```
+
+
+```{r}
+world <- map_data("world")
+ggplot() + 
+  geom_tile(data=wcpfc, aes(x=lon, y=lat, fill=cpue)) +
+  geom_map(
+    data = world, map = world,
+    aes(long, lat, map_id = region)) +
+  scale_fill_gradientn(colours=topo.colors(7), 
+                       breaks=c(0, 1, 2, 3), 
+                       limits=c(0,3))
+
+```
+
+
+
