@@ -57,6 +57,14 @@ iccat$bft_cpue = (iccat$bft / iccat$eff1)
 
 
 
-# iccat$bft_cpue = (iccat$bft / iccat$eff1) 
+world <- map_data("world")
+ggplot() + 
+  geom_tile(data=wcpfc, aes(x=lon, y=lat, fill=cpue)) +
+  geom_map(
+    data = world, map = world,
+    aes(long, lat, map_id = region)) +
+  scale_fill_gradientn(colours=topo.colors(7), 
+                       breaks=c(0, 1, 2, 3), 
+                       limits=c(0,3)) 
 
 # plot(iccat$bft_cpue)
