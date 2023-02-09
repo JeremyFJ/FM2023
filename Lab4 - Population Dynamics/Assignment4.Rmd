@@ -18,7 +18,7 @@ require(FSAdata)
 ```
 
 1) Growth Modeling
-- plot an exponential growth model for a stock with `initial population size of 1500`, an `annual death rate of 0.07`, and an `annual harvest (catch) of 100` individuals. Compare the effects of different `birth rates b=0.15, b=0.2, and b=0.25` on the population trajectory. Project the population growth over `30 years`.  
+- plot an **exponential growth model** for a stock with `initial population size of 1500`, an `annual death rate of 0.07`, and an `annual harvest (catch) of 100` individuals. Compare the effects of different `birth rates b=0.15, b=0.2, and b=0.25` on the population trajectory. Project the population growth over `30 years`.  
 
 ```{r}
 
@@ -74,18 +74,19 @@ getRmax= function(method = "Smith.etal.1998", mortality = "Then.etal.2014", fec 
 hadLife = subset(popgrowth(species_list = "Melanogrammus aeglefinus"), Locality=="North Sea")
 hadMat = subset(maturity(species_list = "Melanogrammus aeglefinus"), Locality=="North Sea")
 hadFec = subset(fecundity(species_list = "Melanogrammus aeglefinus"), Locality=="North Sea")
+
 ```
 
-3) Download catch and effort data for a species from your choice of an RFMO (ICCAT, IATTC, WCPFC, IOTC)
+3) Download catch and effort data for one species from your choice of an RFMO (some examples; ICCAT, IATTC, WCPFC, IOTC)
   [WCPFC](https://www.wcpfc.int/public-domain)
   [ICCAT](https://iccat.int/en/accesingdb.html)
   [IOTC](https://iotc.org/data/datasets)
   [IATTC](https://www.iattc.org/en-US/Data/Public-domain)
-  - standardize CPUE (effort type and unit needs to be the same for all catches)
+  - standardize CPUE (effort type and unit should be the same for all catches)
   - plot `CPUE` vs `year`
   
 4) Calculate Z, S, and A for Florida Largemouth Bass (sampled from multiple lakes)
-  - plot catch curve line
+  - plot catch curve 
 
 ```{r}
 lmbass = BassFL
