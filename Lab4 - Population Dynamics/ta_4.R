@@ -23,48 +23,29 @@ fecundity = hadFec$FecundityMax[2]
 
 rmax = getRmax(method = "Smith.etal.1998", mortality = "Then.etal.2014", fec = fecundity, lifespan=lifespan, agemat=agemat)
 
+## Q3
 
 
-
-
-
-iccat = read.csv("iccat2000_2005.csv")
-
-names(iccat)
+## Q4
+lmbass = BassFL
 
 ggplot() + 
-  geom_point(data=iccat, aes(x=as.factor(yearc), y=bft*0.001)) +
-  xlab("Year") + 
-  ylab("Catch (t)") + 
-  ggtitle("Atlantic Bluefin Tuna")
+  geom_point(data=lmbass, aes(x=age, y=log(num)), pch=19) + 
+  xlab("Age (years)") + 
+  ylab("Log Catch") + 
+  theme_bw()
 
+thcr_lmbass <- chapmanRobson(num~age,data=lmbass,ages2use=2:8)
+cbind(summary(thcr_lmbass),confint(thcr_lmbass))
+plot(thcr_lmbass)
 
-hooks = subset(iccat, eff1type="NO.HOOKS")
-newhooks = aggregate(data=hooks, eff1~flagname, FUN=sum)
-newhooks = newhooks[order(newhooks$eff1, decreasing = T),]
-newhooks = newhooks[c(1:5),]
-colors = c("springgreen4", "pink", "red", "orange", "maroon2")
-ggplot() + 
-  geom_bar(data=newhooks, aes(x=reorder(flagname, -eff1), y=0.001*eff1, fill=flagname), stat="identity") +
-  scale_fill_manual(values=colors)
+tmp <- filter(lmbass,age>=2) %>% mutate(lnct=log(num)) # filter for ages >2 and log catch
+lm1 <- lm(lnct~age,data=tmp) # linear regression
+coef(lm1)
 
-
-hooks_bft = hooks[-(which(hooks$bft==0 | hooks$eff1==0)),]
-ggplot() + geom_point(data=hooks_bft, aes(x=bft, y=eff1)) + ylim(0, 1*10^7) 
-
-
-iccat$bft_cpue = (iccat$bft / iccat$eff1) 
+thcc_lmbass <- catchCurve(num~age,data=lmbass,ages2use=2:8,weighted=TRUE)
+cbind(summary(thcc_lmbass),confint(thcc_lmbass))
+plot(thcc_lmbass,pos.est="bottomleft")
 
 
 
-world <- map_data("world")
-ggplot() + 
-  geom_tile(data=wcpfc, aes(x=lon, y=lat, fill=cpue)) +
-  geom_map(
-    data = world, map = world,
-    aes(long, lat, map_id = region)) +
-  scale_fill_gradientn(colours=topo.colors(7), 
-                       breaks=c(0, 1, 2, 3), 
-                       limits=c(0,3)) 
-
-# plot(iccat$bft_cpue)

@@ -13,6 +13,8 @@ getwd()
 set.seed(9999)
 require(tidyverse)
 require(rfishbase)
+require(FSA)
+require(FSAdata)
 ```
 
 1) Growth Modeling
@@ -22,7 +24,7 @@ require(rfishbase)
 
 ```
 
-2) Calculate the maximum growth rate of `North Sea Haddock` (`Melanogrammus aeglefinus`) using the functions below. 
+2) Calculate the maximum growth rate of `North Sea Haddock` (`Melanogrammus aeglefinus`) using the functions below. **HINT** inspect your data for the correct parameters!
 *Parameters that we need*
 - Lifespan
 - Fecundity
@@ -69,8 +71,23 @@ getRmax= function(method = "Smith.etal.1998", mortality = "Then.etal.2014", fec 
 ```
 
 ```{r}
-
+hadLife = subset(popgrowth(species_list = "Melanogrammus aeglefinus"), Locality=="North Sea")
+hadMat = subset(maturity(species_list = "Melanogrammus aeglefinus"), Locality=="North Sea")
+hadFec = subset(fecundity(species_list = "Melanogrammus aeglefinus"), Locality=="North Sea")
 ```
 
-3)
+3) Download catch and effort data for a species from your choice of an RFMO (ICCAT, IATTC, WCPFC, IOTC)
+  [WCPFC](https://www.wcpfc.int/public-domain)
+  [ICCAT](https://iccat.int/en/accesingdb.html)
+  [IOTC](https://iotc.org/data/datasets)
+  [IATTC](https://www.iattc.org/en-US/Data/Public-domain)
+  - standardize CPUE (effort type and unit needs to be the same for all catches)
+  - plot `CPUE` vs `year`
+  
+4) Calculate Z, S, and A for Florida Largemouth Bass (sampled from multiple lakes)
+  - plot catch curve line
 
+```{r}
+lmbass = BassFL
+```
+ 

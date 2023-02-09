@@ -1,5 +1,5 @@
 ---
-title: "Population dynamics, Length frequencies, and CPUEs"
+title: "Population dynamics, CPUEs, and Catch Curves"
 author: "(Your name here)"
 date: "2/9/23"
 output: html_document
@@ -215,7 +215,7 @@ wcpfc = read.csv("wcpfc_swo.csv") # WCPFC catch and effort for swordfish
 Create catch per unit effort using the `catch` and `hooks` columns 
 
 ```{r}
-# calculate CPUE and rescale by a factor of 1000
+# calculate CPUE 
 iattc$cpue = (iattc$catch / iattc$hooks)*1000
 wcpfc$cpue = (wcpfc$catch / wcpfc$hooks)*1000
 ```
@@ -240,16 +240,29 @@ gridExtra::grid.arrange(p1,p2)
 # IATTC
 fleet_ia = aggregate(data=iattc, catch~fleet, sum) # aggregate catch by fleet
 top5fleets =  fleet_ia[order(-fleet_ia$catch),] # order fleet by top catches
-iattc_plot = ggplot(iattc[(iattc$year>1990 & iattc$fleet==top5fleets$fleet[1:5]),], aes(fill=fleet, y=catch*0.001, x=year)) + # top fleets with most catch
-    geom_bar(position="stack", stat="identity") + ggtitle("IATTC Swordfish") + 
+top5_iattc <- subset(iattc, year >= 1990)
+top5_iattc <- subset(top5_iattc, fleet=="CHN" | 
+                       fleet == "ESP" | 
+                       fleet == "JPN" | 
+                       fleet == "KOR" | 
+                       fleet == "TWN")
+iattc_plot = ggplot(top5_iattc, aes(fill=fleet, y=catch*0.001, x=year)) + # top fleets with most catch
+  geom_bar(position="stack", stat='identity') + ggtitle("IATTC Swordfish") + 
   ylab("Catch (t)")
 
 # WCPFC
-fleet_wc = aggregate(data=wcpfc, catch~fleet, sum) # aggregate catch by fleet
-top5fleets =  fleet_wc[order(-fleet_wc$catch),] # order fleet by top catches
-wcpfc_plot = ggplot(wcpfc[(wcpfc$year>1990 & wcpfc$fleet==top5fleets$fleet[1:5]),], aes(fill=fleet, y=catch*0.001, x=year)) + # top fleets with most catch
-    geom_bar(position="stack", stat="identity") + ggtitle("WCPFC Swordfish") +
+fleet_wp = aggregate(data=wcpfc, catch~fleet, sum) # aggregate catch by fleet
+top5fleets =  fleet_wp[order(-fleet_wp$catch),] # order fleet by top catches
+top5_wcpfc <- subset(wcpfc, year >= 1990)
+top5_wcpfc <- subset(top5_wcpfc, fleet=="JP" | 
+                       fleet == "TW" | 
+                       fleet == "CN" | 
+                       fleet == "KR" | 
+                       fleet == "AU")
+wcpfc_plot = ggplot(top5_wcpfc, aes(fill=fleet, y=catch*0.001, x=year)) + # top fleets with most catch
+  geom_bar(position="stack", stat='identity') + ggtitle("WCPFC Swordfish") + 
   ylab("Catch (t)")
+
 ```
 
 ```{r}
@@ -299,7 +312,7 @@ ggplot() +
   geom_map(
     data = world, map = world,
     aes(long, lat, map_id = region)) +
-  scale_fill_gradientn(colors = hcl.colors(7), 
+  scale_fill_gradientn(colors = hcl.colors(4), 
                        limits=c(0,4)) +
   xlim(60,180) 
 ```
@@ -308,6 +321,7 @@ ggplot() +
 # install.packages('mapplots')
 # install.packages('fields')
 # install.packages('maps')
+require(mapplots)
 ```
 
 ```{r}
@@ -319,7 +333,6 @@ names(wcpfc2) = c("lat","lon","lon2","year","hooks","catch")
 wcpfc2 = wcpfc2[wcpfc2$hooks!=0,]
 wcpfc2$cpue = (wcpfc2$catch / wcpfc2$hooks)*1000
 names(wcpfc2) = c("lat","lon","lon2","year","hooks","catch", "cpue")
-require(mapplots)
 wcpfc2=wcpfc2[wcpfc2$year==2019,]
 ylim <- c(bbox[1], bbox[2]) # define our map's ylim
 xlim <- c(bbox[3], bbox[4]) 
@@ -331,7 +344,7 @@ fields::image.plot(long,lati,datGrid, las = 1, ylab = "latitude", xlab = "longit
 maps::map("world2", xlim = xlim+180, ylim = ylim, fill = T, add = T) # this works
 ```
 
-## Catch Curves, Total Mortality, and Length-Frequency Distribution
+## Length-Frequency Distribution, Catch Curves, and Total Mortality
 
 Yellow Perch FSA data from Trout Lake Wisconsin
 ```{r}
@@ -344,9 +357,10 @@ perch2000 <- filter(perch,year4==2000)
 perch2001 <- filter(perch,year4==2001)
 perch2002 <- filter(perch,year4==2002)
 
-perch2000 %<>% mutate(lcat10=lencat(length,w=10))
+perch2000 %<>% mutate(lcat10=lencat(length,w=10)) # the appropriate 10 mm length interval for yellow perch
 perch2001 %<>% mutate(lcat10=lencat(length,w=10))
 perch2002 %<>% mutate(lcat10=lencat(length,w=10))
+headtail(perch2000)
 ( bgFreq10 <- xtabs(~lcat10,data=perch2000) )
 ```
 
@@ -366,16 +380,7 @@ legend("bottomright",c("2000","2001"),col=clr,lty=1,
 bty="n",cex=0.75)
 ```
 
-```{r}
-perch %<>% mutate(lcat10=lencat(length,w=10))
-```
-
-```{r}
-vb = vbFuns(param="Typical") # from FSA package
-f.starts <- vbStarts(length~age,data=RedDrum) # vbStarts is an optimization algorithm designed to find the best params
-f.fit <- nls(fl~vb(age,Linf,K,t0),data=RedDrum,start=f.starts)
-coef(f.fit)
-```
+### Catch-at-Age
 
 Look at catches-at-age of Brook Trout captured in Tobin Harbor (Michigan) from
 1996–1998 (Quinlan 1999).
@@ -408,7 +413,7 @@ Assuming that mortality is constant, ages 0-1 will not be considered fully recru
 ```{r}
 thcc <- catchCurve(ct~age,data=bkt,ages2use=2:6,weighted=TRUE)
 cbind(summary(thcc),confint(thcc))
-plot(thcc,pos.est="bottomleft")
+plot(thcc,pos.est="bottomleft", main="Predicted log catch and mortality of Florida Largemouth Bass")
 ```
 
 The catch curve methods make the following assumptions:
