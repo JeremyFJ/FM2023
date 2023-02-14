@@ -9,8 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 set.seed(999)
 ```
-Yellowfin tuna fishery data from 1957 can be found from the book: *Using R for Modelling and Quantitative Methods in Fisheries* catch, effort, and cpue from 1934-1955
 
+Yellowfin tuna fishery data from 1957 can be found from the book: *Using R for Modelling and Quantitative Methods in Fisheries* catch, effort, and cpue from 1934-1955
 
 1) Use the `Schaefer` and `Fox` models to predict CPUE (incorporate catch)
 

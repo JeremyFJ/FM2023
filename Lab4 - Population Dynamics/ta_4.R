@@ -87,3 +87,20 @@ ggplot() +
                        name="CPUE\n(Catch/1000 hooks)\n") +
   labs(y="Latitude") + #Rename y axis
   scale_x_continuous(name="Longitude", breaks=c(0,90,180,270), labels=c(0,90,180,-90)) #Correct longitude to show negative values
+
+
+
+scale_cols = c("#FFFFFF", hcl.colors(6))
+world2 <- map_data("world2") #world2 is centered on antimeridian
+wcpfc$lon2 <- ifelse(wcpfc$lon < 0, wcpfc$lon + 360, wcpfc$lon) #IF lon is negative, we add 360 to correct for antimeridian, ELSE means its positive so we leave it
+ggplot() + 
+  geom_tile(data=wcpfc, aes(x=lon2, y=lat, fill=log(cpue))) + #lon2 is our corrected lon
+  geom_map(
+    data = world2, map = world2, #world 2 is our antimeridian map
+    aes(long, lat, map_id = region)) +
+  scale_fill_gradientn(colours=topo.colors(7), 
+                       # breaks=c(0, 1, 2, 3), 
+                       # limits=c(0,3),
+                       name="CPUE\n(Catch/1000 hooks)\n") +
+  labs(y="Latitude") + #Rename y axis
+  scale_x_continuous(name="Longitude", breaks=c(0,90,180,270), labels=c(0,90,180,-90)) #Correct longitude to show negative values

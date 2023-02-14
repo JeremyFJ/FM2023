@@ -268,7 +268,9 @@ From the 2018 WCPFC assessment, there appears to be 3 defined stocks of Pacific 
 
 Look at the `North` and `South` swordfish stocks in the Western Pacific
 ```{r}
-dat_n = wcpfc[wcpfc$lat>0,] # subset master dataframe for ABOVE the equator
+# subset north and south swordfish stocks
+# add an = sign where lat>=0
+dat_n = wcpfc[wcpfc$lat>=0,] # subset master dataframe for ABOVE the equator
 fc_north = aggregate(data=dat_n, catch~year, FUN=mean) # aggregate catch by year
 fc_north$hooks = aggregate(data=dat_n, hooks~year, FUN=mean)$hooks # add aggregated hook data
 fc_north$cpue = fc_north$catch/fc_north$hooks*1000 # and finally calculate average CPUE

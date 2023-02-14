@@ -21,7 +21,24 @@ require(FSAdata)
 - plot an **exponential growth model** for a stock with `initial population size of 1500`, an `annual death rate of 0.07`, and an `annual harvest (catch) of 100` individuals. Compare the effects of different `birth rates b=0.15, b=0.2, and b=0.25` on the population trajectory. Project the population growth over `30 years`.  
 
 ```{r}
+b = c(0.15,0.2,0.25) # birth rates
+d = c(0.07,0.07,0.07) # death rates
+N0 = c(1500,1500,1500) # starting populations
+Ct = 100
 
+Time = seq(0,30,1) # time steps
+Nt = matrix(NA, nrow = length(Time), ncol = 3)
+for (i in 1:3){
+  Nt[,i] = N0[i]*exp((b[i]-d[i])*Time) - Ct
+}
+
+Nt_dat = data.frame(Nt)
+colnames(Nt_dat) = c('T1', 'T2', 'T3')
+ggplot() + geom_line(aes(x=Time, y=Nt_dat$T1)) +
+  geom_line(aes(x=Time, y=Nt_dat$T2),col=2) +
+  geom_line(aes(x=Time, y=Nt_dat$T3), col=3) + 
+  labs(x="Time", y="Population size (Nt)") +
+  ggtitle("Exponential Growth of mystery fish")
 ```
 
 2) Calculate the maximum growth rate of `North Sea Haddock` (`Melanogrammus aeglefinus`) using the functions below. **HINT** inspect your data for the correct parameters!
@@ -75,6 +92,20 @@ hadLife = subset(popgrowth(species_list = "Melanogrammus aeglefinus"), Locality=
 hadMat = subset(maturity(species_list = "Melanogrammus aeglefinus"), Locality=="North Sea")
 hadFec = subset(fecundity(species_list = "Melanogrammus aeglefinus"), Locality=="North Sea")
 
+lifespan = hadLife[!is.na(hadLife$tmax),]$tmax
+#OR 
+#lifespan = mean(hadLife$tmax, na.rm=T)
+
+agemat = sum(3,3,2,5) / 4 #based on visual inspection of dataframe
+#OR
+#agemat <- (hadMat$AgeMatMin + hadMat$AgeMatMin2) / 2
+#agemat <- agemat[!is.na(agemat)]
+
+fecundity = 685800 #based on visual inspection of dataframe
+#OR
+#fecundity <- mean(hadFec$FecundityMax, na.rm=T) #no data in FecundityMin so we use Max only
+
+haddock_rmax = getRmax(fec = fecundity, agemat = agemat, lifespan = lifespan)
 ```
 
 3) Download catch and effort data for one species from your choice of an RFMO (some examples; ICCAT, IATTC, WCPFC, IOTC)
@@ -82,13 +113,56 @@ hadFec = subset(fecundity(species_list = "Melanogrammus aeglefinus"), Locality==
   [ICCAT](https://iccat.int/en/accesingdb.html)
   [IOTC](https://iotc.org/data/datasets)
   [IATTC](https://www.iattc.org/en-US/Data/Public-domain)
-  - standardize CPUE (effort type and unit should be the same for all catches)
+  - CPUE (effort type and unit should be the same for all catches)
   - plot `CPUE` vs `year`
+  
+```{r}
+iotc = read.csv("IOTC-DATASETS-2023-01-23-CE-Longline_1950-2021.csv")
+names(iotc)
+
+iotc_bet = iotc[!is.na(iotc$BET.NO),] # removing NA values from catch
+iotc_bet = iotc_bet[iotc_bet$EffortUnits=="HOOKS",] # subsetting for gear type
+iotc_agg = aggregate(data=iotc_bet, BET.NO~Year, FUN=sum)
+iotc_agg$Effort = aggregate(data=iotc_bet, Effort~Year, FUN=sum)$Effort
+iotc_agg$cpue = iotc_agg$BET.NO/iotc_agg$Effort
+
+ggplot() + 
+  geom_line(data=iotc_agg, aes(x=Year, y=(BET.NO/Effort))) +
+  xlab("Year") +
+  ylab("CPUE (# catch / hooks)") + 
+  ggtitle("Indian Ocean Big Eye Tuna CPUE") +
+  theme(panel.grid = element_line(colour = "black", size=0.05),
+        panel.border = element_rect(fill=NA),
+        axis.title = element_text(size=15),
+        title = element_text(size=15))
+```
   
 4) Calculate Z, S, and A for Florida Largemouth Bass (sampled from multiple lakes)
   - plot catch curve 
 
 ```{r}
 lmbass = BassFL
+
+ggplot() + 
+  geom_point(data=lmbass, aes(x=age, y=log(num)), pch=17)
 ```
+```{r}
+thcr <- chapmanRobson(log(num)~age,data=lmbass,ages2use=2:8)
+cbind(summary(thcr),confint(thcr))
+```
+
+```{r}
+plot(thcr)
+```
+```{r}
+thcc <- catchCurve(log(num)~age,data=lmbass,ages2use=2:8,weighted=TRUE)
+cbind(summary(thcc),confint(thcc))
+plot(thcc,pos.est="bottomleft", main="Predicted log catch and mortality of Florida Largemouth Bass")
+```
+
+S = 69.76
+Z = 0.204
+A = 18.5%
+
+
  
