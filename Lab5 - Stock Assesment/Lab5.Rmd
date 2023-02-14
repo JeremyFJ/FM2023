@@ -35,16 +35,17 @@ b = 3 # this is the intercept
 m = 0.5 # this is the slope
 sigma = 5
 mu = 0
-x = runif(20, min = 2, max = 56) # let's generate a set of 20 x values going from 2 to 56
-y = m*x + b # now we generate a series of response values without error
-err2 = rnorm(20,mean=mu,sd = sigma) # let's assume the error is normally distributed with mean 0 and sd  = 5
-y = y+err2 # add error to mean
+x = runif(200, min = 2, max = 56) # let's generate a set of 20 x values going from 2 to 56
+mu = m*x + b # now we generate a series of response values without error
+err2 = rnorm(200,mean=0,sd = sigma) # let's assume the error is normally distributed with mean 0 and sd  = 5
+y = mu+err2 # add error to mean
 ```
 
 ```{r}
 model1 = lm(y~x) # least squares estimation
 plot(y~x)
 abline(model1)
+summary(model1)
 ```
 
 ```{r}
@@ -233,10 +234,7 @@ spmphaseplot(ans, fnt=7)
 ```
 This plot identifies the start and end years (green and red dots). It also plots out the catch time-series and harvest rate time-series to aid in interpretation of the phase plot.
 
-
-**Exercise**
 Let's use the loglikelihood function of the lognormal distribution to optimize our model
- 
 $$
 \hat{\sigma}^2 = \sum_t\frac{(\ln I_t-\ln\hat{I_t})^2}{n}
 $$

@@ -1,0 +1,40 @@
+---
+title: "Assignment 5"
+author: "(Your name here)"
+date: "2/16/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+getwd()
+set.seed(9999)
+require(tidyverse)
+library(datalowSA)
+library(FSA)
+library(FSAdata)
+```
+
+Use negLL to estimate parameters of weight-length data for Pygmy Whitefish
+```{r}
+pygmy = PygmyWFBC
+```
+
+$$
+W = aL^b
+$$
+
+Yellowfin tuna fishery data from 1957 can be found from the book: *Using R for Modelling and Quantitative Methods in Fisheries* catch, effort, and CPUE from 1934-1955
+```{r}
+yellow = read.csv("yellowfin1957.csv")
+```
+
+1) What is the autocorrelation of this dataset?
+
+2) Use the `Schaefer` and `Fox` models to predict CPUE (incorporate catch)
+
+
+
+
