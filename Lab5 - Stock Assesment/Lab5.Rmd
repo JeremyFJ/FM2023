@@ -34,8 +34,7 @@ Simulating distributions, linear regression, and parameter estimation/optimizati
 b = 3 # this is the intercept
 m = 0.5 # this is the slope
 sigma = 5
-mu = 0
-x = runif(200, min = 2, max = 56) # let's generate a set of 20 x values going from 2 to 56
+x = runif(200, min = 2, max = 56) # let's generate a set of 200 x values going from 2 to 56
 mu = m*x + b # now we generate a series of response values without error
 err2 = rnorm(200,mean=0,sd = sigma) # let's assume the error is normally distributed with mean 0 and sd  = 5
 y = mu+err2 # add error to mean
@@ -64,27 +63,26 @@ fun_negLL = function(m, b) {
 We can optimize our regression parameters with a `nested for loop` using the function above and a generated list of parameter values
 ```{r}
 # building a search grid
-b_list = seq(0.1,10,0.1)
-m_list = seq(0.1,10,0.1)
-params = matrix(NA,nrow=100,ncol=100,dimnames = list(b_list,m_list))
+b_list = seq(0.01,10,0.01)
+m_list = seq(0.01,10,0.01)
+params = matrix(NA,nrow=1000,ncol=1000,dimnames = list(b_list,m_list))
 for (i in 1:length(b_list)){ # for b
  	for (j in 1:length(m_list)){ # for m
 		params[i,j] = fun_negLL(b = b_list[i], m = m_list[j])
 		}
 	}
-# not very precise because the grid is coarse. 
-which(params==min(params),arr.ind=T)
-```
-
-```{r}
-# the best parameters are 
+# the optimized parameters 
 bopt = rownames(params)[which(params==min(params),arr.ind=T)[1]] # b - intercept
 mopt = colnames(params)[which(params==min(params),arr.ind=T)[2]] # m - slope
 cat(paste0("b: ",bopt,"\nm: ",mopt))
 ```
 
 ```{r}
-plot(seq(0.1,10,0.1),
+model1$coefficients
+```
+
+```{r}
+plot(seq(0.01,10,0.01),
      params[,mopt], 
      type = "l", 
      ylab = "-LogLikelihood", 
@@ -94,19 +92,21 @@ plot(seq(0.1,10,0.1),
 Use the optimization function
 `?optim`
 ```{r}
-pars = c(b = b, m = m, err.sigma = sigma)
+pars = c(b=b, m=m, sigma=sigma)
 fun_negLL = function(par) {
 	b = par[1]
 	m = par[2]
 	err.sigma = par[3]
-	Y.pred = a + b * x
-	-sum(dnorm(y, mean = Y.pred, sd = err.sigma, log = T))
+	Y.pred = m*x+b
+	-sum(dnorm(y, mean = Y.pred, sd = sigma, log = T))
 	}
 
 paropt = optim(par = pars, fn = fun_negLL)
 paropt$par
 ```
 Are these estimates close to the estimates from above?
+
+
 
 ## Surplus Production
 
@@ -226,13 +226,11 @@ str(ans)
 `LN Residuals`: displays the residuals (scaled observe CPUE / scaled predicted CPUE) with a value of RMSE (root mean square error)
 `Surplus Production - Depletion`: displays the surplus production vs. depletion function. The vertical lines represent the LRP (red, limit reference point) and TRP (green, target reference point) and MSY (blue)
 
-
 Now let's plot the harvest rate vs. Biomass 
-
 ```{r}
 spmphaseplot(ans, fnt=7)
 ```
-This plot identifies the start and end years (green and red dots). It also plots out the catch time-series and harvest rate time-series to aid in interpretation of the phase plot.
+This plot identifies the start and end years (green and red dots). It also plots out the catch time-series and harvest rate time-series.
 
 Let's use the loglikelihood function of the lognormal distribution to optimize our model
 $$
@@ -248,26 +246,46 @@ out <- optim(par=pars, fn=negLL, callfun=simpspm,
                 indat=fish)
 out$par
 ```
-Let's use our optimized parameters to fit a new model
 
+Let's use our optimized parameters to fit a new model
 ```{r}
 B = c()
 B[1] = out$par["Binit"]
 C = fish$catch
 
-# Predict biomass with the Schaefer model again, but this time, with your new parameters
-# use a for loop again
+r = out$par["r"]
+K = out$par["K"]
+time = seq(1, 30, 1)
+for (i in time){
+  B[i+1] = B[i] + r*B[i]*(1-B[i]/K) - C[i]
+}
+B
+```
 
-
-# predict CPUE
-
+```{r}
+cpue = fish$cpue
+# estimating q from the data
+qs = cpue/B
+q = mean(qs)
+pred.cpue.e = B*q 
 ```
 
 Plot your data and compare the models - use a legend
 ```{r}
-
+ggplot() +
+  geom_point(aes(x=time, y=cpue[1:30]), pch=15, size=2, color="black") +
+  geom_line(aes(x=time, y=pred.cpue.e[1:30]), color="green") + 
+  xlab("Time") + 
+  ylab("CPUE") +
+  theme(panel.border = element_rect(fill=NA),
+        panel.grid = element_line(size=0.07, color="black"))
 ```
 
+```{r}
+par(mfrow=c(2,2))
+lm2 = lm(log(pred.cpue.e)~log(cpue))
+plot(lm2)
+```
 
 ```{r}
 ans1 = displayModel(out$par,fish,schaefer = TRUE, addrmse = TRUE) 

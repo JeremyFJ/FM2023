@@ -17,9 +17,11 @@ library(FSA)
 library(FSAdata)
 ```
 
-Use negLL to estimate parameters of weight-length data for Pygmy Whitefish
+1) Use negLL to estimate parameters of weight-length data for Kootenay Lake Bull Trout data from 2013. Retrieved from [github_ypr](https://poissonconsulting.shinyapps.io/shinyypr/)
+  - predict weight using your optimized parameters
+  - plot log weight vs. log length and fit your model
 ```{r}
-pygmy = PygmyWFBC
+laketrout = read.csv("laketrout.csv")
 ```
 
 $$
@@ -31,9 +33,9 @@ Yellowfin tuna fishery data from 1957 can be found from the book: *Using R for M
 yellow = read.csv("yellowfin1957.csv")
 ```
 
-1) What is the autocorrelation of this dataset?
+2) Plot the autocorrelation of this dataset?
 
-2) Use the `Schaefer` and `Fox` models to predict CPUE (incorporate catch)
+3) Use the `Schaefer` and `Fox` models to predict CPUE (incorporate catch)
 
 
 
