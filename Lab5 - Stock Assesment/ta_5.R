@@ -4,10 +4,6 @@ laketrout = read.csv('laketrout.csv')
 length = laketrout$Length
 weight = laketrout$Weight
 
-# ruffe = RuffeSLRH92[(!is.na(RuffeSLRH92$weight)),]
-# length = ruffe$length
-# weight = ruffe$weight
-
 fun_negLL = function(a, b) {
   W.pred = a*(length^b)
   -sum(dnorm(weight, mean = W.pred, sd = 1, log = T))
@@ -27,22 +23,27 @@ bopt = as.numeric(colnames(params)[which(params==min(params),arr.ind=T)[2]]) # b
 cat(paste0("a: ",aopt,"\nb: ",bopt))
 
 W.pred = aopt*(length^bopt)
+residuals = weight - W.pred
+plot(length,residuals)
 
 ggplot() +
   geom_point(aes(x=log(length), y=log(weight)), color="black") +
   geom_line(aes(x=log(length), y=log(W.pred)), color="red")
 
+lm4 = lm(log(length)~log(W.pred))
+summary(lm4)
 
-pars = c(a=50, b=50, sigma=sigma)
-fun_negLL = function(par) {
-  b = par[1]
-  m = par[2]
+pars = c(a=1, b=1, sigma=5)
+fun_negLL = function(par, x, y) {
+  a = par[1]
+  b = par[2]
   err.sigma = par[3]
   W.pred = a*(length^b)
-  -sum(dnorm(weight, mean = W.pred, sd = sigma, log = T))
+  -sum(dnorm(weight, mean = W.pred, sd = err.sigma, log = T))
 }
 
-paropt = optim(par = pars, fn = fun_negLL)
+paropt = optim(par = pars, fn = fun_negLL, x=length, y=weight, 
+               lower = c(0.01, 1, 3), upper=c(2,4,10), method="L-BFGS-B")
 paropt$par
 
 aopt = paropt$par[1]
@@ -51,14 +52,55 @@ bopt = paropt$par[2]
 W.pred = aopt*(length^bopt)
 
 ggplot() +
-  geom_point(aes(x=length, y=weight), color="black") +
-  geom_line(aes(x=length, y=W.pred), color="red")
+  geom_point(aes(x=log(length), y=log(weight)), color="black") +
+  geom_line(aes(x=log(length), y=log(W.pred)), color="red")
 
 # Q2
 
-yellow = read.csv("yellowfin1957.csv")
-getlag(yellow)
+bluecat = BlueCatfish
+age = bluecat$age
+length = bluecat$tl
 
-# Q3
+
+vb = vbFuns(param="Typical") # from FSA package
+
+f.starts <- vbStarts(tl~age, data=bluecat) # vbStarts is an optimization algorithm designed to find the best params
+f.fit <- nls(tl~vb(age,Linf,K,t0),data=bluecat,start=f.starts)
+coef(f.fit)
+
+pars = c(Linf = 1600, K=0.05, t0=-0.7)
+fun_negLL = function(par, x, y) {
+  # Parameters
+  Linf = par[1]
+  K = par[2]
+  t0 = par[3]
+  # Model
+  Lpred <- Linf * (1 - exp(-K * (age - t0)))
+  # -LL
+  -sum(dnorm(length, mean = Lpred, sd=5, log = T))
+}
+
+paropt = optim(par = pars, fn = fun_negLL, x=age, y=length, # parameters, function to optimize, x,y
+               lower=c(1200,0.009,-1), upper = c(1800,1,1), # lower and upper bounds of parameter
+               method="L-BFGS-B", hessian = T) # Byrd etal, 1995 opt method allows bounds for params
+paropt$par
+Linf = paropt$par[1]
+K = paropt$par[2]
+t0 = paropt$par[3]
+
+Lpred <- Linf * (1 - exp(-K * (age - t0)))
+
+residual <- length-Lpred
+plot(age, residual, ylab="Residuals", xlab="Age")
+abline(h=0, col="red")
+
+bluemodel = lm(log(Lpred)~log(age))
+summary(bluemodel)
+
+ggplot() +
+  geom_point(aes(x=age, y=length), color="black") +
+  geom_line(aes(x=age, y=Lpred), color="red")
+
+
 
 

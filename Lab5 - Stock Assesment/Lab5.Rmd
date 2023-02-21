@@ -16,7 +16,7 @@ set.seed(9999)
 ```{r}
 # install.packages('remotes')
 # remotes::install_github("haddonm/datalowSA")
-library(datalowSA)
+# library(datalowSA)
 library(tidyverse)
 ```
 
@@ -55,7 +55,7 @@ plot(model1)
 Let's write a function to return the negative logarithmic distribution of our intercept and slope parameter estimates. We can use `dnorm()` to calculate the distribution around predicted response values
 ```{r}
 fun_negLL = function(m, b) {
-	Y.pred = m * x + b
+	Y.pred = m * x + b 
 	-sum(dnorm(y, mean = Y.pred, sd = 5, log = T))
 	}
 ```
@@ -63,11 +63,11 @@ fun_negLL = function(m, b) {
 We can optimize our regression parameters with a `nested for loop` using the function above and a generated list of parameter values
 ```{r}
 # building a search grid
-b_list = seq(0.01,10,0.01)
-m_list = seq(0.01,10,0.01)
-params = matrix(NA,nrow=1000,ncol=1000,dimnames = list(b_list,m_list))
-for (i in 1:length(b_list)){ # for b
- 	for (j in 1:length(m_list)){ # for m
+b_list = seq(0.01,10,0.01) # list of b parameter
+m_list = seq(0.01,10,0.01) # list of m parameter
+params = matrix(NA,nrow=1000,ncol=1000,dimnames = list(b_list,m_list)) # parameter matrix
+for (i in 1:length(b_list)){ # for every 'b' test 'm'
+ 	for (j in 1:length(m_list)){ 
 		params[i,j] = fun_negLL(b = b_list[i], m = m_list[j])
 		}
 	}
@@ -93,20 +93,32 @@ Use the optimization function
 `?optim`
 ```{r}
 pars = c(b=b, m=m, sigma=sigma)
-fun_negLL = function(par) {
+fun_negLL = function(par, x, y) {
+# Parameters
 	b = par[1]
 	m = par[2]
 	err.sigma = par[3]
-	Y.pred = m*x+b
+# Model
+	Y.pred = m*x+b 
+# -LL
 	-sum(dnorm(y, mean = Y.pred, sd = sigma, log = T))
 	}
 
-paropt = optim(par = pars, fn = fun_negLL)
+paropt = optim(par = pars, fn = fun_negLL, x=x, y=y, # parameters, function to optimize, x,y
+               lower=c(1,0.1,3), upper = c(4,1,10), # lower and upper bounds of parameter
+               method="L-BFGS-B", hessian = T) # Byrd etal, 1995 opt method allows bounds for params
 paropt$par
 ```
 Are these estimates close to the estimates from above?
 
-
+```{r}
+b_pred = paropt$par[1]
+m_pred = paropt$par[2]
+Y.pred = m_pred*x+b_pred
+residual <- y-Y.pred
+plot(x, residual, ylab="Residuals", xlab="independent variable")
+abline(h=0, col="red")
+```
 
 ## Surplus Production
 
