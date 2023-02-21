@@ -1,5 +1,7 @@
 # Q1
-
+require(tidyverse)
+require(FSA)
+require(FSAdata)
 laketrout = read.csv('laketrout.csv')
 length = laketrout$Length
 weight = laketrout$Weight
