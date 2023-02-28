@@ -1,0 +1,201 @@
+---
+title: "Lab 7 - Surplus Production Models"
+author: "(Your name here)"
+date: "3/2/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+set.seed(9999)
+library(tidyverse)
+```
+
+# Surplus Production
+*Surplus production models* are useful when evaluating biomass and exploitation levels of fish stocks that are data-deficient (particularly if age and size is not reported)
+
+The FRDC (Fisheries Research and Development Corporation) reports metrics of various fish stocks around Australia from 1986-2016 and can be accessed with the **datalowSA** package. [Haddon1](https://github.com/haddonm/datalowSA)
+```{r}
+# devtools::install_github("haddonm/datalowSA",build_vignettes=TRUE)
+library(datalowSA)
+```
+
+```{r}
+data(dataspm)
+fish = dataspm$fish
+```
+
+```{r}
+lm1 = lm(fish$cpue~fish$catch)
+summary(lm1)
+```
+
+Use the `getlag()` function to look at the correlation between CPUE and catches. Negative correlation is indicative of the CPUE being informative of catch throughout the years where data is being recorded. Blue dotted lines represent significant correlation levels.
+```{r}
+fishdatlag = getlag(fish, maxlag = 10, plotout = TRUE, indexI = 1) # check lag
+```
+Model a time lag of 5 years on cpue.
+```{r}
+lm2 = lm(fish$cpue[5:31]~fish$catch[1:27])
+summary(lm2)
+```
+
+With a lag of 5 years on the cpue time-series, the negative correlation becomes more apparent.
+```{r}
+ggplot() +
+  geom_point(aes(x=fish$catch[1:27], y=fish$cpue[5:31])) +
+  geom_line(aes(x=fish$catch[1:27], y=predict(lm2)), color="maroon") +
+  xlab("Catch (t)") +
+  ylab("CPUE") +
+  ggtitle("Australia fish stock catch effort 1986-2016") +
+  theme_bw()
+```
+
+Changes in population biomass can tell us the relationship between fishing mortality rates and population growth. Surplus production models (SPMs) are strong baselines for determining exploitation of a fish stock. 
+
+Here, we will assume that the maximum sustainable biomass is equal to the carrying capacity 
+
+$$B_{max} \approx K$$
+\\
+$$
+\text{Schaefer}\\
+B_{t+1} = B_t + rB_t(1-B_t/K)-C_t\\
+\text{Fox}\\
+B_{t+1} = B_t + rB_t(1-logB_t/logK)-Ct
+$$
+
+`Bt` = exploitable population biomass at time (t)
+`r` = intrinsic rate of population increase
+`K` = carrying capacity
+`Ct` = catch at time (t)
+
+Here, we'll define our set of parameters.
+**Try** Model expected biomass (similar to how we modeled exponential growth) using the Schaefer SPM model
+
+```{r}
+pars = c(r=0.2,K=6000,Binit=2800) # initial parameters
+
+B = c()
+B[1] = pars["Binit"]
+C = fish$catch
+```
+
+**Exercise**
+We'll be using this model again. So, in another Rscript, define a function that intakes the above parameters (r, K, Binit). *Incorporate Catch into the equation and function*
+
+This function should use the above model to predict population biomass. Add it here when you are done.
+
+```{r}
+# Use the Schaefer model equation to predict population biomass (and incorporate catches) 
+# hint: Use a for loop with 30 time steps 
+
+```
+
+Plot `Biomass vs. Year`
+```{r}
+
+```
+
+## Relative Abundance
+$$
+\text{Index of relative abundance}\\
+I_t = qB_t
+$$
+`q` = catchability coefficient
+`Bt` = exploitable population biomass at time (t)
+`It` = index of relative abundance
+
+Estimating `q` from the data
+```{r}
+cpue = fish$cpue
+qs = cpue/B
+q = mean(qs)
+pred.cpue.e = B*q 
+```
+
+**Exercise** 
+Plot `cpue~year` and fit your model with predicted CPUE
+**Note** In addition, you can use the `simpspm()` function to output predicted CPUE based on observed CPUE (does not incorporate catchability coefficient)
+`simpspm(pars, fish, schaefer = TRUE) # Caclulates CPUE based on Schaefer`
+```{r}
+
+```
+
+Let's use our parameters to evaluate depletion, catch, surplus production, and predicted CPUE with one function `displayModel` from the `datalowSA` package.
+```{r}
+ans = displayModel(pars,fish,schaefer = TRUE, addrmse = TRUE)
+```
+
+`ExploitB Depletion`: displays the trajectory of the exploitable biomass depletion rate. The red line is the LRP and the green line is the TRP. In Schaefer model results, two options are similar 
+`Catch`: displays the catch series with MSY as red line
+`Scaled CPUE`: displays the model fit to the CPUE data. Red line is the model predictions and the black dots are the CPUE data points
+`Surplus Production - Biomass`: displays surplus production vs. biomass. Vertical red lines represent $B_{lim}$, $B_{targ}$, and $B_{MSY}$ and the horizontal dash line is MSY
+`LN Residuals`: displays the residuals (scaled observe CPUE / scaled predicted CPUE) with a value of RMSE (root mean square error)
+`Surplus Production - Depletion`: displays the surplus production vs. depletion function. The vertical lines represent the LRP (red, limit reference point) and TRP (green, target reference point) and MSY (blue)
+
+
+Now let's plot the harvest rate vs. Biomass 
+```{r}
+spmphaseplot(ans, fnt=7)
+```
+This plot identifies the start and end years (green and red dots). It also plots out the catch time-series and harvest rate time-series to aid in interpretation of the phase plot.
+
+
+**Exercise**
+Let's use the negative loglikelihood function of the lognormal distribution to optimize our model.
+$$
+\hat{\sigma}^2 = \sum_t\frac{(\ln I_t-\ln\hat{I_t})^2}{n}
+$$
+The `negLL()` function calculates the negative log-likelihood.
+$$
+-LL = \frac{n}{2}(\ln(2\pi)+2\ln(\hat{\sigma})+1)
+$$
+The `optim()` function is a general-purpose parameter optimization function that takes a list of parameters, data, and function as arguments.
+```{r}
+out <- optim(par=pars, fn=negLL, callfun=simpspm, 
+                indat=fish)
+out$par
+```
+
+Let's use our optimized parameters to fit a new model with the function we wrote.
+```{r}
+optpars = out$par
+
+# Predict biomass with the Schaefer model again, but this time, with your new parameters
+# use a for loop again
+
+
+# predict CPUE
+
+```
+
+Plot your data and compare the models - use a legend
+```{r}
+
+```
+
+
+```{r}
+ans1 = displayModel(out$par,fish,schaefer = TRUE, addrmse = TRUE) 
+spmphaseplot(ans1, fnt=7)
+```
+
+Calculate MSY in tonnes
+$$
+\text{Schaefer model}\\
+MSY = \frac{rK}{4}
+$$
+
+```{r}
+
+```
+
+```{r}
+round(ans1$Dynamics$sumout,3)
+summspm(ans1)
+annual_depletion = out$par[[3]]/out$par[[2]] # initial depletion
+```
+
+

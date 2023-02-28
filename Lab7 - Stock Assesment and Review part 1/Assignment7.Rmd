@@ -1,0 +1,34 @@
+---
+title: "Assignment 5"
+author: "(Your name here)"
+date: "2/16/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+getwd()
+set.seed(9999)
+require(tidyverse)
+```
+
+From 1934-1955, yellow tuna fishery data was recorded by Schaefer for the eastern tropical Pacific. Catches are ’000s of lbs, effort is ’000s of standard class4 clipper days, and cpue is ’000s lbs/day.
+```{r}
+yellowfin = read.csv("yellowfin1934.csv")
+```
+
+1) Model a negative time lag on `cpue` of 2 years and compare when `lag = 0`. Which is a better fit and why? Plot `cpue vs. catch` and fit your model
+
+2) Optimize initial stock parameters, predict biomass, and plot `predicted Biomass vs. Year`
+
+```{r}
+pars <- c(r=0.1,K=2250000,Binit=2250000,sigma=0.5)
+```
+
+3) Predict CPUEs by using catchability as one method and `simpspm` as the other method. Plot CPUE and fit both models. 
+
+4) Plot the Surplus Production statistics
+  - calculate MSY
+  - calculate the net depletion (difference between initial and final depletion) 
