@@ -1,7 +1,7 @@
 ---
 title: "Assignment 5"
 author: "(Your name here)"
-date: "2/16/2023"
+date: "3/2/2023"
 output: html_document
 ---
 
@@ -19,16 +19,17 @@ From 1934-1955, yellow tuna fishery data was recorded by Schaefer for the easter
 yellowfin = read.csv("yellowfin1934.csv")
 ```
 
-1) Model a negative time lag on `cpue` of 2 years and compare when `lag = 0`. Which is a better fit and why? Plot `cpue vs. catch` and fit your model
+1) With the `getlag` function, identify the time lag on `cpue` where the relationship between `cpue` and `catch` is most significant. Write a linear regression with this time lag and plot your results.
 
-2) Optimize initial stock parameters, predict biomass, and plot `predicted Biomass vs. Year`
 
-```{r}
-pars <- c(r=0.1,K=2250000,Binit=2250000,sigma=0.5)
-```
+2) Estimate and optimize initial stock parameters, predict biomass, and plot `predicted Biomass vs. Year`.
+
 
 3) Predict CPUEs by using catchability as one method and `simpspm` as the other method. Plot CPUE and fit both models. 
 
-4) Plot the Surplus Production statistics
+
+4) Plot the Surplus Production statistics with `displayModel`. Make sure to use your optimized parameters.
   - calculate MSY
-  - calculate the net depletion (difference between initial and final depletion) 
+
+
+5) How has the Pacific yellowfin tuna population biomass changed from 1934-1955 based on the reported catch and CPUEs? 
