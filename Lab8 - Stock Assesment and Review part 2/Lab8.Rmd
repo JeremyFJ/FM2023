@@ -20,17 +20,21 @@ require(TropFishR)
 Example of using VPA for Yield-per Recruit Analyses. This is useful to understand the optimal value of fishing mortality to obtain the maximum yield or identified optimal yield. 
 
 Project historic population trends from the oldest cohort caught in the most recent year. We use an exponential decay to model the population change from one cohort to another: 
+
 $$
 N_{t+1} = N_te^{-(F+M)}
 $$
 
 Where F and M are instantaneus rates of Fishing and Natural mortality. We can then calculate the number fish caught with the catch equation:
+
 $$
 \text{Catch}\\C_t = \frac{F_t}{F_t+M_t}N_t(1-e^{-(F+M)})\\
 $$
+
 So we assume M and F for the oldest cohort. M would be constant for all exploited cohorts while F can vary. 
 
 Additionally, total mortality is given by:
+
 $$
 \text{total mortality}\\F_t + M_t = Z_t
 $$
@@ -40,6 +44,7 @@ For example, if we assume:
 - `F = 0.6` 
 - `we caught x amount of fish at age = 4` 
 - We can work out the population size of fish at age = 4 by rearranging the catch eq.
+
 $$
 N_t = \frac{C_t}{(F_t/Z_t)(1-e^{-Z_t})}\\t=3
 $$
@@ -119,8 +124,11 @@ Fi[8] = 0.2 # fishing mortality rate when t=8
 Z = M + Fi[8] # total mortality rate
 C = whiting$catch[,1] # catch in 1974 for 8 age classes
 N = rep(0,8) # empty vector for population size
-N[8] = C[8]/((Fi[8]/Z)*(1-exp(-Z))) # this is the final N
-N
+```
+
+Calculate the final N (when t=8) 
+```{r}
+
 ```
 
 Write a `for loop` to calculate population size for each age class
@@ -138,9 +146,11 @@ plot(output)
 This dataset contains length-frequency data and biological characteristics about hake (Merluccius merluccius) and its fisheries off Senegal.
 ```{r}
 data(hake)
+hake
 ```
 
-Calculate the population of each size class. Define `M, F, catch, 
+Calculate the population of each size class. Define `M, F, Z, and catch`
+**hint** first calculate the population of the oldest size class and work backwards
 ```{r}
 
 ```
@@ -150,54 +160,60 @@ VPA(hake, terminalE = 0.5, analysis_type = "VPA", plot = TRUE,
 catch_unit = "'000", plus_group = TRUE)
 ```
 
+
+# Yield-per-Recruit
 The following script has been developed from Box 7.6 of Chapter 7 in [@Jennings.etal.2009].
 
 Recruitment is constant, so the structure of a population is the same as if we would see from following a single cohort. Yield is measured per recruit. F and M are also constant after recruitment (the moment they become vulnerable to the fishery). It assumes stable age structure through time. Ignore impact of fishing mortality on recruitment.
 ```{r expDec}
+par(mfrow=c(1,2))
 N0 = 100 # number of individual at age 1
 years = 1:10 # follow the cohort for 10 years
 Fi = 0.6 # fishing mortality
 M = 0.2 # natural mortality
 Z = Fi+M # total mortality
-Nt = c(N0,N0*exp(-(Z)*years[1:9])) # calculate numbers in following ages assuming a exponential decay
+Nt = c(N0,N0*exp(-(Fi+M)*years[1:9])) # calculate numbers in following ages assuming a exponential decay
 plot(Nt~years, type = "l")
-
-W = c(0.6,0.9,2.1,4.1,6.3,8.4,10,11.2,12.6,13.5) # these are average weight at age
-Pb = Nt*W # Population biomass is found by multiplying average weight for number of individuals
+barplot(Nt~years)
 ```
 
-**Exercise** 
+## Exercise
 Calculate `Catch` in number for each year using  
 $$
-C_t = \frac{F_t}{F_t+M_t}N_t(1-e^{-(F_t+M)})
+C_t = \frac{F}{Z}N_t(1-e^{-Z})
 $$
-
-***Tip*** use total mortality (Z) because F is constant
 
 ```{r catch}
 
 ```
 
-Calculate 
--Catch in Biomass/year
--Calculate total yield (sum of catch in biomass)
--Biomass per recruit
+$$
+\text{YPR = }
+\frac{\sum{CW}}{N_0}
+$$
 
+$$
+\text{BPR = }
+\frac{\sum{N_tW}}{N_0}
+$$
+
+Calculate YPR and BPR
 ```{r}
+W = c(0.6,0.9,2.1,4.1,6.3,8.4,10,11.2,12.6,13.5) # these are average weights at age
 
 ```
 
 Lastly, plot historical population sizes considering 3 different values of total mortality (Z)
+$$
+N_t = N_0e^{-Zt}
+$$
 
 ```{r}
-Z = c(0.5, 0.7, 0.9)
+Z = c(0.1, 0.3, 0.9)
 
 ```
 
-Now let's calculate Yield-per-recruit for a range of different fishing mortalities.
-
-Let's write a function which repeat the steps above
-
+Now let's calculate Yield-per-recruit for a range of different fishing mortalities. Let's write a function which repeat the steps above
 ```{r YpR}
 getYpR = function(Fi){
   N0 = 100
@@ -208,21 +224,20 @@ getYpR = function(Fi){
   Nt = c(N0,N0*exp(-(Fi+M)*years[1:9]))
 W = c(0.6,0.9,2.1,4.1,6.3,8.4,10,11.2,12.6,13.5)
 Pb = Nt*W # Population biomass
-Cn = Cn = Fi/(Z)*Nt*(1-exp(-Z)) # catches in Numbers
+Cn = Fi/(Z)*Nt*(1-exp(-Z)) # catches in Numbers
 Cw = Cn*W
 Y = sum(Cw)
 
 # Yield per recruit
-YpR = Y/100
+YpR = Y/N0
 # Biomass per recruit
-BpR = sum(Pb)/100
+BpR = sum(Pb)/N0
 c(YpR = YpR,BpR = BpR)
 }  
 ```
 
 Now we need to assign a sequence of values to fishing mortality.
 `do.call()` executes a function defined as an argument. In this case, we can specify 2 functions, one that combines matrices or dataframes `rbind()` created by calculating Yield-per-Recruitement per fishing mortality Fis with `lapply()` 
-
 ```{r}
 Fis = seq(0,1,.1) # range of fishing mortality values 
 
@@ -249,97 +264,7 @@ So fishing harder does not generate more Yield per recruit. The optimal fishing 
 
 
 
-Dr. Jiao's example of Gulland's backward VPA with simulated data. 
 
-```{r Gulland}
-Data<-read.csv('catchage.csv')  # 8 years and 4 ages
-
-Ca.o<-Data[,2:5] # Catch-at-age Matrix observed
-F<-matrix(NA,8,4) # Fishing mortality at different ages
-N<-matrix(NA,8,4) # abundance (population size)
-Ca.p<-matrix(NA,8,4) # Catch estimated  
-M<-0.2 # assume M is constant and known
-### assume F to be 0.2 for last age and last year
-F[,4]<-0.2  # last age group
-F[8,]<-0.2  # last year group
-
-
-## Guland 1965 with 
-### estimate N for last age and last year 
-#    based on the assumed F
-# Nt=Ct/(Ft/Zt)*(1-exp(-Zt))
-# Z=F+M=F+0.2
-N<-Ca.o/(F/(F+M))/(1-exp(-(F+M)))
-N  # we know Year 8, and age group 4
-```
-
-
-```{r}
-for (a in 3:1) {               # Calculate VPA backwards from age group 3-1, 4 is already figured
-  for (y in 7:1) {             # backwards from Year 7-1
-    obj<-function(par) {       # function to return sum of standard error of estimated catch
-      F[y,a]<-par
-      # C/Na+1=Fa/Za*(exp(Za)-1)
-      Ca.p[y,a]<-N[y+1,a+1]*F[y,a]/(F[y,a]+M)*(exp(F[y,a]+M)-1) # estimate previous catch using above equation
-      SE<-(log(Ca.o[y,a])-log(Ca.p[y,a]))^2                     # calculate standard error of estimate
-      sum(SE)                                                   # sum of all SE values 
-    }
-    F.fit<-optim(par=0.05,obj,method='L-BFGS-B',lower = 0.00001,upper = 1) #optimize estimated F at year and age
-    F[y,a]<-F.fit$par
-    # Na+1=Na*exp(-Za)
-    N[y,a]<-N[y+1,a+1]/exp(-(F[y,a]+M))     # calculate population size with optimized catch mortality
-  }
-}
-N
-F
-```
-
-Now let's adjust F
-
-```{r}
-###  Gulland 1965 with tuned F
-# n is the numbers of adjustment to F assuming
-n<-3
-
-Fa4<-matrix(NA,8,n) # F at Age 4
-Fy8<-matrix(NA,n,4) # F at the 8th year
-for (i in 1:n) {
-  N<-Ca.o/(F/(F+M))/(1-exp(-(F+M)))      # Nt=Ct/(Ft/Zt)*(1-exp(-Zt))
-  for (a in 3:1) {
-    for (y in 7:1) {
-      obj<-function(par) {
-        F[y,a]<-par
-        # C/Na+1=Fa/Za*(exp(Za)-1)
-        Ca.p[y,a]<-N[y+1,a+1]*F[y,a]/(F[y,a]+M)*(exp(F[y,a]+M)-1)
-        SE<-(log(Ca.o[y,a])-log(Ca.p[y,a]))^2
-        sum(SE)
-      }
-      F.fit<-optim(par=0.05,obj,method='L-BFGS-B',lower = 0.00001,upper = 1)
-      F[y,a]<-F.fit$par
-      # Na+1=Na*exp(-Za)
-      N[y,a]<-N[y+1,a+1]/exp(-(F[y,a]+M))
-    }
-  }
-  
-  Fa4[,i]<-F[,4]
-  Fy8[i,]<-F[8,]
-  
-  # adjust F assuming
-  F[,4]<-rowMeans(F[,2:4]) # last age group
-  F[8,]<-colMeans(F[6:8,])  # last year group
-}
-N
-F
-```
-
-**Exercise** 
-
-```{r}
-# Practice
-# plot of year~abundance
-# plot of year~fishing mortality
-# plot of year~fishing mortality under 2 hypotheses of M
-```
 
 
 
