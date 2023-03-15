@@ -1,0 +1,80 @@
+---
+title: "Yield per Recruit Analysis"
+author: "Francesco Ferretti"
+date: "2023-03-13"
+output: html_document
+---
+
+Yield-per Recruit Analyses are useful to understand the optimal value of fishing mortality to obtain the maximum yield or identified optimal yield. 
+
+The following script has been developed from Box 7.6 of Chapter 7 in [@Jennings.etal.2009].
+recruitment is constant, so the structure of a population is the same as if we would see from following a single cohort. Yield is mesured per recruit. F and M are also constant after recruitment (the moment they become vulnerable to te fishery). It Assumes stable age structutre through time. Ignore impact of fishing mortality on recruitment.
+```{r expDec}
+N0 = 100 # number of individual at age 1
+years = 1:10 # follow the cohort for 10 years
+Fi = 0.6 # fishing mortality
+M = 0.2 # natural mortality
+Z = Fi+M # total mortality
+Nt = c(N0,N0*exp(-(Fi+M)*years[1:9])) # calculate numbers in following ages assuming a exponential decay
+plot(Nt~years, type = "l")
+barplot(Nt~years)
+
+W = c(0.6,0.9,2.1,4.1,6.3,8.4,10,11.2,12.6,13.5) # these are average weight at age
+Pb = Nt*W # Population biomass is found mutiplying average weight for number of individuals
+Cn = Fi/(Z)*Nt*(1-exp(-Z)) # catches in Numbers from the catch equation derived in box 7.2
+Cw = Cn*W # catch in biomass
+Y = sum(Cw) # this is teh yield
+
+# If we want to find the Yield per recruit
+Y/100
+# Biomass per recruit
+sum(Pb)/100
+
+```
+
+Now let's calculate Yield-per-recruit for a range of different fishing mortalities.
+Let's write a function which repeat the steps above
+
+```{r YpR}
+getYpR = function(Fi){
+  N0 = 100
+  years = 1:10
+
+  M = 0.2
+  Z = Fi+M
+  Nt = c(N0,N0*exp(-(Fi+M)*years[1:9]))
+
+W = c(0.6,0.9,2.1,4.1,6.3,8.4,10,11.2,12.6,13.5)
+Pb = Nt*W # Population biomass
+Cn = Cn = Fi/(Z)*Nt*(1-exp(-Z)) # catches in Numbers
+Cw = Cn*W
+Y = sum(Cw)
+
+# Yield per recruit
+YpR = Y/100
+# Biomass per recruit
+BpR = sum(Pb)/100
+c(YpR = YpR,BpR = BpR)
+}  
+
+Fis = seq(0,1,.1) # range of fishing mortality values 
+
+dat = do.call(rbind, lapply(Fis, getYpR)) # apply the function to all elements of Fis and then combine the results in a table
+dat = as.data.frame(dat) # we need to make sure this table is a data.frame
+dat$Fi = Fis
+
+par(mar = c(5,5,2,5)) # set the margins for the plotting device
+plot(YpR~Fi, dat, type = "l", axes = FALSE, ylab = "Yield per Recruit (kg)")
+axis(1)
+axis(2)
+par(new = T) # allows overplotting on the same figure
+plot(BpR~Fi, dat, type = "l", lty = 2, axes=FALSE, xlab=NA, ylab=NA, ylim = c(0,20)) # this is the dashed line
+axis(side = 4)
+mtext(4,line = 3 ,text = "Biomass per Recruit (kg)")
+# best Fi
+abline(v = dat$Fi[dat$YpR==max(dat$YpR)], lty = 2)
+
+
+lines(BpR~Fi, dat, lty = 2)
+```
+So fishing harder does not generate more Yield per recruit. The optimal fishin mortality is 0.2.

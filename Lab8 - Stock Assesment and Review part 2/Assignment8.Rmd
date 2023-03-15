@@ -1,0 +1,35 @@
+---
+title: "Assignment 8 -- Virtual Population Analysis and Yield Per Recruit"
+author: "(Your name here)"
+date: "3/16/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+set.seed(9999)
+require(TropFishR)
+```
+
+Estimated catch-at-age for Gulf Menhaden (Brevoortia patronus), 1964-2004 from the reduction
+fishery in the U.S. Gulf of Mexico. `Catch unit = millions of fish`
+“Rule of thumb” (Hewitt & Hoenig 2005) `M = 3/tmax`
+Lifespan of Atlantic menhaden `~11 years`
+```{r}
+menhaden = FSAdata::Menhaden1
+head(menhaden)
+```
+
+```{r}
+C = as.numeric(menhaden[19,][2:8]) # Menhaden catch in 1982 for ages 0-6
+M = 3/11 # approximate natural mortality rate
+Fi = rep(0, 7) # empty vector for fishing mortality values
+Fi[7] = 0.2 # fishing mortality for oldest age class
+Z = M + Fi[7] # total mortality
+N = rep(0, 7) # empty vector for population size
+N[7] = C[7] / ((Fi[7]/Z)*(1-exp(-Z))) # Calculate population size at t=6
+N
+```
+
