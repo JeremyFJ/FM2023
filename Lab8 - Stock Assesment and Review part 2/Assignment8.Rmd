@@ -13,7 +13,7 @@ set.seed(9999)
 require(TropFishR)
 ```
 
-1) Use the Catch-at-Age data below to simulate a population of vulnerable recruits `assuming fishing mortality = 0.2 for the oldest age class.`
+1) Use the Catch-at-Age data below to simulate a population of vulnerable recruits `assuming fishing mortality = 0.2 AND is constant.`
 
 - Estimated catch-at-age for Gulf Menhaden (Brevoortia patronus), 1964-2004 from the reduction
 fishery in the U.S. Gulf of Mexico. `Catch unit = millions of fish`
@@ -25,15 +25,9 @@ menhaden = FSAdata::Menhaden1
 head(menhaden)
 ```
 
-Subset for Menhaden catch 1977 - 1982 to follow the same cohort.
+Subset menhaden catch to view the population structure and catch of 1982 (remove age=0 because they are not vulnerable to fishing gear).
 ```{r}
-m =15
-C = as.numeric(menhaden[14,][3])
-for (i in 4:8) {
-C = append(C,as.numeric(menhaden[m,][i]))
-m=m+1
-}
-C
+C = as.numeric(menhaden[19,][3:8])
 ```
 
 2) Use the average weight-at-age for Atlantic Menhaden (reconstructed from Turner 2017) to calculate yield per recruit AND biomass per recruit for 1982? 
@@ -42,9 +36,7 @@ C
 W = c(0.68, 1.3, 1.89, 2.09, 2.5, 2.8)
 ```
 
-*BONUS*
-3) Modify the `getYpR` function for the Menhaden analysis you conducted in questions 1-2. What is the optimal fishing mortality rate for maximum YPR? How does this YPR analysis compare with the initial fishing mortality rate of 0.6? Could they have fished more, or did they need to fish less to achieve optimal YPR? 
-
+3) Modify the `getYpR` function for the Menhaden analysis you conducted in questions 1-2. What is the optimal fishing mortality rate for maximum YPR (assuming recruitment is constant)? How does this YPR analysis compare with the initial fishing mortality rate of 0.2? 
 ```{r}
 getYpR = function(Fi){
   N0 = 100

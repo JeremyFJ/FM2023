@@ -13,13 +13,9 @@ set.seed(9999)
 require(TropFishR)
 ```
 
-
 # Virtual Population Analysis (VPA)
-## Statistical Catch-at-Age (SCA)
 
-Example of using VPA for Yield-per Recruit Analyses. This is useful to understand the optimal value of fishing mortality to identify optimal yield. 
-
-Project historic population trends from the oldest cohort caught in the most recent year. We use an exponential decay to model the population change from one cohort to another: 
+VPA uses catch data (fishery-dependent data collection) to determine past stock size using mortality rates (Jennings et al., 2001). It uses fishing mortality (number landed) and natural mortality (estimated) to discern the number in the stock for the previous time period (i.e. the previous year/month) and survivors.
 
 $$
 N_{t+1} = N_te^{-(F+M)}
@@ -51,7 +47,7 @@ $$
 
 Generate catch data for 4 years
 ```{r}
-C = runif(4, min=30, max=100) # generates 4 random catch values 
+C = sort(runif(4, min=30, max=100), decreasing=T) # generates 4 random catch values 
 C
 ```
 
@@ -125,10 +121,18 @@ C = whiting$catch[,1] # catch in 1974 for 8 age classes
 N = rep(0,8) # empty vector for population size
 ```
 
+$$
+N_t = \frac{C_t}{(F_t/Z_t)(1-e^{-Z_t})}\\t=8
+$$
+
 Calculate the final N (when t=8) 
 ```{r}
 
 ```
+
+$$
+N_{t-1} = N_te^{(F_{t-1}+M)}
+$$
 
 Write a `for loop` to calculate population size for each age class
 **hint** use `uniroot` and the `population equation` to work backwards through age
@@ -159,8 +163,13 @@ VPA(hake, terminalE = 0.5, analysis_type = "VPA", plot = TRUE,
 catch_unit = "'000", plus_group = TRUE)
 ```
 
-
 # Yield-per-Recruit
+Yield per Recruit is the expected life time yield per fish recruited into the stock at a
+specified age. The Beverton and Holt’s Yield per Recruit model (1957), is a predictive model
+that can be used by fishery managers to understand the biological / economical effect
+of fishing on the stocks and helps them to take suitable measures to ensure sustainable
+yields from the fishery.
+
 The following script has been developed from Box 7.6 of Chapter 7 in [@Jennings.etal.2009].
 
 Recruitment is constant, so the structure of a population is the same as if we would see from following a single cohort. Yield is measured per recruit. F and M are also constant after recruitment (the moment they become vulnerable to the fishery). It assumes stable age structure through time. Ignore impact of fishing mortality on recruitment.

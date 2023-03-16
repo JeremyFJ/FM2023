@@ -76,33 +76,16 @@ ggplot() +
 
 # Assignment Q1
 menhaden = FSAdata::Menhaden1
-m =14
-C = as.numeric(menhaden[14,][3])
-for (i in 4:8) {
-C = append(C,as.numeric(menhaden[m+1,][i]))
-m=m+1
-}
+C = as.numeric(menhaden[19,][3:8])
 
-Fi = rep(0, 6) # empty vector for fishing mortality values
-Fi[6] = 0.2 # fishing mortality for oldest age class (assumed)
-Fi = rep(0, 6) # empty vector for fishing mortality values
-Fi[6] = 0.2 # fishing mortality for oldest age class (assumed)
+Fi = 0.2 # empty vector for fishing mortality values
 M = 3/11 # approximate natural mortality rate
-Z = M + Fi[6] # total mortality
+Z = M + Fi # total mortality
 N = rep(0, 6) # empty vector for population size
-N[6] = C[6] / ((Fi[6]/Z)*(1-exp(-Z))) # Calculate population size at t=6
+N = C / ((Fi/Z)*(1-exp(-Z))) # Calculate population size 
 N
 
-for (i in 5:1){
-  
-  Fi[i] = uniroot(step2fun, N = N[i+1], C = C[i], interval = c(-1,2))$root
-  N[i] = N[i+1]*exp(M+Fi[i])
-  
-}
-
-
 # Assignment Q2
-
 W = c(0.68, 1.3, 1.89, 2.09, 2.5, 2.8)
 Cw = C*W
 Y = sum(Cw)
@@ -112,7 +95,6 @@ Pb = N*W
 sum(Pb) / N[1]
 
 # Assignment Q3
-
 getYpR = function(Fi){
   N0 = N[1]
   years = 1:6
