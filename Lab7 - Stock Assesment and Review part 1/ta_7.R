@@ -10,16 +10,34 @@ schaefer = function(pars, catch) {
   }
   return(B)
 }
-
+KB_ratio = fish$cpue[1] / max(fish$cpue)
+KB_ratio # Binit = 82% of K
+K = 3000
+pars = c(r=0.2,K=K,Binit=(K*KB_ratio)) # initial parameters assuming biomass is ~0.5K
+out <- optim(par=pars, fn=negLL, callfun=simpspm,
+             indat=fish)
+pars = out$par
 B = schaefer(pars=pars, catch=fish$catch)
+ggplot() +
+  geom_line(aes(x=fish$year, y=B[1:31]))
+cpue = fish$cpu
+qs = cpue/B
+q = mean(qs)
+pred.cpue.e = B*q 
+
+plot(fish$year,B[1:31])
 
 pred.cpue.e2 = simpspm(pars, fish, schaefer = TRUE)
 ggplot() +
   geom_point(data=fish, aes(x=year, y=cpue)) +
   geom_line(aes(x=fish$year, y=pred.cpue.e[1:31]), color="red") +
-  geom_line(aes(x=fish$year, y=pred.cpue.e2[1:31]), color="green")
+  geom_line(aes(x=fish$year, y=pred.cpue.e2[1:31]), color="green") +
+  scale_color_manual(values=c(""))
+
+
 
 # Q1
+fishdatlag = getlag(yellowfin, maxlag = 10, plotout = TRUE, indexI = 1) # -2 most significant
 model1 <-lm(yellowfin$cpue~yellowfin$catch)
 model2 <-lm(yellowfin[3:22,"cpue"]~yellowfin[1:20,"catch"])
 summary(model1) # lag = 0 for cpue
@@ -31,7 +49,12 @@ ggplot() +
 # Q2
 yellowfin = read.csv("yellowfin1934.csv")
 
-pars = c(r=0.1,K=2250000,Binit=2250000,sigma=0.5)
+plot(data=yellowfin, cpue~year, type="l")
+KB_ratio = yellowfin$cpue[1] / max(yellowfin$cpue)
+KB_ratio
+
+K = 2250000
+pars = c(r=0.1,K=K,Binit=K*0.7,sigma=0.5)
 out <- optim(par=pars, fn=negLL, callfun=simpspm, 
              indat=yellowfin)
 out$par

@@ -1,5 +1,5 @@
 ---
-title: "Lab 7 - Surplus Production Models"
+title: "Lab 7 - Surplus Production"
 author: "(Your name here)"
 date: "3/2/2023"
 output: html_document
@@ -18,27 +18,30 @@ library(tidyverse)
 
 The FRDC (Fisheries Research and Development Corporation) reports metrics of various fish stocks around Australia from 1986-2016 and can be accessed with the **datalowSA** package. [Haddon1](https://github.com/haddonm/datalowSA)
 ```{r}
-# devtools::install_github("haddonm/datalowSA",build_vignettes=TRUE)
+# devtools::install_github("haddonm/datalowSA")
 library(datalowSA)
 ```
 
 ```{r}
 data(dataspm)
 fish = dataspm$fish
+head(fish)
 ```
 
+
 ```{r}
-lm1 = lm(fish$cpue~fish$catch)
+lm1 = lm(data=fish, cpue~catch)
 summary(lm1)
 ```
 
-Use the `getlag()` function to look at the correlation between CPUE and catches. Negative correlation is indicative of the CPUE being informative of catch throughout the years where data is being recorded. Blue dotted lines represent significant correlation levels.
+Use the `getlag()` function to look at the correlation between CPUE and catches. Correlation is indicative of the CPUE being informative of catch throughout the years where data is being recorded. Blue dotted lines represent significant correlation levels.
 ```{r}
 fishdatlag = getlag(fish, maxlag = 10, plotout = TRUE, indexI = 1) # check lag
 ```
+
 Model a time lag of 5 years on cpue.
 ```{r}
-lm2 = lm(fish$cpue[5:31]~fish$catch[1:27])
+lm2 = lm(data=fish, cpue[5:31]~catch[1:27])
 summary(lm2)
 ```
 
@@ -55,10 +58,6 @@ ggplot() +
 
 Changes in population biomass can tell us the relationship between fishing mortality rates and population growth. Surplus production models (SPMs) are strong baselines for determining exploitation of a fish stock. 
 
-Here, we will assume that the maximum sustainable biomass is equal to the carrying capacity 
-
-$$B_{max} \approx K$$
-\\
 $$
 \text{Schaefer}\\
 B_{t+1} = B_t + rB_t(1-B_t/K)-C_t\\
@@ -71,26 +70,38 @@ $$
 `K` = carrying capacity
 `Ct` = catch at time (t)
 
-Here, we'll define our set of parameters.
-**Try** Model expected biomass (similar to how we modeled exponential growth) using the Schaefer SPM model
+Here, we'll define our set of parameters and model expected biomass (similar to how we modeled exponential growth) using the Schaefer SPM model.
+
+To estimate initial parameters, it is good practice to plot the data.
+```{r}
+plot(data=fish, cpue~year, type="l")
+``` 
+CPUE was highest in the late 90's. If we assume the carrying capacity was reached, we can calculate the ratio of K/Binit. 
 
 ```{r}
-pars = c(r=0.2,K=6000,Binit=2800) # initial parameters
+KB_ratio = fish$cpue[1] / max(fish$cpue)
+KB_ratio # Binit = 82% of K
+```
 
-B = c()
-B[1] = pars["Binit"]
-C = fish$catch
+Let's also assume that catch is representative of `5% of the carrying capacity (K)`. Now we can `estimate K and Binit`. We can also assume `r` to be within a range from `0.01-1.5` for most fish stocks.
+```{r}
+mcatch = mean(fish$catch) # mean catch
+K = mcatch / 0.05 # assume catch is 10% of carrying capacity -- initial
+Binit = KB_ratio*K # assume carrying capacity was reached during this survey -- initial
+pars = c(r=0.2,K=K,Binit=Binit) # initial parameters 
 ```
 
 **Exercise**
-We'll be using this model again. So, in another Rscript, define a function that intakes the above parameters (r, K, Binit). *Incorporate Catch into the equation and function*
+Define a function that takes the above parameters (r, K, Binit) and estimates biomass of the stock throughout it's recorded lifespan. *Incorporate Catch into the equation and function*
 
-This function should use the above model to predict population biomass. Add it here when you are done.
-
+This function should use the Schaefer model to predict population biomass.
 ```{r}
 # Use the Schaefer model equation to predict population biomass (and incorporate catches) 
-# hint: Use a for loop with 30 time steps 
+# hint: Use a for loop with time steps 
 
+schaefer = function(pars, catch) {
+  
+}
 ```
 
 Plot `Biomass vs. Year`
@@ -110,15 +121,13 @@ $$
 Estimating `q` from the data
 ```{r}
 cpue = fish$cpue
-qs = cpue/B
-q = mean(qs)
-pred.cpue.e = B*q 
+qs = cpue/B # annual catchability
+q = mean(qs) # mean catchability
+pred.cpue.e = B*q # predict CPUE
 ```
 
 **Exercise** 
 Plot `cpue~year` and fit your model with predicted CPUE
-**Note** In addition, you can use the `simpspm()` function to output predicted CPUE based on observed CPUE (does not incorporate catchability coefficient)
-`simpspm(pars, fish, schaefer = TRUE) # Caclulates CPUE based on Schaefer`
 ```{r}
 
 ```
@@ -128,13 +137,12 @@ Let's use our parameters to evaluate depletion, catch, surplus production, and p
 ans = displayModel(pars,fish,schaefer = TRUE, addrmse = TRUE)
 ```
 
-`ExploitB Depletion`: displays the trajectory of the exploitable biomass depletion rate. The red line is the LRP and the green line is the TRP. In Schaefer model results, two options are similar 
-`Catch`: displays the catch series with MSY as red line
-`Scaled CPUE`: displays the model fit to the CPUE data. Red line is the model predictions and the black dots are the CPUE data points
-`Surplus Production - Biomass`: displays surplus production vs. biomass. Vertical red lines represent $B_{lim}$, $B_{targ}$, and $B_{MSY}$ and the horizontal dash line is MSY
-`LN Residuals`: displays the residuals (scaled observe CPUE / scaled predicted CPUE) with a value of RMSE (root mean square error)
-`Surplus Production - Depletion`: displays the surplus production vs. depletion function. The vertical lines represent the LRP (red, limit reference point) and TRP (green, target reference point) and MSY (blue)
-
+`ExploitB Depletion`: displays the fraction of current depleted biomass. The red line is the Limit Reference Point and the green line is the Target Reference Point. 
+`Catch`: displays the catch series with MSY as red line.
+`Scaled CPUE`: displays the model fit to the CPUE data. Red line is the model predictions and the black dots are the CPUE data points. Green line is a simple loess curve fit (not based on ecological parameters).
+`Surplus Production - Biomass`: displays surplus production (# fish recruited/year) vs. biomass. Vertical red lines represent $B_{lim}$, $B_{targ}$, and $B_{MSY}$ and the horizontal dash line is MSY
+`Log-Normal Residuals`: displays the residuals (scaled observe CPUE / scaled predicted CPUE) with a value of RMSE (root mean square error)
+`Surplus Production - Depletion`: displays the surplus production vs. depletion function. The vertical lines represent the Limit Reference Point (red, limit reference point) and Target Reference Point (green, target reference point) and MSY (blue)
 
 Now let's plot the harvest rate vs. Biomass 
 ```{r}
@@ -171,7 +179,7 @@ optpars = out$par
 
 ```
 
-Plot your data and compare the models - use a legend
+Plot your data and compare the models
 ```{r}
 
 ```
@@ -191,6 +199,7 @@ $$
 ```{r}
 
 ```
+
 
 ```{r}
 round(ans1$Dynamics$sumout,3)

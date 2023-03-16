@@ -1,0 +1,79 @@
+---
+title: "test"
+author: "Jeremy"
+date: "2023-03-02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+yellowfin = read.csv("yellowfin1934.csv")
+```
+
+1) With the `getlag` function, identify the time lag on `cpue` where the relationship between `cpue` and `catch` is most significant. Write a linear regression with this time lag and plot your results.
+
+```{r}
+fishdatlag = getlag(yellowfin, maxlag = 10, plotout = TRUE, indexI = 1) # check lag
+```
+
+```{r}
+model1 = lm(data=yellowfin, cpue~catch)
+model2 = lm(data=yellowfin, cpue[3:22]~catch[1:20])
+summary(model1)
+summary(model2)
+```
+```{r}
+ggplot() +
+  geom_line(aes(x=yellowfin$catch[1:20], y=predict(model2))) +
+  geom_point(aes(x=yellowfin$catch[1:20], y=yellowfin$cpue[3:22]), color="blue") +
+  xlab("Catch (t)") +
+  ylab("CPUE") +
+  ggtitle("Pacific yellowfin tuna 1934-1955")
+```
+
+2) Estimate and optimize initial stock parameters, predict biomass, and plot `predicted Biomass vs. Year`.
+
+```{r}
+plot(data=yellowfin, cpue~year, type='l')
+```
+```{r}
+KB_ratio = yellowfin$cpue[1] / max(yellowfin$cpue)
+KB_ratio
+
+
+```
+
+3) Predict CPUEs. Plot CPUE and fit both models. 
+
+```{r}
+KB_ratio = yellowfin$cpue[1] / max(yellowfin$cpue)
+KB_ratio # Binit = 82% of K
+mcatch = mean(yellowfin$catch)
+K = mcatch / 0.05
+pars = c(r=1.5,K=K,Binit=(K*KB_ratio)) # initial parameters assuming biomass is ~0.5K
+# out <- optim(par=pars, fn=negLL, callfun=simpspm,
+#              indat=yellowfin)
+# pars = out$par
+B = schaefer(pars=pars, catch=yellowfin$catch)
+cpue = yellowfin$cpue
+qs = cpue/B
+q = mean(qs)
+pred.cpue.e = B*q 
+
+plot(yellowfin$year,B[1:22])
+
+pred.cpue.e2 = simpspm(pars, yellowfin, schaefer = TRUE)
+ggplot() +
+  geom_point(data=yellowfin, aes(x=year, y=cpue)) +
+  geom_line(aes(x=yellowfin$year, y=pred.cpue.e[1:22]), color="red") +
+  geom_line(aes(x=yellowfin$year, y=pred.cpue.e2[1:22]), color="green")
+```
+
+4) Plot the Surplus Production statistics with `displayModel`. Make sure to use your optimized parameters.
+  - calculate MSY
+
+
+5) How has the Pacific yellowfin tuna population biomass changed from 1934-1955 based on the reported catch and CPUEs? 
