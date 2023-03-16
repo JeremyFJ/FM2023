@@ -17,7 +17,7 @@ require(TropFishR)
 # Virtual Population Analysis (VPA)
 ## Statistical Catch-at-Age (SCA)
 
-Example of using VPA for Yield-per Recruit Analyses. This is useful to understand the optimal value of fishing mortality to obtain the maximum yield or identified optimal yield. 
+Example of using VPA for Yield-per Recruit Analyses. This is useful to understand the optimal value of fishing mortality to identify optimal yield. 
 
 Project historic population trends from the oldest cohort caught in the most recent year. We use an exponential decay to model the population change from one cohort to another: 
 
@@ -25,7 +25,7 @@ $$
 N_{t+1} = N_te^{-(F+M)}
 $$
 
-Where F and M are instantaneus rates of Fishing and Natural mortality. We can then calculate the number fish caught with the catch equation:
+Where F and M are instantaneous rates of Fishing and Natural mortality. We can then calculate the number fish caught with the catch equation:
 
 $$
 \text{Catch}\\C_t = \frac{F_t}{F_t+M_t}N_t(1-e^{-(F+M)})\\
@@ -46,7 +46,7 @@ For example, if we assume:
 - We can work out the population size of fish at age = 4 by rearranging the catch eq.
 
 $$
-N_t = \frac{C_t}{(F_t/Z_t)(1-e^{-Z_t})}\\t=3
+N_t = \frac{C_t}{(F_t/Z_t)(1-e^{-Z_t})}\\t=4
 $$
 
 Generate catch data for 4 years
@@ -64,20 +64,17 @@ Z = Fi[4] + M # Total Mortality rate
 N = rep(0,4) # Population size for each year
 
 N[4] = C[4] / ((Fi[4]/Z)*(1-exp(-Z))) # Calculate population size at t=4
+Fi
 N
 ```
 
 To populate the amount of fish for the previous year, we must calculate $F_{t-1}$ or $F_{[3]}$ in this case.
 
-```{r}
-Fi
-```
-
 $$
 C_{t-1} = \frac{F_{t-1}}{F_{t-1}+M}N_t(e^{(F_{t-1}+M)}-1)
 $$
 
-Define a function to calculate the above catch equation
+Define a function to calculate fishing mortality from the above catch equation
 ```{r}
 step2fun = function(x, N, C){
   
@@ -93,7 +90,9 @@ Fi
 ```
 
 Then we use fishing mortality to calculate population size again.
-$$N_{t-1} = N_te^{(F_{t-1}+M)}$$
+$$
+N_{t-1} = N_te^{(F_{t-1}+M)}
+$$
 
 ```{r}
 N[3] = N[4]*exp(Fi[3]+M)
@@ -261,8 +260,9 @@ text(0.8,10, expression('YpR'))
 ```
 So fishing harder does not generate more Yield per recruit. The optimal fishing mortality is 0.2.
 
-
-
+```{r}
+dat$Fi[dat$YpR==max(dat$YpR)]
+```
 
 
 

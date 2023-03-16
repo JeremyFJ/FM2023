@@ -1,28 +1,58 @@
-
+step2fun = function(x, N, C){
+  
+  (x/(x+M)*N*(exp(x+M)-1)) - C
+  
+}
 # Exercise whiting
+data(whiting)
+M = 0.2 # natural mortality rate
+Fi = rep(0,8) # empty vector for fishing mortality
+Fi[8] = 0.2 # fishing mortality rate when t=8
+Z = M + Fi[8] # total mortality rate
+C = whiting$catch[,1] # catch in 1974 for 8 age classes
+N = rep(0,8) # empty vector for population size
+
 N[8] = C[8]/((Fi[8]/Z)*(1-exp(-Z))) # this is the final N
-N
 
 for (i in 7:1){
   
-  Fi[i] = uniroot(step2fun, N = N[i+1], C = C[i], interval = c(-1,2))$root
+  Fi[i] = uniroot(step2fun, N = N[i+1], C = C[i], interval = c(0,2))$root
   N[i] = N[i+1]*exp(M+Fi[i])
   
 }
 
 # Exercise hake
+M = hake$M
+Fi = hake$FM
+C = hake$catch
+N = rep(0,14)
+Z = M + Fi[14]
 
+N[14] = C[14]/((Fi[14]/Z)*(1-exp(-Z)))
+
+for (i in 13:1){
+  
+  Fi[i] = uniroot(step2fun, N = N[i+1], C = C[i], interval = c(0,2))$root
+  N[i] = N[i+1]*exp(M+Fi[i])
+  
+}
 
 # Exercise YPR
-W = c(0.6,0.9,2.1,4.1,6.3,8.4,10,11.2,12.6,13.5) # these are average weight at age
-Pb = Nt*W # Population biomass is found mutiplying average weight for number of individuals
+N0 = 100 # number of individual at age 1
+years = 1:10 # follow the cohort for 10 years
+Fi = 0.6 # fishing mortality
+M = 0.2 # natural mortality
+Z = Fi+M # total mortality
+Nt = c(N0,N0*exp(-(Fi+M)*years[1:9])) # calculate numbers in following ages assuming a
 Cn = Fi/(Z)*Nt*(1-exp(-Z)) # catches in Numbers from the catch equation derived in box 7.2
-Cw = Cn*W # catch in biomass (kg)
-Y = sum(Cw) # this is the yield
 
 ### If we want to find the Yield per recruit
+W = c(0.6,0.9,2.1,4.1,6.3,8.4,10,11.2,12.6,13.5) # these are average weight at age
+Cw = Cn*W # catch in biomass (kg)
+Y = sum(Cw) # this is the yield
 Y/N0
 ### Biomass per recruit
+Pb = Nt*W # Population biomass is found mutiplying average weight for number of individuals
 sum(Pb)/N0
 
 Z = c(0.1, 0.3, 0.9)
@@ -44,10 +74,17 @@ ggplot() +
         panel.border = element_rect(size=0.9, fill=NA))
   
 
-# Assignment Q1 
+# Assignment Q1
+menhaden = FSAdata::Menhaden1
+m =14
+C = as.numeric(menhaden[14,][3])
+for (i in 4:8) {
+C = append(C,as.numeric(menhaden[m+1,][i]))
+m=m+1
+}
+
 Fi = rep(0, 6) # empty vector for fishing mortality values
 Fi[6] = 0.2 # fishing mortality for oldest age class (assumed)
-C = as.numeric(menhaden[19,][3:8]) # Menhaden catch in 1982 for ages 0-6
 Fi = rep(0, 6) # empty vector for fishing mortality values
 Fi[6] = 0.2 # fishing mortality for oldest age class (assumed)
 M = 3/11 # approximate natural mortality rate
@@ -66,6 +103,7 @@ for (i in 5:1){
 
 # Assignment Q2
 
+W = c(0.68, 1.3, 1.89, 2.09, 2.5, 2.8)
 Cw = C*W
 Y = sum(Cw)
 Y / N[1]
@@ -114,5 +152,4 @@ abline(v = dat$Fi[dat$YpR==max(dat$YpR)], lty = 2)
 text(0.6, 0.1, expression('Fi at max YpR'))
 text(0.85,0.42, expression('BpR'))
 text(0.82,18, expression('YpR'))
-
-#
+dat$Fi[dat$YpR==max(dat$YpR)]
