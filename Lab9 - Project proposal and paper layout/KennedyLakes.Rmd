@@ -1,0 +1,59 @@
+---
+title: "Kennedy Lakes Assessment"
+author: "(Your name here)"
+date: "3/23/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+set.seed(9999)
+```
+
+# Kennedy Tree Farm dataset
+
+```{r}
+dat = read.csv("kennedylakes.csv")
+```
+
+## Assignment
+
+1) Create age classes based on length of `largemouth bass` using the Von Bertalanffy Growth Function and `rfishbase` for life history parameters.  
+
+### rfishbase
+
+```{r}
+require(rfishbase)
+LH1 = popgrowth("Micropterus salmoides") # parameters: Loo, growth coefficient k
+LH2 = length_weight("Micropterus salmoides") # parameters: a, b 
+```
+
+2) Calculate and plot `catch-at-age`. 
+
+3) Calculate total mortality rate based on the catch curve.
+
+4) Optimize and fit a model that predicts weight of `largemouth bass` given length 
+  - plot a linear fit
+  - plot a non-linear fit
+
+$$
+log_eW = log_ea + b*log_eL 
+$$
+
+$$
+W = aL^b
+$$
+
+
+
+
+
+
+
+
+
+
+
+
