@@ -21,7 +21,7 @@ First, let's pull the data from our database `kennedylakes`
 connectKennedy = function (dbuser, dbpass) 
 {
   dbname = "kennedylakes"   # name of database
-  dbhost <- "sharkpulse.cnre.vt.edu"    # host or server
+  dbhost <- "sp2.cs.vt.edu"    # host or server
   dbport <- 5432
   drv <- dbDriver("PostgreSQL")
   con <- dbConnect(drv, host = dbhost, port = dbport, dbname = dbname, 
