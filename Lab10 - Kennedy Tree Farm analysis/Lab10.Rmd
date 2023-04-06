@@ -141,7 +141,8 @@ n = nrow(subset(datrecap2023, (common=="largemouth bass" & lake=="big" & date>"2
 m = nrow(bigrecap2023)
 
 mr = FSA::mrClosed(M = M, n = n, m = m, method="Petersen")
-summary(mr)
+summary(mr, incl.SE=TRUE)
+confint(mr,verbose=TRUE)
 ```
 
 
