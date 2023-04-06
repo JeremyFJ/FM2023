@@ -11,7 +11,7 @@ lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
 knitr::opts_knit$set(root.dir = lab_path)
 set.seed(9999)
 library(tidyverse)
-library(magrittr)
+library(rfishbase)
 ```
 
 # Kennedy Tree Farm dataset
@@ -22,7 +22,7 @@ dat = read.csv("kennedylakes.csv")
 
 ### Data Exploration
 
-Species distribution with `geom_bar`
+From a 3-year sampling event, what is the species distribution across all 4 lakes? 
 ```{r, fig.width=120%}
 ggplot(data=dat, aes(x=common)) +
   geom_bar() +
@@ -31,35 +31,35 @@ ggplot(data=dat, aes(x=common)) +
   ggtitle("Kennedy lakes species distribution")
 ```
 
-Proportion of catch
+Calculate the proportion of catch by species 
 ```{r}
-specs = aggregate.data.frame(list(inds = dat$date), list(common = dat$common), length)
-specs = specs[order(specs$inds),]
-specs$perc = specs$inds/sum(specs$inds)*100
+specs = aggregate.data.frame(list(inds = dat$date), list(common = dat$common), length) # create aggregated dataframe with 2 columns (species, catch)
+specs = specs[order(specs$inds),] # order dataframe by descending catch
+specs$perc = specs$inds/sum(specs$inds)*100 # create proportion
 par(oma = c(1,7,2,1))
 barplot(specs$inds, names.arg = paste(specs$common," (",round(specs$perc,1),"%)",sep = ""), horiz=T, las = 1)
 ```
 
-Catch and fishing pressure by lake
+What is the overall catch and effort per lake? How would you develop relative abundance indices from this information?
 ```{r} 
 g1 = ggplot(data=dat, aes(x=lake)) +
-  geom_bar() +
+  geom_bar() + # create a barplot to count how many rows pertain to each lake
   theme_bw() +
   xlab("Lake") +
   ylab("Catch") +
   ggtitle(paste0("Kennedy lakes (Nov 2021 - Apr 2023)"))
 g2 = ggplot(data=dat, aes(x=lake, y=time_targeted)) +
-  geom_bar(position="stack", stat="identity") +
+  geom_bar(position="stack", stat="identity") + # barplot of fishing effort per lake
   theme_bw() +
   xlab("Lake") +
   ylab("Effort (hours)") 
 gridExtra::grid.arrange(g1, g2)
 ```
 
-
+Length frequency distribution of `largemouth bass` from 2021-2023. 
 ```{r}
 dat_2021 <- dat[(dat$date > "2021-01-01" & dat$date < "2022-01-01" 
-                 & dat$common=='largemouth bass' & !is.na(dat$length_cm)),]
+                 & dat$common=='largemouth bass' & !is.na(dat$length_cm)),] # subset for 2021 sampling events and largemouth bass. Remove rows without length measurements 
 dat_2022 <- dat[(dat$date > "2022-01-01" & dat$date < "2023-01-01" 
                  & dat$common=='largemouth bass' & !is.na(dat$length_cm)),]
 dat_2023 <- dat[(dat$date > "2023-01-01" & dat$date < "2024-01-01" 
@@ -71,11 +71,11 @@ hist(~length_cm,data=dat_2023, xlab="Total Length (cm)", col = "black", main="20
 ```
 
 Plot empirical cumulative distribution function (ECDF) which is the proportion of fish
-that are less than each observed length. From this plot, it appears that largemouth bass were relatively the same lengths for all years, however in the 25-30cm range, the proportion of fish increased.
+that are less than each observed length. From this plot, it appears that largemouth bass were relatively the same lengths for all years, however in the 25-30cm range, the proportion of fish increased over the sampling period.
 ```{r}
 clr <- c("black","gray55", "gray")
 plot(ecdf(dat_2021$length_cm),xlab="Total Length (cm)",do.points=FALSE,
-verticals=TRUE,main="",col.01line=NULL)
+verticals=TRUE,main="",col.01line=NULL) # plot the ECDF for 2021 sampling events
 plot(ecdf(dat_2022$length_cm),add=TRUE,do.points=FALSE,
 verticals=TRUE,col=clr[2],col.01line=NULL)
 plot(ecdf(dat_2023$length_cm),add=TRUE,do.points=FALSE,
@@ -84,7 +84,7 @@ legend("bottomright",c("2021","2022", "2023"),col=clr,lty=1,
 bty="n",cex=0.75)
 ```
 
-
+Convert length classes of largemouth bass caught in 2022 into age classes. Use the VBGF and rfishbase life history parameters.
 ```{r}
 lhB = as.data.frame(popgrowth("Micropterus salmoides", fields = c("K","to","Loo"))) # parameters: Loo, growth coefficient k
 meanpar = colMeans(lhB, na.rm=TRUE) # Loo is in cm
@@ -94,9 +94,10 @@ dat_2022$age = round(dat_2022$age)
 afl = data.frame(table(dat_2022$age))
 colnames(afl) = c("age", "catch")
 afl$age = as.numeric(afl$age)
+afl
 ```
 
-
+Plot the age class distribution.
 ```{r, fig.width=2}
 ggplot() + 
   geom_point(data=afl, aes(x=age, y=log(catch)), pch=19) + 
@@ -119,34 +120,43 @@ text(4, 3, paste0("Z=", round(z,3)),
 
 ### Closed Population, Single Recapture
 
+The most simple and common capture-recapture study occurs when M fish
+are collected from a closed population, marked with either a batch or individual mark, and returned to the population.
 $$
-\text{Petersen equation}\\
+\text{Chaptman modification of the Petersen equation}\\
 \hat{N} = \frac{(M + 1)(n +1)}{m + 1} - 1\\
 \hat{N} = \text{total population size}\\
 M = \text{tagged fish}\\
 n = \text{subsequent sample of fish}\\
 m = \text{recaptured fish}
 $$
-Big Lake largemouth bass recapture from Thursday 3/30/2023
+Big Lake largemouth bass recapture from Thursday 3/30/2023.
 ```{r}
-datrecap2023 = dat[(!is.na(dat$tagid) & dat$tagid!='' & dat$date > "2023-01-01"),]
-recaprows = which(grepl("recap", tolower(datrecap2023$notes)))
-bigrecap2023 = datrecap2023[c(49,69),]
+datrecap2023 = dat[(!is.na(dat$tagid) & dat$tagid!='' & dat$date > "2023-01-01"),] # subset master dataframe for only tagged fish caught in 2023
+recaprows = which(grepl("recap", tolower(datrecap2023$notes))) # explore the rows where recaptures were reported. Which of these are from Big Lake, and which of these were tagged on our class trip on March 30th?
+bigrecap2023 = datrecap2023[c(49,69),] # Brendan and Tom caught recaptures from the class trip
 ```
 
-Estimate population size of gear-vulnerable fish
+Estimate population size of gear-vulnerable fish with the Chapman-modification to the Petersen equation (Krebs 1989).
 ```{r}
-M = nrow(subset(datrecap2023, (common=="largemouth bass" & lake=="big" & date=="2023-03-30")))
-n = nrow(subset(datrecap2023, (common=="largemouth bass" & lake=="big" & date>"2023-03-30")))
-m = nrow(bigrecap2023)
+M = nrow(subset(datrecap2023, (common=="largemouth bass" & lake=="big" & date=="2023-03-30"))) # amount of tagged fish from the class trip
+n = nrow(subset(dat, (common=="largemouth bass" & lake=="big" & date>"2023-03-30"))) # amount of tagged+recaptured fish sampled after the class trip
+m = nrow(bigrecap2023) # amount of recaptured fish from M
 
-mr = FSA::mrClosed(M = M, n = n, m = m, method="Petersen")
-summary(mr, incl.SE=TRUE)
-confint(mr,verbose=TRUE)
+mr = FSA::mrClosed(M = M, n = n, m = m, method="Chapman", chapman.mo=TRUE) # FSA function for mark-recapture in a closed system
+mrsum = summary(mr, incl.SE=TRUE) # Use Poisson distribution when m < 50 or m/n > 0.1, otherwise use binomial distribution
+mrsum
+confint(mr, verbose=TRUE)
 ```
 
+This model assumes the following:
+1. The population is physically (i.e., no immigration or emigration) and demographically (i.e., no recruitment or mortality) closed.
+2. Marks or tags are neither lost nor missed.
+3. Marked fish returned to the population mix randomly with unmarked fish.
+4. All fish within a sample have an equal probability of capture.
+5. Fish behavior or vulnerability does not change after being marked.
 
 
-```{r}
 
-```
+
+

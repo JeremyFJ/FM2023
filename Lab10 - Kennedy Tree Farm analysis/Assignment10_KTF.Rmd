@@ -1,0 +1,61 @@
+---
+title: "Kennedy Lakes Assignment"
+author: "(Your name here)"
+date: "3/23/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+set.seed(9999)
+```
+
+# Kennedy Tree Farm dataset
+
+```{r}
+dat = read.csv("kennedylakes.csv")
+```
+
+## Assignment
+
+1) For 2021, 2022, and 2023 separately, create age classes based on length of caught `largemouth bass` using the Von Bertalanffy Growth Function and `rfishbase` for life history parameters. 
+
+2) Plot all 3 catch curves and determine total mortality rate for all three years. 
+  - Plot all 3 catch curves 
+  - Calculate harvest rate
+
+3) Consider small lake, there has been `one recapture` that was originally tagged on April 7th, 2022. Calculate a rough estimation of the population size from this date until it was recaptured on April 1st, 2023. **hint** `M` will be equal to the amount of all fish tagged in small lake from April 7th 2022 up until April 1st 2023 (not including) and `n` is the total amount of fish caught in that time and including the latest sampling date.
+
+4) Optimize and fit a model that predicts weight of `largemouth bass` in all lakes given length 
+  - plot the observed growth and fit a predictive non-linear model
+  - Compare your model with the predicted weight produced from `rfishbase` parameters
+  - How do the KTF bass growth patterns compare with the average?
+
+$$
+W = aL^b
+$$
+```{r}
+
+```
+
+`rfishbase` parameters
+```{r, echo=FALSE}
+dat2 = length_weight("Micropterus salmoides")
+dat2 = as.data.frame(dat2)
+Ma = exp(mean(log(dat2$a))) # geometric mean of a
+Mb = mean(dat2$b) # mean of b
+```
+
+5) Create a management plan for these lake systems given your time at the tree farm and all data exploration and population analyses that you have done. Develop a baseline 5-year plan for improving the recreational fishing experience, health of the ponds and fishes, and economic value of the land with a budget of $15,000 / year. 
+
+
+
+
+
+
+
+
+
+
