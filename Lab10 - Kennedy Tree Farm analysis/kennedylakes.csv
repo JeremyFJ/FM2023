@@ -1,0 +1,250 @@
+date,lake,angler,time,common,target_species,length_cm,weight_g,tagid,bait_lure,time_targeted,notes,image,lat,lon,tagcolor
+2022-04-07,big,Chad,11:36:00,bluegill,,14.5,66.1,10,crayfish crank bait,2.5,,,,,
+2022-04-07,hidden,Jeremy,,,,,,,,2.5,,,,,
+2022-04-07,big,Chad,12:22:00,bluegill,,19,135,12,crayfish crank bait,2.5,,,,,
+2022-04-07,big,Andrew,14:25:00,largemouth bass,,30,,,soft plastic worm,2,size estimated. He was far from measuring station,,,,
+2023-04-01,big,Joey,,largemouth bass,,37,720,061B,trick worm,,,,,,
+2022-04-07,big,Chad,13:00:00,largemouth bass,,20.5,69,15,spoon,2.5,,,,,
+2022-04-07,big,Andrew,13:30:00,largemouth bass,,35,549,16,soft plastic worm,2.5,,,,,
+2023-04-01,big,Jesse,,bluegill,,20,,4,,2,,,,,green
+2023-04-01,big,Jesse,,bluegill,,18,80,10,,2,,,,,green
+2022-04-07,small,Josh,12:20:00,largemouth bass,,19.5,,29,pan fish fly,2.5,no scale,,,,
+2022-04-07,small,Josh,12:35:00,largemouth bass,,19.4,,28,pan fish fly,2.5,no scale,,,,
+2023-04-01,big,Jesse,,bluegill,,16,,11,,2,,,,,green
+2023-04-01,big,Joey,,largemouth bass,,26,22,12,trick worm,2,,,,,green
+2023-04-01,big,Jesse,12:50:00,bluegill,,16,,13,,2,,,,,green
+2023-04-01,big,Joey,,largemouth bass,,34,420,14,trick worm,2,,,,,green
+2023-04-01,big,Joey,,chain pickerel,,49,680,66B,trick worm,2,Recap,,,,orange
+2022-04-07,big,Josh,14:25:00,bluegill,,17.8,102.4,20,woolly bugger,2,,,,,
+2023-04-01,big,Jesse,,largemouth bass,,23,140,15,,2,,,,,green
+2022-04-07,big,Andrew,14:36:00,largemouth bass,,23,130,22,soft plastic worm,2,,,,,
+2023-04-01,big,Joey,,largemouth bass,,24,160,16,trick worm,2,,,,,green
+2022-04-07,small,Chad,14:35:00,largemouth bass,,20,,21,soft plastic worm,2,no scale,,,,
+2022-04-07,small,Francesco,14:46:00,largemouth bass,,37,,27,crank bait,2,no scale,,,,
+2022-04-07,small,Francesco,14:49:00,largemouth bass,,21,,51,crank bait,2,no scale,,,,
+2022-04-07,small,Francesco,14:58:00,largemouth bass,,18,,52,crank bait,2,no scale,,,,
+2022-04-07,small,Andrew,15:57:00,largemouth bass,,28,,54,soft plastic worm,2,no scale,,,,
+2022-04-07,big,Andrew,13:40:00,largemouth bass,,19,106,17,soft plastic worm,2,,,,,
+2022-04-07,big,Andrew,13:50:00,largemouth bass,,34,480,18,soft plastic worm,2,,,,,
+2023-04-01,big,Joey,,largemouth bass,,25,180,17,trick worm,2,,,,,green
+2023-04-01,hidden,Jesse,,largemouth bass,,30.5,360,18,,2,,,,,green
+2023-04-02,big,Jeremy,,largemouth bass,largemouth bass,33,480,36B,In-line spinner,1.4,,,,,orange
+2023-04-02,big,Jeremy,,largemouth bass,largemouth bass,23.5,220,92,In-line spinner,1.4,,,,,orange
+2022-04-07,hidden,Jaimee,15:03:00,largemouth bass,,25.7,,72,spinner curly tail gig,2,no scale,,,,
+2023-04-02,big,Francesco,,largemouth bass,largemouth bass,,,,,1,,,,,
+2023-04-01,nursery,Cameron,,largemouth bass,,24,260,49,In-line spinner,2,,,,,orange
+2022-04-07,hidden,Logan,15:10:00,largemouth bass,,23.25,,51,soft plastic crawl,2,no scal,,,,
+2022-04-07,hidden,logan,15:15:00,largemouth bass,,24,,54,soft plastic crawl,2,no scale,,,,
+2022-04-07,hidden,Logan,15:20:00,largemouth bass,,28,,71,soft plastic crawl,2,no scale,,,,
+2022-04-07,nursery,Jeremy,15:00:00,bluegill,,22,,94,live worms and small hook,2,scale did not work,,,,
+2022-04-07,nursery,Jeremy,15:05:00,bluegill,,20.5,,95,live worms and small hook,2,scale did not work,,,,
+2022-04-07,nursery,Jon,15:10:00,bluegill,,17.9,,97,live worms and small hook,2,scale did not work,,,,
+2022-04-07,nursery,Jon,15:20:00,bluegill,,19,,98,live worms and small hook,2,scale did not work,,,,
+2021-11-06,nursery,Jonah Cochrane,,largemouth bass,largemouth bass,40,737,3,Black popper,0.95,,,,,
+2021-11-06,nursery,Jonah Cochrane,,black crappie,largemouth bass,26,255,5,Dropshot worm,1.966666667,,,,,
+2023-04-01,nursery,Cameron,,largemouth bass,,16.5,140,47,,2,,,,,orange
+2023-04-01,nursery,Cameron,,largemouth bass,,21.5,140,46,,2,,,,,orange
+2023-04-01,nursery,Cameron,,largemouth bass,,16.5,60,44,,2,,,,,orange
+2023-04-01,nursery,Noah,,largemouth bass,,24,220,42,,2,,,,,orange
+2023-04-01,big,Cameron,,largemouth bass,,29,420,41,,2,,,,,orange
+2021-11-06,big,Jonah Cochrane,,largemouth bass,largemouth bass,29,71,6,Dropshot worm,1.883333333,,,,,
+2023-04-01,big,Cameron,,largemouth bass,,21.5,180,40,,2,,,,,orange
+2021-11-07,hidden,Bella Edwards,,largemouth bass,largemouth bass,29,51,7,Swimbait,0.666666667,,,,,
+2023-04-01,big,Cameron,,bluegill,,18.5,140,39,,2,,,,,orange
+2021-11-07,big,Jonah Cochrane,,largemouth bass,largemouth bass,36,635,8,Dropshot worm,2.3,,,,,
+2023-04-01,big,Cameron,,largemouth bass,,24,160,38,,2,,,,,orange
+2023-04-01,big,Cameron,,largemouth bass,,18.5,80,,,2,,,,,
+2023-04-01,big,Cameron,,largemouth bass,,22,160,37,,2,,,,,orange
+2021-11-06,big,Truman,,largemouth bass,largemouth bass,19.5,25.1,41,Worm,0.083333333,,,,,
+2021-11-07,small,Truman,,largemouth bass,largemouth bass,31,365,40,Worm,0.016666667,,,,,
+2021-11-07,hidden,Truman,,largemouth bass,largemouth bass,18.5,64.6,39,Worm,0.5,,,,,
+2023-04-01,big,Cameron,,largemouth bass,,17,60,,,2,,,,,
+2021-11-07,hidden,Truman,,bluegill,bluegill,16.5,75.4,38,Worm,0.95,,,,,
+2021-11-07,hidden,Truman,,bluegill,bluegill,15.5,57.5,37,Worm,1.083333333,,,,,
+2021-11-07,hidden,Truman,,bluegill,bluegill,17.5,95.4,36,Worm,1.166666667,,,,,
+2021-11-07,hidden,Truman,,bluegill,bluegill,16.5,83.1,35,Worm,1.316666667,,,,,
+2021-11-07,hidden,Truman,,redear,bluegill,20.7,149.4,34,Worm,1.5,,,,,
+2021-11-07,hidden,Truman,,bluegill,bluegill,16,62.5,33,Worm,1.566666667,,,,,
+2023-04-01,big,Cameron,,largemouth bass,,21,60,,,2,,,,,
+2023-04-01,big,Noah,,largemouth bass,,19,60,87,,2,,,,,green
+2023-04-01,big,Noah,,bluegill,,19.5,180,88,,2,,,,,green
+2023-04-01,big,Noah,,largemouth bass,,26,240,,,2,,,,,
+2023-04-01,big,Noah,,largemouth bass,,28,310,89,,2,,,,,green
+2023-04-01,big,Noah,,green sunfish,,21.5,240,,,2,,,,,
+2023-04-01,big,Kayden,,largemouth bass,,35,445,41,chatterbait,2,,,,,green
+2023-04-01,big,Kayden,,largemouth bass,,17,60,,In-line spinner,2,,,,,
+2021-11-07,hidden,Truman,,bluegill,bluegill,17.3,87.3,32,Worm,1.65,,,,,
+2021-11-07,hidden,Truman,,bluegill,bluegill,18,105,31,Worm,1.85,,,,,
+2021-11-07,hidden,Truman,,bluegill,bluegill,17,88.9,30,Worm,1.983333333,Died on release - tag removed,,,,
+2021-11-06,big,Noah,,black crappie,black crappie,24,178,82,,2,2:00 total target time,,,,
+2021-11-06,big,Noah,,black crappie,black crappie,28.3,224,83,,2,2:00 total target time,,,,
+2021-11-06,big,Noah,,bluegill,bluegill,19.75,135,,,2,2:00 total target time,,,,
+2021-11-06,big,Tom/Jared,,bluegill,Bass/Panfish,18.5,118,50,Worm,2,2:00 total target time,,,,
+2021-11-06,big,Tom/Jared,,bluegill,Bass/Panfish,19.4,120,47,Worm,2,2:00 total target time,,,,
+2021-11-06,big,Tom/Jared,,bluegill,Bass/Panfish,15.8,67,46,Worm,2,2:00 total target time,,,,
+2021-11-06,big,Tom/Jared,,bluegill,Bass/Panfish,18.7,126,45,Worm,2,2:00 total target time,,,,
+2021-11-06,big,Tom/Jared,,largemouth bass,Bass/Panfish,33.5,136,44,Worm,2,2:00 total target time,,,,
+2021-11-06,big,Tom/Jared,,bullhead catfish,Catfish,33.5,810,42,Worm,,Sunset,,,,
+2021-11-06,big,Tom/Jared,,bullhead catfish,Catfish,41,1500,88,Worm,,Sunset,,,,
+2021-11-07,nursery,Tom/Jared,,bluegill,Bass/Panfish,22.5,312,89,Worm,,,,,,
+2021-11-07,nursery,Tom/Jared,,bluegill,Bass/Panfish,18,283,90,Worm,2,2:00 total target time,,,,
+2021-11-07,nursery,Tom/Jared,,bluegill,Bass/Panfish,20,340,91,Worm,2,2:00 total target time,,,,
+2021-11-07,nursery,Tom/Jared,,largemouth bass,largemouth bass,29,397,92,Soft plastic,,,,,,
+2021-11-06,big,Noah,,redear,bluegill,21.1,146,,,2,2:00 total target time,,,,
+2021-11-06,big,Leo,,largemouth bass,largemouth bass,18,50,75,Yellow grub,,,,,,
+2022-04-23,big,Brendan,11:45:00,largemouth bass,largemouth bass,18,,55,crawfish crank,0.05,,,,,
+2021-11-06,big,Noah,,black crappie,black crappie,26,177,,,2,2:00 total target time,,,,
+2022-04-23,big,Brendan,,largemouth bass,largemouth bass,39,480,8,texas weightless rig,0.5,recapture and retag -- 057,,37.5785,-78.4654,
+2022-04-23,big,Brendan,,largemouth bass,largemouth bass,25,156,59,texas weightless rig,0.6,,,,,
+2022-04-23,big,Brendan,,largemouth bass,largemouth bass,21.5,108,68,texas weightless rig,0.65,,,,,
+2022-04-24,big,Jeremy,,bluegill,bluegill,13,36,23B,fly,0.1,,,37.5799,-78.4653,
+2022-04-24,big,Jeremy,,bluegill,bluegill,15.5,80,22B,fly,0.1,,,,,
+2022-04-24,big,Jeremy,,bluegill,bluegill,14.5,67,21B,fly,0.2,,,,,
+2022-04-24,big,Jeremy,,largemouth bass,bluegill,23,118,19B,fly,0.25,,,,,
+2022-04-24,big,Jeremy,,bluegill,largemouth bass,20,135,18B,bucktail spinner,0.1,,,,,
+2022-04-24,big,Jeremy,,largemouth bass,largemouth bass,19.5,39,15B,bucktail spinner,0.2,,,,,
+2022-04-24,big,Jeremy,,largemouth bass,largemouth bass,22,18,14B,bucktail spinner,0.5,,,,,
+2022-04-24,big,Jeremy,,largemouth bass,largemouth bass,18,32,13B,bucktail spinner,0.5,,,,,
+2022-04-24,small,Jeremy,,largemouth bass,largemouth bass,17.5,10,10B,bucktail spinner,0.05,,,,,
+2022-04-24,small,Jeremy,,bluegill,largemouth bass,16,5,9B,bucktail spinner,0.2,,,,,
+2022-04-24,small,Jeremy,,largemouth bass,largemouth bass,20.5,8,7B,bucktail spinner,0.5,,,,,
+2022-04-24,big,Brendan,10:30:00,largemouth bass,largemouth bass,29,34,76,worm,,,,,,
+2022-04-24,big,Francesco,11:00:00,largemouth bass,largemouth bass,29,46,62,crank bait,,recapture,,,,
+2023-03-30,big,Emily Shawish,02:10:00,bluegill,bluegill,20,220,054,White trout magnet,0,"","",37.5793020108475,-78.4651251335907,green
+2022-04-24,big,Francesco,,largemouth bass,largemouth bass,43,884,75,swimbait,1,possibly did not live,,,,
+2022-04-23,nursery,Jeremy,18:45:00,largemouth bass,largemouth bass,33.5,120,24,bucktail spinner,0.03125,,,37.5851,-78.4644,
+2022-04-23,nursery,Jeremy,19:00:00,largemouth bass,largemouth bass,28.5,180,25,bucktail spinner,0.041666667,,,37.5851,-78.4644,
+2022-04-23,big,Brendan,11:30:00,largemouth bass,largemouth bass,20,250,60,weightless texas rig,0.020833333,,,37.5789,-78.4664,
+2022-04-23,big,Brendan,11:45:00,largemouth bass,largemouth bass,41,690,61,weightless texas rig,0.03125,,,37.5789,-78.4664,
+2022-04-23,big,Brendan,12:00:00,largemouth bass,largemouth bass,24,200,62,weightless texas rig,0.041666667,,,37.5798,-78.467,
+2022-04-23,big,Brendan,12:30:00,largemouth bass,largemouth bass,40,290,63,weightless texas rig,0.0625,,,37.58,-78.4658,
+2022-04-23,big,Brendan,13:00:00,largemouth bass,largemouth bass,24,132,64,weightless texas rig,0.083333333,,,37.5794,-78.4651,
+2022-04-23,big,Jeremy,13:15:00,largemouth bass,largemouth bass,21,,66,weightless texas rig,0.09375,,,37.5794,-78.4651,
+2022-04-23,big,Brendan,13:45:00,largemouth bass,largemouth bass,20.5,88.5,67,weightless texas rig,0.114583333,,,37.5785,-78.4659,
+2022-04-24,big,Jeremy,08:30:00,largemouth bass,largemouth bass,41,920,70,chatterbait,0,,,37.5794,-78.4651,
+2022-04-24,big,Brendan,08:45:00,largemouth bass,largemouth bass,24,47,71,weightless texas rig,0.010416667,,,37.5785,-78.4659,
+2023-03-30,big,Tom Fitzpatrick,03:30:00,bluegill,bluegill,16,137,055,White trout magnet,1.5,"","",37.57927310168,-78.4651465912628,green
+2022-04-24,big,Jeremy,09:05:00,largemouth bass,largemouth bass,19.5,72,73,bucktail spinner,0.024305556,,,37.5785,-78.4659,
+2022-04-24,big,Brendan,09:15:00,largemouth bass,largemouth bass,17.5,44,74,weightless texas rig,0.75,,,37.5791,-78.4659,
+2022-04-24,big,Brendan,09:30:00,largemouth bass,largemouth bass,22.5,30,80,weightless texas rig,1,,,37.5789,-78.4664,
+2022-04-23,nursery,Brendan,18:15:00,largemouth bass,largemouth bass,26,208,23,weightless texas rig,0.010416667,,,37.5846,-78.4648,
+2023-03-30,hidden,Emily Shawish,12:05:00,largemouth bass,largemouth bass,22.5,199,"",Spinner,0.75,Tagging not successful,"",37.5763394257173,-78.4627718822784,""
+2023-03-30,hidden,Emily Shawish,01:04:00,bluegill,bluegill,18,197,051,White trout magnet,1.75,"","",37.5763870426943,-78.4627075092621,green
+2022-10-22,big,Jeremy,13:45:00,largemouth bass,largemouth bass,,,,Spinner,2.15,"tagging equipment was in use while this fish was caught, smaller than 25cm and <150g ","",,,
+2022-10-23,big,Jeremy,13:49:00,black crappie,Largemouth Bass,24,156,6B,Chatter Bait,3.5,fish was lethargic ,image_67162625.JPG,,,
+2022-10-23,big,Brendan,12:35:00,largemouth bass,Largemouth Bass,26.5,200,60B,Weightless Texas rig soft plastic worm,4,"Western shore, near small bay at midpoint of western shore","",,,
+2022-10-23,big,Brendan,10:47:00,largemouth bass,Largemouth bass,23,160,98B,Weightless Texas rig soft plastic worm,2.5,SE corner of Big Lake near marshy area by creek mouth,"",,,
+2022-08-18,big,Brendan,10:30:00,largemouth bass,Largemouth bass,46,945,83B,Spinnerbait,0.5,"Off dock, casting south toward peninsula","",,,
+2022-08-18,big,Brendan,12:13:00,largemouth bass,Largemouth bass,45,909,84B,Chatterbait,2,Embayment at NW corner,"",,,
+2023-03-30,big,Tom Fitzpatrick,03:41:00,bluegill,bluegill,13,60,056,White trout magnet,1.68,"","",37.579247593536,-78.4651465912628,green
+2023-03-30,big,Tom Fitzpatrick,03:45:00,bluegill,bluegill,16,100,058,White trout magnet,1.75,"","",37.5792407913368,-78.4651573200989,green
+2023-03-30,big,Tom Fitzpatrick,03:49:00,bluegill,bluegill,17.5,120,059,White trout magnet,1.82,"","",37.579268,-78.4651573200989,green
+2023-03-30,big,Tom Fitzpatrick,03:56:00,bluegill,bluegill,16,80,060,White trout magnet,1.93,"","",37.579233989137,-78.465178777771,green
+2023-03-30,big,Tom Fitzpatrick,04:06:00,bluegill,bluegill,18,120,061,White trout magnet,2.1,"","",37.57938623785,-78.4651938403668,green
+2023-03-31,big,Lindsay ,12:02:00,largemouth bass,largemouth bass,17.4,140,049,Crank bait,0.5,"","",37.5793360216794,-78.4654469986725,green
+2023-03-30,big,Francesco,12:15:00,largemouth bass,largemouth bass,23.5,120,048,Crankbait,0.5,"","",37.5795443376859,-78.4654094477463,green
+2023-03-30,big,Joe,12:30:00,largemouth bass,largemouth bass,22.7,80,047,"",0.5,"","",37.5799039315364,-78.4656074815094,green
+2023-03-31,big,Joe,12:45:00,largemouth bass,largemouth bass,24.6,200,"","",1.5,"","",,,""
+2023-03-30,nursery,Bridget,01:02:00,bluegill,bluegill,14,190,"","",0.5,"","",,,""
+2023-03-30,nursery,Bridget,01:02:00,bluegill,bluegill,13.5,100,"","",0.5,"","",,,""
+2023-03-30,nursery,Noah,13:10:00,black crappie,largemouth bass,30.5,380,081,"",0.5,"","",37.5847393985316,-78.464633809188,green
+2023-03-30,nursery,Noah,13:15:00,black crappie,black crappie,30,400,082,"",0.5,"","",37.5846862134859,-78.4646190737495,green
+2023-03-30,hidden,Joe,14:34:00,largemouth bass,largemouth bass,32.7,400,44,"",0.5,"","",,,green
+2023-03-30,small,Noah,14:32:00,largemouth bass,largemouth bass,25.5,280,084,"",0.5,"","",37.579001,-78.4632687718277,green
+2023-03-30,small,Noah,15:21:00,largemouth bass,largemouth bass,33,460,086,"",1,"","",37.5789754917627,-78.4632821828728,green
+2023-04-01,small,Jeremy,,black crappie,largemouth bass,25.5,260,19,Topwater,1,,,,,green
+2023-04-01,big,Brendan,,largemouth bass,largemouth bass,43,920,61,In-line spinner,1,Recap - also tagged 20 green,,,,orange
+2023-04-01,small,Brendan,,largemouth bass,largemouth bass,23,60,28,In-line spinner,1,Recap,,,,orange
+2023-04-02,big,Brendan,09:53:00,largemouth bass,largemouth bass,21,,,In-line spinner,2.5,,,,,
+2023-04-02,big,Brendan,10:05:00,largemouth bass,largemouth bass,21,,24,In-line spinner,2.5,,,,,green
+2023-04-02,big,Brendan,10:17:00,largemouth bass,largemouth bass,,,003B,In-line spinner,2.5,Recent recap,,,,orange
+2023-04-02,big,Brendan,10:20:00,largemouth bass,largemouth bass,24,160,25,In-line spinner,2.5,,,,,green
+2023-04-02,big,Rachael,10:25:00,largemouth bass,largemouth bass,21,,,In-line spinner,2.5,,,,,
+2023-04-02,big,Brendan,10:30:00,largemouth bass,largemouth bass,26,220,22,In-line spinner,2.5,,,,,green
+2023-04-02,big,Rachael,13:45:00,black crappie,largemouth bass,30,300,77,In-line spinner,1.5,,,,,orange
+2023-04-02,big,Brendan,13:40:00,bluegill,largemouth bass,17,,,In-line spinner,1.5,,,,,
+2023-04-02,big,Brendan,13:55:00,largemouth bass,largemouth bass,20,,,In-line spinner,1.5,,,,,
+2023-04-02,big,Brendan,13:58:00,largemouth bass,largemouth bass,23,,23,In-line spinner,1.5,,,,,green
+2023-04-02,big,Brendan,14:05:00,largemouth bass,largemouth bass,19,,,In-line spinner,1.5,,,,,
+2022-10-22,nursery,Brendan,18:31:00,largemouth bass,largemouth bass,25,203,95B,"",0.5,"near island, last clearing","",,,
+2022-10-22,big,Brendan,16:14:00,largemouth bass,largemouth bass,25.5,170,92B,"",1,"","",,,
+2022-10-22,big,Jeremy,16:55:00,largemouth bass,largemouth bass,30,354,94B,Spinner,1.8,"","",,,
+2022-10-22,big,Brendan,16:18:00,largemouth bass,largemouth bass,29,260,93B,"",1,"","",,,
+2022-10-22,big,Brendan,13:45:00,largemouth bass,largemouth bass,21,91,91B,"",2.15,"","",,,
+2022-10-22,big,Brendan,11:55:00,largemouth bass,largemouth bass,21,101,87B,"",0.1,"","",,,
+2022-10-22,big,Brendan,11:32:00,largemouth bass,largemouth bass,20.5,99.6,85B,"",0.05,caught on the dock,"",,,
+2022-10-23,big,Jeremy,14:18:00,largemouth bass,largemouth bass,43.5,878,5B,Chatter Bait,5.2,Was previously hooked from the day before,"",,,
+2022-10-23,big,Jeremy,13:22:00,largemouth bass,largemouth bass,30.5,267,88B,Chatter Bait,4.5,"","",,,
+2022-10-23,big,Jeremy,11:00:00,largemouth bass,largemouth bass,24,194,100B,Chatter Bait,2,"","",,,
+2022-10-23,big,Jeremy,10:33:00,largemouth bass,largemouth bass,22,100,97B,Spinner,1.5,"","",,,
+2022-04-24,big,Jeremy,,black crappie,largemouth bass,22,128,17B,bucktail spinner,0.15,,crappie1.JPG,37.57943,-78.4651,
+2022-04-24,big,Jeremy,,black crappie,largemouth bass,23.5,281,11B,bucktail spinner,0.55,,crappie2.JPG,37.5798,-78.46691,
+2023-03-30,hidden,Emily Shawish,01:12:00,bluegill,bluegill,20.5,260,052,White trout magnet,1.87,"","",37.5764006476134,-78.4627289669342,green
+2023-03-30,small,JD,11:29:00,largemouth bass,largemouth bass,30.7,280,003,Spinner,0.25,"","",,,green
+2023-03-30,small,JD,12:49:00,largemouth bass,largemouth bass,26.1,240,006,Spinner,1.2,"","",,,green
+2023-03-30,small,JD,13:10:00,largemouth bass,largemouth bass,22,140,007,Spinner,1.4,"","",,,green
+2023-04-02,big,Brendan,14:13:00,largemouth bass,largemouth bass,21,,,In-line spinner,1.5,,,,,
+2022-04-07,big,Brendan,11:50:00,bluegill,,18.5,124,,crayfish crank bait,2.5,tagging problematic,,,,
+2022-04-07,big,Chad,12:45:00,largemouth bass,,,,,Soft plastic,2.5,no measurements,,,,
+2022-04-07,big,Logan,12:45:00,largemouth bass,,,,,Soft plastic,2.5,no measurements,,,,
+2022-04-07,small,Josh,12:10:00,bluegill,,14.7,,,pan fish fly,2.5,no scale very samll no tagging,,,,
+2022-04-07,small,Jon,12:15:00,bluegill,,15.6,,,pan fish fly,2.5,no scale very samll no tagging,,,,
+2022-04-07,hidden,Madison,,,,,,,,2.5,,,,,
+2022-04-07,nursery,Jaimee,12:35:00,largemouth bass,,23,,,curly tail gig,2.5,bass escaped length estimated,,,,
+2022-10-23,big,Jeremy,10:12:00,largemouth bass,Largemouth Bass,29.5,300,96B,Spinnerbait,2,Southeast corner of Big Lake near marshy area by creek mouth,"",,,
+2022-10-22,big,Brendan,11:41:00,largemouth bass,largemouth bass,30.5,275,86B,"",0.08,"","",,,
+2022-04-07,nursery,Francesco,,,,,,,,2.5,,,,,
+2023-04-02,big,Brendan,14:17:00,largemouth bass,largemouth bass,20,,,In-line spinner,1.5,,,,,
+2023-04-02,big,Brendan,14:30:00,largemouth bass,largemouth bass,17,,,In-line spinner,1.5,,,,,
+2022-10-22,big,Jeremy,13:07:00,largemouth bass,largemouth bass,37,720,,Spinner,,"attempted tagging once, but did not take so let it go","",,,
+2022-10-22,big,Brendan,13:33:00,largemouth bass,largemouth bass,30,329,,"",2,"","",,,
+2022-10-23,big,Jeremy,13:00:00,largemouth bass,largemouth bass,22,118,,Chatter Bait,4,"","",,,
+2023-03-30,big,Brendan,15:55:00,largemouth bass,largemouth bass,23,220,003B,Texas rig,0.5,"","",37.5785783196405,-78.4654775063031,orange
+2023-03-30,big,Brendan,16:03:00,largemouth bass,largemouth bass,23,120,002B,Texas rig,0.5,"","",37.5786047853693,-78.4659727116394,orange
+2023-03-30,big,Jeremy,16:10:00,largemouth bass,largemouth bass,28,260,001B,In-line spinner ,0.45,"","",37.5786813104358,-78.4662302037048,orange
+2023-03-30,big,Brendan,16:30:00,largemouth bass,largemouth bass,36.5,460,69B,Texas rig,1,"","",37.5791489619115,-78.4667559166718,orange
+2023-03-30,big,Jeremy,18:20:00,largemouth bass,largemouth bass,24.5,240,068B,spinner,0.5,"","",37.5785367630218,-78.4655650158691,orange
+2023-03-30,big,Jeremy,18:34:00,chain pickerel,largemouth bass,49,,066B,spinner,0.5,"Could not get weight, too big","",37.5784432321926,-78.4654899140167,orange
+2023-03-30,big,Jeremy,18:24:00,largemouth bass,largemouth bass,25,300,067B,In-line spinner ,0.5,"","",37.5786728076545,-78.4656401177216,orange
+2023-03-30,big,Jeremy,18:57:00,largemouth bass,largemouth bass,18.5,160,065B,In-line spinner ,0.45,"","",37.5786898132162,-78.4661121865082,orange
+2022-04-07,big,Josh,14:35:00,bluegill,,19.1,126.5,,woolly bugger,2,non tagged tag came out,,,,
+2022-04-07,big,Josh,14:30:00,bluegill,,17.5,99.7,,woolly bugger,2,failed tagging,,,,
+2022-04-07,small,Chad,14:10:00,largemouth bass,,14,,,soft plastic worm,2,no scale - bass escaped and size estimated,,,,
+2022-04-07,big,Andrew,14:20:00,largemouth bass,,35,,,soft plastic worm,2,size estimated fare from the mesuring station,,,,
+2023-03-30,big,Jeremy,16:16:00,largemouth bass,largemouth bass,20,160,,spinner,0.5,Too small to tag,"",37.5787493326512,-78.466262390213,
+2023-03-30,big,Brendan,16:33:00,largemouth bass,largemouth bass,21.5,120,,Texas rig,0.5,"","",37.5792424918542,-78.4667022724915,
+2022-04-07,hidden,Jaimee,14:45:00,largemouth bass,,24.1,,,spinner curly tail gig,2,no scale available to jaimee - failed tagging,,,,
+2022-04-07,hidden,Jaimee,14:48:00,largemouth bass,,19.1,,,spinner curly tail gig,2,no scale and did not have tage,,,,
+2022-04-07,hidden,Logan,14:40:00,largemouth bass,,24.5,,,soft plastic crawl,2,no scale - no tag gun available,,,,
+2022-04-07,hidden,Logan,14:50:00,largemouth bass,,26,,,soft plastic crawl,2,no scale - tagging gun not available,,,,
+2021-11-06,nursery,Bella Edwards,,largemouth bass,largemouth bass,20,85,,Dropshot worm,2.25,,,,,
+2021-11-06,big,Jonah Cochrane,,largemouth bass,largemouth bass,20,31,,Dropshot worm,0.916666667,,,,,
+2021-11-06,big,Jonah Cochrane,,largemouth bass,largemouth bass,20,31,,Dropshot worm,1.033333333,,,,,
+2021-11-06,big,Jonah Cochrane,,largemouth bass,largemouth bass,22,40,,Dropshot worm,1.533333333,,,,,
+2021-11-06,big,Bella Edwards,,largemouth bass,largemouth bass,25,82,,Swimbait,1.716666667,,,,,
+2021-11-07,hidden,Bella Edwards,,largemouth bass,largemouth bass,21,14,,Swimbait,0.316666667,,,,,
+2021-11-07,hidden,Jonah Cochrane,,largemouth bass,largemouth bass,23,8.5,,Dropshot worm,1.966666667,,,,,
+2021-11-06,nursery,Lance,,largemouth bass,largemouth bass,30.6,337,,,0.166666667,,,,,
+2021-11-06,big,Truman,,bluegill,bluegill,15,,,Worm,0.066666667,,,,,
+2021-11-06,big,Truman,,bluegill,bluegill,15.7,,,Worm,0.5,,,,,
+2021-11-07,hidden,Truman,,bluegill,bluegill,18.5,123.7,,Worm,0.85,,,,,
+2021-11-06,big,Chiara,,largemouth bass,largemouth bass,22.5,114,,Worm,,,,,,
+2021-11-06,big,Leo,,largemouth bass,largemouth bass,20,5.4,,Yellow grub,,,,,,
+2022-04-23,big,Jeremy,12:00:00,bluegill,bluegill,18,52,,fly,0.05,,,37.5794,-78.4651,
+2022-04-23,big,Jeremy,12:03:00,bluegill,bluegill,17.2,24,,fly,0.05,,,,,
+2022-04-23,big,Jeremy,12:05:00,bluegill,bluegill,15.5,75,,fly,0.05,,,,,
+2022-04-24,big,Francesco,10:45:00,largemouth bass,largemouth bass,17.5,,,crank bait,,,,,,
+2022-04-24,big,Jeremy,,largemouth bass,largemouth bass,16,25,,bucktail spinner,,,,,,
+2022-04-24,big,Jeremy,08:50:00,largemouth bass,largemouth bass,19.5,30,,bucktail spinner,0.013888889,,,37.5785,-78.4659,
+2023-04-01,hidden,Jared,,largemouth bass,,25,160,29,,2,,,,,green
+2023-04-01,hidden,Jared,,largemouth bass,,28,300,160,,2,,,,,
+2023-04-01,nursery,Tom,,bluegill,,14.5,80,28,,1,,,,,green
+2023-04-01,big,Tom,,largemouth bass,,30,180,86,,0.75,recapture,,,,orange
+2023-04-01,big,Tom,,bluegill,,17.7,120,26,,0.75,,,,,green
+2023-04-01,big,Tom,,bluegill,,19.5,180,65B,,2,,,,,orange
+2023-04-01,big,Tom,,bluegill,,15.1,100,62B,,2,,,,,orange
+2023-04-01,big,Tom,,bluegill,,18.2,120,60B,,2,,,,,orange
+2023-04-01,big,Tom,,black crappie,,27.5,300,59B,,2,,,,,orange
+2023-04-01,big,Tom,,black crappie,,30,320,58B,,2,,,,,orange
+2023-04-01,big,Francesco,,largemouth bass,,18.2,80,,,1.5,,,,,
+2023-04-01,big,Jeremy,,largemouth bass,,25.5,180,34B,,,,,,,orange

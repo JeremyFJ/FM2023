@@ -1,0 +1,151 @@
+---
+title: "Lab 10 - Kennedy Lakes Assessment"
+author: "(Your name here)"
+date: "4/6/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+lab_path = dirname(rstudioapi::getSourceEditorContext()$path)
+knitr::opts_knit$set(root.dir = lab_path)
+set.seed(9999)
+library(tidyverse)
+library(magrittr)
+```
+
+# Kennedy Tree Farm dataset
+
+```{r}
+dat = read.csv("kennedylakes.csv")
+```
+
+### Data Exploration
+
+Species distribution with `geom_bar`
+```{r, fig.width=120%}
+ggplot(data=dat, aes(x=common)) +
+  geom_bar() +
+  theme_bw() +
+  xlab("Catch") +
+  ggtitle("Kennedy lakes species distribution")
+```
+
+Proportion of catch
+```{r}
+specs = aggregate.data.frame(list(inds = dat$date), list(common = dat$common), length)
+specs = specs[order(specs$inds),]
+specs$perc = specs$inds/sum(specs$inds)*100
+par(oma = c(1,7,2,1))
+barplot(specs$inds, names.arg = paste(specs$common," (",round(specs$perc,1),"%)",sep = ""), horiz=T, las = 1)
+```
+
+Catch and fishing pressure by lake
+```{r} 
+g1 = ggplot(data=dat, aes(x=lake)) +
+  geom_bar() +
+  theme_bw() +
+  xlab("Lake") +
+  ylab("Catch") +
+  ggtitle(paste0("Kennedy lakes (Nov 2021 - Apr 2023)"))
+g2 = ggplot(data=dat, aes(x=lake, y=time_targeted)) +
+  geom_bar(position="stack", stat="identity") +
+  theme_bw() +
+  xlab("Lake") +
+  ylab("Effort (hours)") 
+gridExtra::grid.arrange(g1, g2)
+```
+
+
+```{r}
+dat_2021 <- dat[(dat$date > "2021-01-01" & dat$date < "2022-01-01" 
+                 & dat$common=='largemouth bass' & !is.na(dat$length_cm)),]
+dat_2022 <- dat[(dat$date > "2022-01-01" & dat$date < "2023-01-01" 
+                 & dat$common=='largemouth bass' & !is.na(dat$length_cm)),]
+dat_2023 <- dat[(dat$date > "2023-01-01" & dat$date < "2024-01-01" 
+                 & dat$common=='largemouth bass' & !is.na(dat$length_cm)),]
+par(mfrow=c(1,3))
+hist(~length_cm,data=dat_2021, xlab="Total Length (cm)", col = "black", main="Largemouth Bass 2021")
+hist(~length_cm,data=dat_2022, xlab="Total Length (cm)", col = "black", main="2022")
+hist(~length_cm,data=dat_2023, xlab="Total Length (cm)", col = "black", main="2023")
+```
+
+Plot empirical cumulative distribution function (ECDF) which is the proportion of fish
+that are less than each observed length. From this plot, it appears that largemouth bass were relatively the same lengths for all years, however in the 25-30cm range, the proportion of fish increased.
+```{r}
+clr <- c("black","gray55", "gray")
+plot(ecdf(dat_2021$length_cm),xlab="Total Length (cm)",do.points=FALSE,
+verticals=TRUE,main="",col.01line=NULL)
+plot(ecdf(dat_2022$length_cm),add=TRUE,do.points=FALSE,
+verticals=TRUE,col=clr[2],col.01line=NULL)
+plot(ecdf(dat_2023$length_cm),add=TRUE,do.points=FALSE,
+verticals=TRUE,col=clr[3],col.01line=NULL)
+legend("bottomright",c("2021","2022", "2023"),col=clr,lty=1,
+bty="n",cex=0.75)
+```
+
+
+```{r}
+lhB = as.data.frame(popgrowth("Micropterus salmoides", fields = c("K","to","Loo"))) # parameters: Loo, growth coefficient k
+meanpar = colMeans(lhB, na.rm=TRUE) # Loo is in cm
+dat_2022$age = TropFishR::VBGF(L = dat_2022$length_cm, list(Linf=meanpar["Loo"], K=meanpar["K"], t0= meanpar["to"])) # we need to divide by ten because MEDITS data are reported in millimeters
+dat_2022$age = round(dat_2022$age)
+
+afl = data.frame(table(dat_2022$age))
+colnames(afl) = c("age", "catch")
+afl$age = as.numeric(afl$age)
+```
+
+
+```{r, fig.width=2}
+ggplot() + 
+  geom_point(data=afl, aes(x=age, y=log(catch)), pch=19) + 
+  xlab("Age (years)") + 
+  ylab("Log Catch") + 
+  theme_bw()
+```
+Linear regression of catch for gear-vulnerable ages. The slope is equal to the total mortality rate.
+```{r}
+mod1 = lm(log(catch)~age, afl[-c(1),])
+# summary(mod1)
+# coef(mod1)
+z = -coef(mod1)["age"]
+
+plot(log(catch)~age, afl, pch=16, main="KTF largemouth bass 2022")
+lines(predict(mod1)~afl$age[2:6])
+text(4, 3, paste0("Z=", round(z,3)),
+     cex=1,col="black", )
+```
+
+### Closed Population, Single Recapture
+
+$$
+\text{Petersen equation}\\
+\hat{N} = \frac{(M + 1)(n +1)}{m + 1} - 1\\
+\hat{N} = \text{total population size}\\
+M = \text{tagged fish}\\
+n = \text{subsequent sample of fish}\\
+m = \text{recaptured fish}
+$$
+Big Lake largemouth bass recapture from Thursday 3/30/2023
+```{r}
+datrecap2023 = dat[(!is.na(dat$tagid) & dat$tagid!='' & dat$date > "2023-01-01"),]
+recaprows = which(grepl("recap", tolower(datrecap2023$notes)))
+bigrecap2023 = datrecap2023[c(49,69),]
+```
+
+Estimate population size of gear-vulnerable fish
+```{r}
+M = nrow(subset(datrecap2023, (common=="largemouth bass" & lake=="big" & date=="2023-03-30")))
+n = nrow(subset(datrecap2023, (common=="largemouth bass" & lake=="big" & date>"2023-03-30")))
+m = nrow(bigrecap2023)
+
+mr = FSA::mrClosed(M = M, n = n, m = m, method="Petersen")
+summary(mr)
+```
+
+
+
+```{r}
+
+```
